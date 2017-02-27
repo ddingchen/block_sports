@@ -20,3 +20,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::get('hsblockgame/ticket', 'TicketController@index');
     Route::get('wechat/material', 'WechatController@material');
 });
+
+Route::group(['namespace' => 'Admin'], function () {
+    Route::any('/wechat', 'WechatController@serve');
+});
