@@ -33,7 +33,7 @@ class WechatController extends Controller
                     [
                         "type" => "view",
                         "name" => "说明",
-                        "url" => "http://www.soso.com/",
+                        "url" => "https://mp.weixin.qq.com/s?__biz=MzAwNTAyNzEwOQ==&mid=503151575&idx=1&sn=49cb1cce3c4b03d5dc87218664507990&chksm=032b3f9d345cb68b2bdab17fb08c7e6330221593a616354450743063f7286dfdb0a61f92659e#rd",
                     ],
                     [
                         "type" => "view",
