@@ -19,6 +19,7 @@ Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::get('hsblockgame/ticket', 'TicketController@index');
     Route::get('wechat/material', 'WechatController@material');
+    Route::get('wechat/updateMenu', 'WechatController@updateMenu');
 });
 
 Route::group(['namespace' => 'Admin'], function () {
