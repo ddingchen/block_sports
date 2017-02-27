@@ -53,8 +53,8 @@
 	        </label>
 	        @endforeach
 	    </div>
-	    <div class="weui-cells__tips">赛制规则说明：<a href="#">羽毛球</a>，<a href="#">篮球</a>，<a href="#">足球</a></div>
-	    <div style="padding: 0 15px">
+	    {{-- <div class="weui-cells__tips">赛制规则说明：<a href="#">羽毛球</a>，<a href="#">篮球</a>，<a href="#">足球</a></div> --}}
+	    <div style="padding: 0 15px; margin: 20px 0">
 	    	<input type="submit" class="weui-btn weui-btn_primary" value="确认提交">
 	    </div>
   	</form>
