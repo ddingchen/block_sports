@@ -22,7 +22,7 @@
         <div class="weui-cells__title">报名项目</div>
   		<div class="weui-cells">
   			@foreach($sports as $sport)
-            <a class="weui-cell weui-cell_access" href="javascript:;">
+            <a class="weui-cell weui-cell_access" href="{{ $sport->fileOfGameRule }}">
                 <div class="weui-cell__bd">
                     <p>{{ $sport->name }}</p>
                 </div>

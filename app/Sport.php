@@ -11,4 +11,9 @@ class Sport extends Model
     public $incrementing = false;
 
     public $timestamps = false;
+
+    public function getFileOfGameRuleAttribute()
+    {
+        return '/doc/' . $this->name . '赛制规则.docx';
+    }
 }

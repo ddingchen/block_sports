@@ -60,7 +60,7 @@
 	    </div>
 	    <div class="weui-cells__tips">赛制规则说明：
 		    @foreach($sports as $sport)
-		    <a class="sport-rule" href="#">{{ $sport->name }}</a>@if(!$loop->last)，@endif
+		    <a class="sport-rule" href="{{ $sport->fileOfGameRule }}">{{ $sport->name }}</a>@if(!$loop->last)，@endif
 		    @endforeach
 	    </div>
 	    <div style="padding: 0 15px; margin: 20px 0">
