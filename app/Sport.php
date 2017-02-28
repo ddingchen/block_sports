@@ -14,6 +14,6 @@ class Sport extends Model
 
     public function getFileOfGameRuleAttribute()
     {
-        return '/doc/' . $this->name . '赛制规则.docx';
+        return '/doc/2017街区运动会' . $this->name . '规程.docx';
     }
 }
