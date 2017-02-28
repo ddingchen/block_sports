@@ -57,6 +57,7 @@ class TicketController extends Controller
             'area.required' => '请选择所在小区',
             'area.exists' => '请选择有效的小区',
             'sports.required' => '请选择想要参与的项目',
+            'sports.max' => '最多仅可以选择五个项目',
             'sports.*.required' => '请选择想要参与的项目',
             'sports.*.exists' => '请选择想要参与的项目',
         ];
@@ -65,7 +66,7 @@ class TicketController extends Controller
             'name' => 'required|max:15',
             'tel' => 'required|digits:11',
             'area' => 'required|exists:residential_areas,id',
-            'sports' => 'required|array',
+            'sports' => 'required|array|max:5',
             'sports.*' => 'required|exists:sports,id',
         ], $messages);
 

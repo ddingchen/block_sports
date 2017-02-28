@@ -16,5 +16,5 @@ const { mix } = require('laravel-mix');
 
 mix.sass('resources/assets/sass/activities/hsblockgame.scss', 'public/css/activities')
 	.js('resources/assets/js/activities/hsblockgame.js', 'public/js/activities')
-	.version()
+	.version()	
 	// .copy('node_modules/weui/dist/example/images', 'public/image/activities/images', false);

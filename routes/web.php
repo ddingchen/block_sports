@@ -16,6 +16,8 @@ Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
     Route::post('activities/hsblockgame', 'TicketController@store');
 });
 
+Route::get('doc', 'FileController@show');
+
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::get('hsblockgame/ticket', 'TicketController@index');
     Route::get('wechat/material', 'WechatController@material');

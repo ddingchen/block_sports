@@ -22,14 +22,16 @@
         <div class="weui-cells__title">报名项目</div>
   		<div class="weui-cells">
   			@foreach($sports as $sport)
-            <div class="weui-cell">
+            <a class="weui-cell weui-cell_access" href="javascript:;">
                 <div class="weui-cell__bd">
                     <p>{{ $sport->name }}</p>
                 </div>
-            </div>
-            @endforeach
-        </div>
-        <div class="weui-cells__tips">您已报名成功</div>
+                <div class="weui-cell__ft">
+                </div>
+            </a>
+        @endforeach
+      </div>
+      <div class="weui-cells__tips">您已报名成功</div>
   	</div>
   </body>
 </html>

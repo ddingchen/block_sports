@@ -7,6 +7,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>街区运动会－报名通道</title>
     <link rel="stylesheet" type="text/css" href="{{ mix('css/activities/hsblockgame.css') }}">
+    <style type="text/css">
+    	.sport-rule {
+    		text-decoration: underline;
+    	}
+    </style>
   </head>
   <body>
   	<form id="app" method="post" action="/activities/hsblockgame"
@@ -39,7 +44,7 @@
 	            </div>
 	        </div>
 	    </div>
-	    <div class="weui-cells__title">参与项目（建议最多报名两项）</div>
+	    <div class="weui-cells__title">参与项目<span class="sport-tip"><span></div>
 	    <div class="weui-cells weui-cells_checkbox">
 	    	@foreach($sports as $sport)
 	        <label class="weui-cell weui-check__label" for="s{{ $sport->id }}">
@@ -53,7 +58,11 @@
 	        </label>
 	        @endforeach
 	    </div>
-	    {{-- <div class="weui-cells__tips">赛制规则说明：<a href="#">羽毛球</a>，<a href="#">篮球</a>，<a href="#">足球</a></div> --}}
+	    <div class="weui-cells__tips">赛制规则说明：
+		    @foreach($sports as $sport)
+		    <a class="sport-rule" href="#">{{ $sport->name }}</a>@if(!$loop->last)，@endif
+		    @endforeach
+	    </div>
 	    <div style="padding: 0 15px; margin: 20px 0">
 	    	<input type="submit" class="weui-btn weui-btn_primary" value="确认提交">
 	    </div>
