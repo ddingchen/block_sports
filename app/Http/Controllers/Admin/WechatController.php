@@ -28,7 +28,7 @@ class WechatController extends Controller
         $menu = $wechat->menu;
         $buttons = [
             [
-                "name" => "全民运动会",
+                "name" => "街区运动会",
                 "sub_button" => [
                     [
                         "type" => "view",

@@ -17,7 +17,6 @@ class SportSeeder extends Seeder
         '乒乓球',
         '足球',
         '篮球',
-        '太极',
     ];
 
     /**

@@ -70,6 +70,12 @@ class TicketController extends Controller
         ], $messages);
 
         $user = auth()->user();
+
+        if ($user->ticket) {
+            // 已报名
+            return redirect('activities/hsblockgame');
+        }
+
         $user->name = $request->input('name');
         $user->tel = $request->input('tel');
         $user->residential_area_id = $request->input('area');
