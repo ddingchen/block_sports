@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use EasyWeChat\Message\Material;
+use EasyWeChat\Message\News;
 use Illuminate\Http\Request;
 
 class WechatController extends Controller
@@ -18,7 +19,11 @@ class WechatController extends Controller
                     break;
                 case 'text':
                     if ($message->Content == '报名') {
-                        return new Material('mpnews', 'LUY0P8mlFZSb6H24mzka7FTabitCZw2qsPHtVKowDG0');
+                        return new News([
+                            'title' => '街区运动会报名',
+                            'description' => '为社区，更为自己代言',
+                            'url' => 'http://wap.zhongkaiyun.com/activities/hsblockgame',
+                        ]);
                     }
                     break;
                 case 'image':
