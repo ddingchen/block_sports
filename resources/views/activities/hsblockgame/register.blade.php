@@ -47,7 +47,7 @@
 	        <div class="weui-cell block-field" @if(!old('block'))style="display: none;"@endif>
 	            <div class="weui-cell__hd"><label class="weui-label">社区</label></div>
 	            <div class="weui-cell__bd">
-	                <input name="block" class="weui-input" type="text" value="{{ old('block') }}">
+	                <input name="block" class="weui-input" type="text" readonly="true" value="{{ old('block') }}">
 	            </div>
 	        </div>
 	    </div>
