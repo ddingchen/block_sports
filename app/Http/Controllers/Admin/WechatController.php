@@ -13,12 +13,14 @@ class WechatController extends Controller
     {
         $wechat = app('wechat');
         $wechat->server->setMessageHandler(function ($message) {
+            \Log::debug('request handler.');
             switch ($message->MsgType) {
                 case 'event':
 
                     break;
                 case 'text':
                     if ($message->Content == '报名') {
+                        \Log::debug('replied baomin.');
                         return new News([
                             'title' => '街区运动会报名',
                             'description' => '为社区，更为自己代言',
