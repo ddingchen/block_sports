@@ -1,7 +1,6 @@
 require('./../bootstrap');
 
 $(function() {
-	$('select[name="area"]').val('')
     $('input[name="sports[]"]').change(function() {
         var tip, checkedCount = $('input[name="sports[]"]:checked').length
         tip = checkedCount > 1 ? '建议报名两项' : ''

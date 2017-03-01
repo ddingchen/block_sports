@@ -8,7 +8,7 @@ class BlockController extends Controller
 {
     public function blockNameOfArea($areaId)
     {
-        $area = ResidentialArea::findOrFail($areaId);
-        return $area->block ? $area->block->name : '';
+        $area = ResidentialArea::find($areaId);
+        return $area && $area->block ? $area->block->name : '';
     }
 }

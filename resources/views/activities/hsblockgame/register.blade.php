@@ -37,6 +37,7 @@
 	            </div>
 	            <div class="weui-cell__bd">
 	                <select class="weui-select" name="area">
+	                	<option value="0">请选择所在小区</option>
 	                	@foreach($residentialAreas as $area)
 	                    <option value="{{ $area->id }}" @if(old('area')==$area->id) selected @endif>{{ $area->name }}</option>
 	                    @endforeach
