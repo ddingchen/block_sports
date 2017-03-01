@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use EasyWeChat\Message\Material;
-use EasyWeChat\Message\News;
 use Illuminate\Http\Request;
 
 class WechatController extends Controller
@@ -13,42 +12,8 @@ class WechatController extends Controller
     {
         $wechat = app('wechat');
         $wechat->server->setMessageHandler(function ($message) {
-            \Log::debug('request handler.');
-            switch ($message->MsgType) {
-                case 'event':
-
-                    break;
-                case 'text':
-                    if ($message->Content == '报名') {
-                        \Log::debug('replied baomin.');
-                        return new News([
-                            'title' => '街区运动会报名',
-                            'description' => '为社区，更为自己代言',
-                            'url' => 'http://wap.zhongkaiyun.com/activities/hsblockgame',
-                        ]);
-                    }
-                    break;
-                case 'image':
-
-                    break;
-                case 'voice':
-
-                    break;
-                case 'video':
-
-                    break;
-                case 'location':
-
-                    break;
-                case 'link':
-
-                    break;
-                default:
-
-                    break;
-            }
+            return "欢迎关注！";
         });
-
         return $wechat->server->serve();
     }
 

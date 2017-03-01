@@ -29,7 +29,7 @@
 	          <td>{{ $ticket->owner->tel }}</td>
 	          <td>{{ $ticket->sports->implode('name', '，') }}</td>
 	          <td>{{ $ticket->owner->residentialArea->name }}</td>
-	          <td>{{ $ticket->owner->residentialArea->block->name }}</td>
+	          <td>{{ $ticket->owner->residentialArea->block->name ?? '' }}</td>
 	        </tr>
 	        @endforeach
 	      </tbody>
