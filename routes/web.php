@@ -14,9 +14,11 @@ Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
     Route::get('activities/hsblockgame', 'TicketController@index');
     Route::get('activities/hsblockgame/register', 'TicketController@create');
     Route::post('activities/hsblockgame', 'TicketController@store');
+    Route::get('residentialArea/{id}/blockName', 'BlockController@blockNameOfArea');
 });
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
+    Route::resource('block', 'BlockController');
     Route::get('hsblockgame/ticket', 'TicketController@index');
     Route::get('wechat/material', 'WechatController@material');
     Route::get('wechat/updateMenu', 'WechatController@updateMenu');

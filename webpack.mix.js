@@ -1,4 +1,5 @@
 const { mix } = require('laravel-mix');
+var fs = require('fs');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,10 +12,14 @@ const { mix } = require('laravel-mix');
  |
  */
 
-// mix.js('resources/assets/js/app.js', 'public/js')
-//    .sass('resources/assets/sass/app.scss', 'public/css');
-
 mix.sass('resources/assets/sass/activities/hsblockgame.scss', 'public/css/activities')
 	.js('resources/assets/js/activities/hsblockgame.js', 'public/js/activities')
-	.version()	
-	// .copy('node_modules/weui/dist/example/images', 'public/image/activities/images', false);
+	.version()
+
+try {
+	console.log('\nCheck if weui images published...')
+	fs.statSync('public/image/activities/images')
+} catch(e) {
+	console.log('Copy weui images to public from node_modules')
+	mix.copy('node_modules/weui/dist/example/images', 'public/image/activities/images', false)
+}
