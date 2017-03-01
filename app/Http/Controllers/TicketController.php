@@ -36,7 +36,7 @@ class TicketController extends Controller
             return redirect('activities/hsblockgame');
         }
 
-        $residentialAreas = ResidentialArea::all();
+        $residentialAreas = ResidentialArea::all()->sortBy('py');
         $sports = Sport::all();
         return view('activities.hsblockgame.register', compact('residentialAreas', 'sports'));
     }

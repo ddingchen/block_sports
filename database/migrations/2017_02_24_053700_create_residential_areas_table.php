@@ -17,6 +17,7 @@ class CreateResidentialAreasTable extends Migration
             $table->uuid('id');
             $table->integer('block_id')->unsigned()->nullable();
             $table->string('name');
+            $table->string('py');
         });
     }
 

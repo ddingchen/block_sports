@@ -82,6 +82,7 @@ class BlockSeeder extends Seeder
                 $area = new ResidentialArea([
                     'id' => $areaIncreament++,
                     'name' => $areaName,
+                    'py' => getPyHeadersOfZhWord($areaName),
                 ]);
                 $area->block()->associate($block);
                 $area->save();
@@ -91,6 +92,7 @@ class BlockSeeder extends Seeder
         ResidentialArea::create([
             'id' => $areaIncreament++,
             'name' => '其他',
+            'py' => 'ZZZZZZ',
         ]);
     }
 }

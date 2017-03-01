@@ -70,7 +70,7 @@
 		    <a class="sport-rule" href="{{ $sport->fileOfGameRule }}">{{ $sport->name }}</a>@if(!$loop->last)，@endif
 		    @endforeach
 	    </div>
-	    <div style="padding: 0 15px; margin: 20px 0">
+	    <div style="padding: 20px 15px;">
 	    	<input type="submit" class="weui-btn weui-btn_primary" value="确认提交">
 	    </div>
   	</form>
