@@ -3,21 +3,44 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use EasyWeChat\Message\Material;
 use Illuminate\Http\Request;
-use Log;
 
 class WechatController extends Controller
 {
     public function serve()
     {
-        Log::info('request arrived.');
-
         $wechat = app('wechat');
         $wechat->server->setMessageHandler(function ($message) {
-            return "欢迎关注中铠街区体育";
-        });
+            switch ($message->MsgType) {
+                case 'event':
 
-        Log::info('return response.');
+                    break;
+                case 'text':
+                    if ($message->Content == '报名') {
+                        return new Material('mpnews', 'LUY0P8mlFZSb6H24mzka7FTabitCZw2qsPHtVKowDG0');
+                    }
+                    break;
+                case 'image':
+
+                    break;
+                case 'voice':
+
+                    break;
+                case 'video':
+
+                    break;
+                case 'location':
+
+                    break;
+                case 'link':
+
+                    break;
+                default:
+
+                    break;
+            }
+        });
 
         return $wechat->server->serve();
     }
