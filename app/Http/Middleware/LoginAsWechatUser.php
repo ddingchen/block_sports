@@ -33,7 +33,7 @@ class LoginAsWechatUser
                 'name' => $wechatUser->nickname,
                 'open_id' => $wechatUser->id,
                 'nickname' => $wechatUser->nickname,
-                'sex' => $this->sexTranslator($wechatUser->sex),
+                'sex' => $this->sexTranslator($wechatUser->getOriginal()['sex']),
                 'avatar' => $wechatUser->avatar,
             ]);
         }

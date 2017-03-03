@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use EasyWeChat\Message\Material;
 use EasyWeChat\Message\News;
 use Illuminate\Http\Request;
@@ -13,6 +14,9 @@ class WechatController extends Controller
     {
         $wechat = app('wechat');
         $wechat->server->setMessageHandler(function ($message) {
+            $openId = $message->FromUserName;
+            // 如果该用户未曾记录性别信息，则尝试从微信信息中更新
+            $this->setSexForUser($openId);
             switch ($message->MsgType) {
                 case 'event':
                     break;
@@ -83,5 +87,28 @@ class WechatController extends Controller
         $material = app('wechat')->material;
         $resource = $material->lists($type);
         return $resource;
+    }
+
+    private function setSexForUser($openId)
+    {
+        $user = User::where('open_id', $openId)->first();
+        if ($user && !$user->sex) {
+            $userService = app('wechat')->user;
+            $wechatUser = $userService->get($openId);
+            $user->sex = $this->sexTranslator($wechatUser->sex);
+            $user->save();
+            \Log::debug('Refresh sex info of user.');
+        }
+    }
+
+    private function sexTranslator($wechatSex)
+    {
+        $sex = null;
+        if ($wechatSex === 1) {
+            $sex = 'male';
+        } else if ($wechatSex === 2) {
+            $sex = 'female';
+        }
+        return $sex;
     }
 }
