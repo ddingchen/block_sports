@@ -16,4 +16,9 @@ class ResidentialArea extends Model
     {
         return $this->belongsTo('App\Block');
     }
+
+    public function users()
+    {
+        return $this->hasMany('App\User');
+    }
 }
