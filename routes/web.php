@@ -18,6 +18,9 @@ Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
     Route::get('residentialArea/{id}/blockName', 'BlockController@blockNameOfArea');
 
     Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin']], function () {
+        Route::get('/', function () {
+            return redirect('admin/hsblockgame/ticket');
+        });
         Route::resource('role', 'RoleController');
         Route::resource('block', 'BlockController');
         Route::resource('user', 'UserController');
