@@ -19,12 +19,12 @@ Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
 
     Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin']], function () {
         Route::get('/', function () {
-            return redirect('admin/hsblockgame/ticket');
+            return redirect('admin/ticket');
         });
         Route::resource('role', 'RoleController');
         Route::resource('block', 'BlockController');
         Route::resource('user', 'UserController');
-        Route::get('hsblockgame/ticket', 'TicketController@index');
+        Route::resource('ticket', 'TicketController');
         Route::get('wechat/material', 'WechatController@material');
         Route::get('wechat/updateMenu', 'WechatController@updateMenu');
     });

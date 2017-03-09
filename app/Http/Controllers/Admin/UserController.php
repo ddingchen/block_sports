@@ -16,7 +16,6 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->input('keyword');
-        \Log::debug($request->all());
         if (!$keyword) {
             return [];
         }
@@ -24,7 +23,6 @@ class UserController extends Controller
             ->orWhere('nickname', 'like', "%{$keyword}%")
             ->orWhere('tel', 'like', "%{$keyword}%")
             ->get();
-        \Log::debug($users);
         return $users;
     }
 
@@ -91,7 +89,7 @@ class UserController extends Controller
         $user->tel = $request->input('tel');
         $user->save();
 
-        return redirect('admin/hsblockgame/ticket');
+        return redirect('admin/ticket');
     }
 
     /**

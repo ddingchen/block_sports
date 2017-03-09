@@ -3,7 +3,15 @@
 @section('page-title', '报名列表')
 
 @section('content')
-<h3>报名列表</h3>
+<div class="form-inline" style="margin: 20px 0">
+  <label for="exampleInputEmail1">运动项目筛选：</label>
+  <select id="sport" class="form-control">
+    <option value="" selected>所有项目</option>
+    @foreach($sports as $sport)
+    <option value="{{ $sport->name }}">{{ $sport->name }}</option>
+    @endforeach
+  </select>
+</div>
 <div class="table-responsive">
     <table class="table table-hover">
       <thead>
@@ -16,6 +24,8 @@
           <th>姓名</th>
           <th>性别</th>
           <th>联系电话</th>
+          <th></th>
+          <th></th>
           <th></th>
         </tr>
       </thead>
@@ -39,10 +49,34 @@
           <td>
           	<a class="btn btn-primary btn-xs" href="/admin/user/{{ $ticket->owner->id }}/edit" role="button">编辑个人信息</a>
           </td>
+          <td>
+            <a class="btn btn-primary btn-xs" href="/admin/ticket/{{ $ticket->id }}/edit" role="button">更改报名项目</a>
+          </td>
+          <td>
+            <form method="post" action="/admin/ticket/{{ $ticket->id }}">
+              {{ method_field('DELETE') }}
+              {{ csrf_field() }}
+              <button class="btn btn-danger btn-xs" type="submit">删除</button>
+            </form>
+          </td>
         </tr>
         @endforeach
       </tbody>
     </table>
 </div>
 </div>
+@endsection
+
+@section('page-js')
+<script type="text/javascript">
+  $('#sport').change(function() {
+    var sportName = $(this).val()
+    if(!sportName) {
+      $('table tbody tr').show()
+      return
+    }
+    $('table tbody tr').hide()
+    $("table tbody tr:contains('"+sportName+"')").show()
+  })
+</script>
 @endsection

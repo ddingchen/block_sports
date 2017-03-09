@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Sport;
 use App\Ticket;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,8 @@ class TicketController extends Controller
     public function index()
     {
         $tickets = Ticket::all()->sortBy('created_at');
-        return view('admin.ticket.index', compact('tickets'));
+        $sports = Sport::all();
+        return view('admin.ticket.index', compact('tickets', 'sports'));
     }
 
     /**
@@ -57,9 +59,10 @@ class TicketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Ticket $ticket)
     {
-        //
+        $sports = Sport::all();
+        return view('admin.ticket.edit', compact('ticket', 'sports'));
     }
 
     /**
@@ -69,9 +72,14 @@ class TicketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Ticket $ticket)
     {
-        //
+        $this->validate($request, [
+            'sports' => 'required|array|max:5',
+            'sports.*' => 'required|exists:sports,id',
+        ]);
+        $ticket->sports()->sync($request->input('sports'));
+        return redirect('admin/ticket');
     }
 
     /**
@@ -80,8 +88,9 @@ class TicketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Ticket $ticket)
     {
-        //
+        $ticket->delete();
+        return redirect('admin/ticket');
     }
 }
