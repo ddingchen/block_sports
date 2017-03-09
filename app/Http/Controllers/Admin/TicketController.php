@@ -16,7 +16,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $tickets = Ticket::all()->sortBy('created_at');
+        $tickets = Ticket::all()->sortByDesc('created_at');
         $sports = Sport::all();
         return view('admin.ticket.index', compact('tickets', 'sports'));
     }

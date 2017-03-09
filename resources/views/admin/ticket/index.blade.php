@@ -34,7 +34,11 @@
       	@foreach($tickets as $ticket)
         <tr>
           <th scope="row">{{ $loop->index + 1 }}</th>
+          @if($ticket->created_at->isToday())
+          <td>{{ '今天 ' . $ticket->created_at->format('H:i') }}</td>
+          @else
           <td>{{ $ticket->created_at->format('m-d H:i') }}</td>
+          @endif
           <td>{{ $ticket->sports->implode('name', '，') }}</td>
           <td>{{ $ticket->owner->residentialArea->name }}</td>
           <td>{{ $ticket->owner->residentialArea->block->name or '' }}</td>
