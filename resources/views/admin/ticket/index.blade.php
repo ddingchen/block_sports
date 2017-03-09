@@ -5,6 +5,7 @@
 @section('content')
 <div class="form-inline" style="margin: 20px 0">
   <label for="exampleInputEmail1">运动项目筛选：</label>
+  <label id="summary" style="display: none">当前项目共<span id="currentCount">{{ $tickets->count() }}</span>人／总计<span id="allCount">{{ $tickets->count() }}</span>人</label>
   <select id="sport" class="form-control">
     <option value="" selected>所有项目</option>
     @foreach($sports as $sport)
@@ -53,7 +54,7 @@
             <a class="btn btn-primary btn-xs" href="/admin/ticket/{{ $ticket->id }}/edit" role="button">更改报名项目</a>
           </td>
           <td>
-            <form method="post" action="/admin/ticket/{{ $ticket->id }}">
+            <form class="delete" method="post" action="/admin/ticket/{{ $ticket->id }}">
               {{ method_field('DELETE') }}
               {{ csrf_field() }}
               <button class="btn btn-danger btn-xs" type="submit">删除</button>
@@ -69,14 +70,25 @@
 
 @section('page-js')
 <script type="text/javascript">
+  $('form.delete').submit(function(event) {
+    if(!confirm('是否确认删除')) {
+      event.preventDefault()
+    }
+  })
   $('#sport').change(function() {
     var sportName = $(this).val()
+    var $allRows = $('table tbody tr')
     if(!sportName) {
-      $('table tbody tr').show()
+      $allRows.show()
+      $('#summary').hide()
       return
     }
-    $('table tbody tr').hide()
-    $("table tbody tr:contains('"+sportName+"')").show()
+    var $showRows = $("table tbody tr:contains('"+sportName+"')")
+    $allRows.hide()
+    $showRows.show()
+    $('#allCount').text($allRows.length)
+    $('#currentCount').text($showRows.length)
+    $('#summary').show()
   })
 </script>
 @endsection
