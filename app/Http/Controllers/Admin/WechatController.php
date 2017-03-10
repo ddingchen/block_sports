@@ -70,7 +70,7 @@ class WechatController extends Controller
             [
                 "type" => "media_id",
                 "name" => "交流群",
-                "media_id" => "LUY0P8mlFZSb6H24mzka7A8uU2cuzv74yBcaGYcSpsk",
+                "media_id" => "LUY0P8mlFZSb6H24mzka7GVjvC-jEhfEa1gGCcP03BE",
             ],
             [
                 "type" => "view",
