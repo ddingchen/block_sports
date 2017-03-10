@@ -24,7 +24,8 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li @if(preg_match('/\/admin\/hsblockgame\/ticket/' ,url()->current())) class="active" @endif><a href="/admin/hsblockgame/ticket">惠山街道报名列表</a></li>
+            <li @if(preg_match('/\/admin\/ticket/' ,url()->current())) class="active" @endif><a href="/admin/ticket">惠山街道报名列表</a></li>
+            <li @if(preg_match('/\/admin\/ticket\/create/' ,url()->current())) class="active" @endif><a href="/admin/ticket/create">线下报名录入</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li @if(preg_match('/\/admin\/role/' ,url()->current())) class="active" @endif><a href="/admin/role">管理员管理</a></li>

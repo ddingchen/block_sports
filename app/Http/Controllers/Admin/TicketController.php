@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\ResidentialArea;
 use App\Sport;
 use App\Ticket;
+use App\User;
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
@@ -28,7 +30,9 @@ class TicketController extends Controller
      */
     public function create()
     {
-        //
+        $areas = ResidentialArea::all()->sortBy('py');
+        $sports = Sport::all();
+        return view('admin.ticket.create', compact('areas', 'sports'));
     }
 
     /**
@@ -39,7 +43,25 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:15',
+            'tel' => 'required|unique:users|digits:11',
+            'area' => 'required|exists:residential_areas,id',
+            'sports' => 'required|array|max:5',
+            'sports.*' => 'required|exists:sports,id',
+        ]);
+
+        $user = User::create([
+            'name' => $request->input('name'),
+            'tel' => $request->input('tel'),
+            'sex' => $request->input('sex') ?: null,
+            'residential_area_id' => $request->input('area'),
+        ]);
+
+        $ticket = Ticket::create(['user_id' => $user->id]);
+        $ticket->sports()->attach($request->input('sports'));
+
+        return redirect('admin/ticket');
     }
 
     /**
@@ -90,6 +112,7 @@ class TicketController extends Controller
      */
     public function destroy(Ticket $ticket)
     {
+        $ticket->sports()->detach();
         $ticket->delete();
         return redirect('admin/ticket');
     }

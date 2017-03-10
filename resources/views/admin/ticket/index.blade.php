@@ -32,7 +32,7 @@
       </thead>
       <tbody>
       	@foreach($tickets as $ticket)
-        <tr>
+        <tr @if(!$ticket->owner->open_id) style="background-color: #eee" @endif>
           <th scope="row">{{ $loop->index + 1 }}</th>
           @if($ticket->created_at->isToday())
           <td>{{ '今天 ' . $ticket->created_at->format('H:i') }}</td>
@@ -68,7 +68,6 @@
         @endforeach
       </tbody>
     </table>
-</div>
 </div>
 @endsection
 
