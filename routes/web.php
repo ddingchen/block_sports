@@ -17,17 +17,31 @@ Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
     Route::post('activities/hsblockgame', 'TicketController@store');
     Route::get('residentialArea/{id}/blockName', 'BlockController@blockNameOfArea');
 
-    Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin']], function () {
-        Route::get('/', function () {
-            return redirect('admin/ticket');
-        });
-        Route::resource('role', 'RoleController');
-        Route::resource('block', 'BlockController');
-        Route::resource('user', 'UserController');
-        Route::resource('ticket', 'TicketController');
-        Route::get('wechat/material', 'WechatController@material');
-        Route::get('wechat/updateMenu', 'WechatController@updateMenu');
+    // Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin']], function () {
+    //     Route::get('/', function () {
+    //         return redirect('admin/ticket');
+    //     });
+    //     Route::resource('role', 'RoleController');
+    //     Route::resource('block', 'BlockController');
+    //     Route::resource('user', 'UserController');
+    //     Route::resource('ticket', 'TicketController');
+    //     Route::get('wechat/material', 'WechatController@material');
+    //     Route::get('wechat/updateMenu', 'WechatController@updateMenu');
+    // });
+});
+
+$adminMiddleware = isWeChatBrowser(app('request')) ? ['wechat.oauth', 'login.wechat', 'admin'] : ['auth.basic'];
+
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => $adminMiddleware], function () {
+    Route::get('/', function () {
+        return redirect('admin/ticket');
     });
+    Route::resource('role', 'RoleController');
+    Route::resource('block', 'BlockController');
+    Route::resource('user', 'UserController');
+    Route::resource('ticket', 'TicketController');
+    Route::get('wechat/material', 'WechatController@material');
+    Route::get('wechat/updateMenu', 'WechatController@updateMenu');
 });
 
 Route::group(['namespace' => 'Admin'], function () {

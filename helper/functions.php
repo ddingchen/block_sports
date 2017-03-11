@@ -1,5 +1,10 @@
 <?php
 
+function isWeChatBrowser($request)
+{
+    return strpos($request->header('user_agent'), 'MicroMessenger') !== false;
+}
+
 function getPyHeadersOfZhWord($zhWord)
 {
     $chars = preg_split('/(?<!^)(?!$)/u', $zhWord);
