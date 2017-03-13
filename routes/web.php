@@ -30,8 +30,7 @@ Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
     // });
 });
 
-// $adminMiddleware = isWeChatBrowser(app('request')) ? ['wechat.oauth', 'login.wechat', 'admin'] : ['auth.basic'];
-$adminMiddleware = isWeChatBrowser(app('request')) ? ['wechat.oauth', 'login.wechat', 'admin'] : [];
+$adminMiddleware = isWeChatBrowser(app('request')) ? ['wechat.oauth', 'login.wechat', 'admin'] : (config('app.env') == 'production' ? ['auth.basic'] : []);
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => $adminMiddleware], function () {
     Route::get('/', function () {
