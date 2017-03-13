@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
+use App\Block;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class BlockController extends Controller
 {
@@ -14,7 +15,8 @@ class BlockController extends Controller
      */
     public function index()
     {
-        //
+        $blocks = Block::all();
+        return view('admin.block.index', compact('blocks'));
     }
 
     /**
@@ -24,7 +26,7 @@ class BlockController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.block.create');
     }
 
     /**
@@ -35,7 +37,16 @@ class BlockController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+        ]);
+
+        Block::create([
+            'id' => Block::all()->max('id') + 1,
+            'name' => $request->input('name'),
+        ]);
+
+        return redirect('/admin/block');
     }
 
     /**
@@ -55,9 +66,9 @@ class BlockController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Block $block)
     {
-        //
+        return view('admin.block.edit', compact('block'));
     }
 
     /**
@@ -67,9 +78,16 @@ class BlockController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Block $block)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+        ]);
+
+        $block->name = $request->input('name');
+        $block->save();
+
+        return redirect('admin/block');
     }
 
     /**

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ResidentialArea extends Model
 {
-    protected $fillable = ['id', 'name', 'py'];
+    protected $fillable = ['id', 'block_id', 'name', 'py'];
 
     public $incrementing = false;
 
