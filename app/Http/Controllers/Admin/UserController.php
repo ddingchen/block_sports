@@ -82,7 +82,7 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|max:15',
-            'tel' => 'required|digits:11',
+            'tel' => 'required',
         ]);
 
         $user->name = $request->input('name');

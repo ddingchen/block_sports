@@ -47,7 +47,7 @@ class TicketController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|max:15',
-            'tel' => 'required|unique:users|digits:11',
+            'tel' => 'required|unique:users',
             'area' => 'required|exists:residential_areas,id',
             'sports' => 'required|array|max:5',
             'sports.*' => 'required|exists:sports,id',
