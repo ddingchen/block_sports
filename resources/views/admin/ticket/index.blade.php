@@ -31,6 +31,7 @@
           <th>姓名</th>
           <th>性别</th>
           <th>联系电话</th>
+          <th>备注</th>
           <th></th>
           <th></th>
           <th></th>
@@ -50,20 +51,21 @@
           <td>{{ $ticket->owner->residentialArea->block->name or '' }}</td>
           <td>{{ $ticket->owner->name }}</td>
           @if($ticket->owner->sex == 'male')
-          <td>男</td>
+          <td class="sex">男</td>
           @elseif($ticket->owner->sex == 'female')
-          <td>女</td>
+          <td class="sex">女</td>
           @else
-          <td></td>
+          <td class="sex"></td>
           @endif
           <td>{{ $ticket->owner->tel }}</td>
-          <td>
-          	<a class="btn btn-primary btn-xs" href="/admin/user/{{ $ticket->owner->id }}/edit" role="button">编辑个人信息</a>
+          <td class="note">{{ $ticket->note }}</td>
+          <td class="control">
+          	<a class="btn btn-primary btn-xs" href="/admin/user/{{ $ticket->owner->id }}/edit" role="button">联系方式</a>
           </td>
-          <td>
-            <a class="btn btn-primary btn-xs" href="/admin/ticket/{{ $ticket->id }}/edit" role="button">更改报名项目</a>
+          <td class="control">
+            <a class="btn btn-primary btn-xs" href="/admin/ticket/{{ $ticket->id }}/edit" role="button">报名信息</a>
           </td>
-          <td>
+          <td class="control">
             <form class="delete" method="post" action="/admin/ticket/{{ $ticket->id }}">
               {{ method_field('DELETE') }}
               {{ csrf_field() }}
@@ -75,6 +77,23 @@
       </tbody>
     </table>
 </div>
+@endsection
+
+@section('page-css')
+<style type="text/css">
+  table tr td{
+     min-width: 100px
+  }
+  table tr td.sex{
+     min-width: 50px
+  }
+  table tr td.control{
+     min-width: 60px
+  }
+  table tr td.note{
+     max-width: 150px
+  }
+</style>
 @endsection
 
 @section('page-js')

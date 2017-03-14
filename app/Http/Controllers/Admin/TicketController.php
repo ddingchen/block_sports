@@ -60,7 +60,10 @@ class TicketController extends Controller
             'residential_area_id' => $request->input('area'),
         ]);
 
-        $ticket = Ticket::create(['user_id' => $user->id]);
+        $ticket = Ticket::create([
+            'user_id' => $user->id,
+            'note' => $request->input('note'),
+        ]);
         $ticket->sports()->attach($request->input('sports'));
 
         return redirect('admin/ticket');
@@ -103,6 +106,8 @@ class TicketController extends Controller
             'sports.*' => 'required|exists:sports,id',
         ]);
         $ticket->sports()->sync($request->input('sports'));
+        $ticket->note = $request->input('note');
+        $ticket->save();
         return redirect('admin/ticket');
     }
 
