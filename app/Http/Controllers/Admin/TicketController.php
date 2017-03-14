@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Block;
 use App\Http\Controllers\Controller;
 use App\ResidentialArea;
 use App\Sport;
@@ -20,7 +21,8 @@ class TicketController extends Controller
     {
         $tickets = Ticket::all()->sortByDesc('created_at');
         $sports = Sport::all();
-        return view('admin.ticket.index', compact('tickets', 'sports'));
+        $blocks = Block::all();
+        return view('admin.ticket.index', compact('tickets', 'sports', 'blocks'));
     }
 
     /**

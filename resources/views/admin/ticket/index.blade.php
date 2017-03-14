@@ -12,6 +12,12 @@
     <option value="{{ $sport->name }}">{{ $sport->name }}</option>
     @endforeach
   </select>
+  <select id="block" class="form-control">
+    <option value="" selected>所有社区</option>
+    @foreach($blocks as $block)
+    <option value="{{ $block->name }}">{{ $block->name }}</option>
+    @endforeach
+  </select>
 </div>
 <div class="table-responsive">
     <table class="table table-hover">
@@ -73,20 +79,28 @@
 
 @section('page-js')
 <script type="text/javascript">
+  var sportFilter, blockFilter
   $('form.delete').submit(function(event) {
     if(!confirm('是否确认删除')) {
       event.preventDefault()
     }
   })
-  $('#sport').change(function() {
-    var sportName = $(this).val()
+  $('#sport, #block').change(function() {
+    sportFilter = $('#sport').val()
+    blockFilter = $('#block').val()
     var $allRows = $('table tbody tr')
-    if(!sportName) {
+    var $showRows = $allRows
+    if(!sportFilter && !blockFilter) {
       $allRows.show()
       $('#summary').hide()
       return
     }
-    var $showRows = $("table tbody tr:contains('"+sportName+"')")
+    if(sportFilter) {
+      $showRows = $showRows.filter(":contains('"+sportFilter+"')")
+    }
+    if(blockFilter) {
+      $showRows = $showRows.filter(":contains('"+blockFilter+"')")
+    }
     $allRows.hide()
     $showRows.show()
     $('#allCount').text($allRows.length)
