@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\ResidentialArea;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -66,9 +67,8 @@ class UserController extends Controller
      */
     public function edit(Request $request, User $user)
     {
-        $name = $request->old('name') ?: $user->name;
-        $tel = $request->old('tel') ?: $user->tel;
-        return view('admin.user.edit', compact('user', 'name', 'tel'));
+        $areas = ResidentialArea::all();
+        return view('admin.user.edit', compact('user', 'areas'));
     }
 
     /**
@@ -83,10 +83,12 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required|max:15',
             'tel' => 'required',
+            'area' => 'required|exists:residential_areas,id',
         ]);
 
         $user->name = $request->input('name');
         $user->tel = $request->input('tel');
+        $user->residential_area_id = $request->input('area');
         $user->save();
 
         return redirect('admin/ticket');
