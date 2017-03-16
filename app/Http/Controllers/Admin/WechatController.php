@@ -70,12 +70,12 @@ class WechatController extends Controller
             [
                 "type" => "media_id",
                 "name" => "交流群",
-                "media_id" => "LUY0P8mlFZSb6H24mzka7GVjvC-jEhfEa1gGCcP03BE",
+                "media_id" => "LUY0P8mlFZSb6H24mzka7IQGKKicivoUJQ6vyMiSx8c",
             ],
             [
                 "type" => "view",
-                "name" => "关于我们",
-                "url" => "http://mp.weixin.qq.com/s/om2H-aU3OMw3Qm9chY56mw",
+                "name" => "你想看的",
+                "url" => "http://mp.weixin.qq.com/mp/homepage?__biz=MzAwNTAyNzEwOQ==&hid=1&sn=025af7649cb648388f72ee8f3926b337#wechat_redirect",
             ],
         ];
         $menu->add($buttons);
