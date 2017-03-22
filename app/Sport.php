@@ -12,6 +12,11 @@ class Sport extends Model
 
     public $timestamps = false;
 
+    public function matchResults()
+    {
+        return $this->hasMany('App\MatchResult');
+    }
+
     public function getFileOfGameRuleAttribute()
     {
         return '/doc/2017街区运动会' . $this->name . '规程.docx';

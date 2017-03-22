@@ -28,6 +28,12 @@ class WechatController extends Controller
                             'url' => 'http://wap.zhongkaiyun.com/activities/hsblockgame',
                             'image' => 'http://mmbiz.qpic.cn/mmbiz_jpg/oMibuKYSu2KtcLUtQjnrYuDaYVjiazDv2SQQ1zBQLGeqQWcFoSnuBcF0VHibg07vVf38w9XkI3yayxUT6NhUgFGLg/0?wx_fmt=jpeg',
                         ]);
+                    } else if ($message->Content == '投票') {
+                        return new News([
+                            'title' => '投票 丨最佳网络人气队伍',
+                            'description' => '动一动手指的事儿',
+                            'url' => 'http://mp.weixin.qq.com/s?__biz=MzAwNTAyNzEwOQ==&mid=503151671&idx=1&sn=9aaace34410d5eacedfe74d7e9432e51&chksm=032b387d345cb16b1aecff4a2d820a0fa1f98feae1acb3d661ce396d9a1d54cf4975f9aca1ec#rd',
+                        ]);
                     }
                     break;
                 case 'image':
@@ -70,7 +76,7 @@ class WechatController extends Controller
             [
                 "type" => "media_id",
                 "name" => "交流群",
-                "media_id" => "LUY0P8mlFZSb6H24mzka7IQGKKicivoUJQ6vyMiSx8c",
+                "media_id" => "LUY0P8mlFZSb6H24mzka7CcnnC_iIReGDavGqKoEflU",
             ],
             [
                 "type" => "view",
@@ -84,8 +90,10 @@ class WechatController extends Controller
     public function material(Request $request)
     {
         $type = $request->input('type') ? $request->input('type') : 'news';
+        $page = $request->input('page') ? $request->input('page') : 0;
+        $countPerPage = 12;
         $material = app('wechat')->material;
-        $resource = $material->lists($type);
+        $resource = $material->lists($type, $countPerPage * $page, $countPerPage * ($page + 1));
         return $resource;
     }
 

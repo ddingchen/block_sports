@@ -24,6 +24,16 @@ class TicketController extends Controller
         return view('activities.hsblockgame.index', compact('user', 'sports'));
     }
 
+    public function result()
+    {
+        $ticket = auth()->user()->ticket;
+        if ($ticket) {
+            $result = $ticket->matchResults->first();
+            return redirect("result/{$result->id}");
+        }
+        return redirect('activities/hsblockgame/register');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
