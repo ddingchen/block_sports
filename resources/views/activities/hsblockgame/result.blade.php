@@ -85,7 +85,7 @@
 	</style>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" charset="utf-8">
-	    wx.config({!! $js->config(array('onMenuShareAppMessage', 'onMenuShareTimeline'), true) !!});
+	    wx.config({!! $js->config(array('onMenuShareAppMessage', 'onMenuShareTimeline')) !!});
 	    wx.ready(function() {
 		    wx.onMenuShareTimeline({
 			    title: '我正在参加广场舞大赛，为我喝彩吧～',
