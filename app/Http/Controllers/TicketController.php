@@ -29,7 +29,7 @@ class TicketController extends Controller
         $ticket = auth()->user()->ticket;
         if ($ticket) {
             $result = $ticket->matchResults->first();
-            return redirect("result/{$result->id}");
+            return redirect("match/result/{$result->id}");
         }
         return redirect('activities/hsblockgame/register');
     }

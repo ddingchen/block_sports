@@ -15,7 +15,7 @@ Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
     Route::get('activities/hsblockgame', 'TicketController@index');
     Route::get('activities/hsblockgame/register', 'TicketController@create');
     Route::get('activities/hsblockgame/result', 'TicketController@result');
-    Route::get('result/{id}', 'MatchResultController@show');
+    Route::get('match/result/{id}', 'MatchResultController@show');
     Route::post('activities/hsblockgame', 'TicketController@store');
     Route::get('residentialArea/{id}/blockName', 'BlockController@blockNameOfArea');
 });
