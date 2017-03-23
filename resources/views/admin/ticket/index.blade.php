@@ -35,7 +35,6 @@
           <th></th>
           <th></th>
           <th></th>
-          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -73,7 +72,6 @@
               <button class="btn btn-danger btn-xs" type="submit">删除</button>
             </form>
           </td>
-          <td><a class="btn btn-warning btn-xs" href="/admin/match/result/{{ $ticket->id }}" role="button">比赛成果</a></td>
         </tr>
         @endforeach
       </tbody>

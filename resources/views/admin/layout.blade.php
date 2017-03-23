@@ -29,6 +29,7 @@
             <li @if(preg_match('/\/admin\/ticket\/create/' ,url()->current())) class="active" @endif><a href="/admin/ticket/create">线下报名录入</a></li>
             <li @if(preg_match('/\/admin\/block/' ,url()->current())) class="active" @endif><a href="/admin/block">社区管理</a></li>
             <li @if(preg_match('/\/admin\/area/' ,url()->current())) class="active" @endif><a href="/admin/area">小区管理</a></li>
+            <li @if(preg_match('/\/admin\/match\/result/' ,url()->current())) class="active" @endif><a href="/admin/match/result">比赛成绩管理</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li @if(preg_match('/\/admin\/role/' ,url()->current())) class="active" @endif><a href="/admin/role">管理员管理</a></li>
