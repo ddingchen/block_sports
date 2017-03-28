@@ -107,7 +107,7 @@
   	</header>
   	@if($result && $result->video && $result->honour)
   	<section>
-  		<video src="{{ $result->video }}" height="160px" controls autoplay></video>
+  		<video src="{{ $result->video }}" height="160px" controls autoplay preload="auto"></video>
   	</section>
   	<section>
   		<div class="honour">
