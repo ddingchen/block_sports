@@ -19,6 +19,7 @@
 			<th>社区</th>
 			<th>确认成绩</th>
 			<th>荣誉</th>
+			<th>个人展示页</th>
 		</thead>
 		<tbody>
 			@foreach($results as $result)
@@ -30,6 +31,7 @@
 					<a class="btn btn-primary btn-xs" href="/admin/match/result/{{ $result->id }}/edit">确认成绩</a>
 				</td>
 				<td>{{ $result->honour }}</td>
+				<td>{{ url("match/result/{$result->id}") }}</td>
 			</tr>
 			@endforeach
 		</tbody>
