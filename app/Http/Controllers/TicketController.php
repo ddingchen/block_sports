@@ -24,18 +24,18 @@ class TicketController extends Controller
         return view('activities.hsblockgame.index', compact('user', 'sports'));
     }
 
-    public function result()
-    {
-        $ticket = auth()->user()->ticket;
-        if ($ticket) {
-            $result = $ticket->matchResults->first(function ($res) {
-                return $res->video && $res->honour;
-            });
-            $result = $result ?: $ticket->matchResults->first();
-            return redirect("match/result/{$result->id}");
-        }
-        return redirect('activities/hsblockgame/register');
-    }
+    // public function result()
+    // {
+    //     $ticket = auth()->user()->ticket;
+    //     if ($ticket) {
+    //         $result = $ticket->matchResults->first(function ($res) {
+    //             return $res->video && $res->honour;
+    //         });
+    //         $result = $result ?: $ticket->matchResults->first();
+    //         return redirect("match/result/{$result->id}");
+    //     }
+    //     return redirect('activities/hsblockgame/register');
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -46,7 +46,7 @@ class TicketController extends Controller
     {
         $user = auth()->user();
         if ($user->ticket) {
-            return redirect('activities/hsblockgame');
+            return redirect('ticket');
         }
 
         $residentialAreas = ResidentialArea::all()->sortBy('py');

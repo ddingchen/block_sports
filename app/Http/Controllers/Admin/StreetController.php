@@ -7,28 +7,17 @@ use App\Http\Controllers\Controller;
 use App\Street;
 use Illuminate\Http\Request;
 
-class BlockController extends Controller
+class StreetController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        if ($request->has('street')) {
-            $street = Street::findOrFail($request->input('street'));
-            $blocks = $street->blocks;
-        } else {
-            $street = null;
-            $blocks = Block::all();
-        }
-        return view('admin.block.index', compact('street', 'blocks'));
-    }
-
-    public function indexByStreet(Street $street)
-    {
-        return $street->blocks;
+        $streets = Street::all();
+        return view('admin.street.index', compact('streets'));
     }
 
     /**
@@ -38,7 +27,7 @@ class BlockController extends Controller
      */
     public function create()
     {
-        return view('admin.block.create');
+        return view('admin.street.create');
     }
 
     /**
@@ -53,12 +42,25 @@ class BlockController extends Controller
             'name' => 'required',
         ]);
 
-        Block::create([
-            'id' => Block::all()->max('id') + 1,
-            'name' => $request->input('name'),
-        ]);
+        Street::create($request->all());
 
-        return redirect('/admin/block');
+        return redirect('admin/street');
+    }
+
+    public function importForm()
+    {
+        $blocks = Block::all();
+        return view('admin.street.import', compact('blocks'));
+    }
+
+    public function import(Request $request, Street $street)
+    {
+        Block::find($request->input('blocks'))->each(function ($block) use ($street) {
+            $block->street_id = $street->id;
+            $block->save();
+        });
+
+        return redirect('admin/street');
     }
 
     /**
@@ -78,9 +80,9 @@ class BlockController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Block $block)
+    public function edit($id)
     {
-        return view('admin.block.edit', compact('block'));
+        //
     }
 
     /**
@@ -90,16 +92,9 @@ class BlockController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Block $block)
+    public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required',
-        ]);
-
-        $block->name = $request->input('name');
-        $block->save();
-
-        return redirect('admin/block');
+        //
     }
 
     /**

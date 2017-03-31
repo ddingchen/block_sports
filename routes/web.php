@@ -12,12 +12,14 @@
  */
 
 Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
-    Route::get('activities/hsblockgame', 'TicketController@index');
-    Route::get('activities/hsblockgame/register', 'TicketController@create');
+    Route::get('activities/hsblockgame', 'TicketController@index'); //index
+    Route::get('activities/hsblockgame/register', 'TicketController@create'); //create
+    Route::post('activities/hsblockgame', 'TicketController@store'); // store
     Route::get('activities/hsblockgame/result', 'TicketController@result');
     Route::get('match/result/{id}', 'MatchResultController@show');
-    Route::post('activities/hsblockgame', 'TicketController@store');
     Route::get('residentialArea/{id}/blockName', 'BlockController@blockNameOfArea');
+
+    Route::resource('match/{match}/ticket', 'TicketController');
 });
 
 $adminMiddleware = isWeChatBrowser(app('request')) ? ['wechat.oauth', 'login.wechat', 'admin'] : (config('app.env') == 'production' ? ['auth.basic'] : []);
@@ -27,10 +29,17 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => $admi
         return redirect('admin/ticket');
     });
     Route::resource('role', 'RoleController');
+    Route::resource('street', 'StreetController');
+    Route::get('street/{street}/block', 'BlockController@indexByStreet');
+    Route::get('street/{street}/blocks/import', 'StreetController@importForm');
+    Route::post('street/{street}/blocks/import', 'StreetController@import');
     Route::resource('block', 'BlockController');
     Route::resource('area', 'AreaController');
     Route::resource('user', 'UserController');
     Route::resource('ticket', 'TicketController');
+    Route::resource('match', 'MatchController', ['only' => ['index', 'create', 'store']]);
+    Route::get('match/register/qrcode', 'MatchController@registerQrcodeForm');
+    Route::get('match/register/qrcode/generate', 'MatchController@generateRegisterQrcode');
     Route::resource('match/result', 'MatchResultController');
     Route::get('wechat/material', 'WechatController@material');
     Route::get('wechat/updateMenu', 'WechatController@updateMenu');

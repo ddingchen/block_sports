@@ -19,6 +19,20 @@ class WechatController extends Controller
             $this->setSexForUser($openId);
             switch ($message->MsgType) {
                 case 'event':
+                    switch ($message->Event) {
+                        case 'subscribe':
+                            if (preg_match('/reg_\d+_\d+$/', $message->EventKey) === 1) {
+                                // 带区域参数的报名入口
+                                $datas = explode('_', $message->EventKey);
+                                $mode = $datas[0];
+                                $matchId = $datas[1];
+                                $blockId = $datas[2];
+                                // TO DO
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                     break;
                 case 'text':
                     if ($message->Content == '报名') {
