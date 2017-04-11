@@ -16,12 +16,18 @@ class TicketController extends Controller
      */
     public function index()
     {
+        $faker = \Faker\Factory::create();
+        return view('ticket.index', compact('faker'));
+    }
+
+    public function indexOfUser()
+    {
         $user = auth()->user();
         if (!$user->ticket) {
             return redirect('ticket/create');
         }
         $sports = $user->ticket->sports;
-        return view('ticket.index', compact('user', 'sports'));
+        return view('user.ticket.index', compact('user', 'sports'));
     }
 
     // public function result()

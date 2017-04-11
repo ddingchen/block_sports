@@ -19,6 +19,8 @@ Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
     Route::get('match/result/{id}', 'MatchResultController@show');
     // Route::get('residentialArea/{id}/blockName', 'BlockController@blockNameOfArea');
 
+    Route::get('i/ticket', 'TicketController@indexOfUser');
+
     Route::resource('ticket', 'TicketController');
     Route::get('street/{street}/area', 'AreaController@indexByStreet');
 
