@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\ResidentialArea;
+use App\Match;
 use App\Sport;
 use App\Ticket;
 use Illuminate\Http\Request;
@@ -18,10 +18,10 @@ class TicketController extends Controller
     {
         $user = auth()->user();
         if (!$user->ticket) {
-            return redirect('activities/hsblockgame/register');
+            return redirect('ticket/create');
         }
         $sports = $user->ticket->sports;
-        return view('activities.hsblockgame.index', compact('user', 'sports'));
+        return view('ticket.index', compact('user', 'sports'));
     }
 
     // public function result()
@@ -48,10 +48,10 @@ class TicketController extends Controller
         if ($user->ticket) {
             return redirect('ticket');
         }
-
-        $residentialAreas = ResidentialArea::all()->sortBy('py');
-        $sports = Sport::all();
-        return view('activities.hsblockgame.register', compact('residentialAreas', 'sports'));
+        $matches = Match::all();
+        // $areas = $matches->first()->street->areas->sortBy('py');
+        $sports = Sport::where('name', '广场舞')->get();
+        return view('ticket.create', compact('matches', 'sports'));
     }
 
     /**
@@ -62,43 +62,63 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
+        \Log::debug($request->all());
         $messages = [
+            'match.required' => '请选择街道',
+            'match.exists' => '请选择有效的街道',
             'name.required' => '请输入姓名',
             'name.max' => '姓名最长不超过15字',
             'tel.required' => '请输入11位手机号',
             'tel.digits' => '请输入11位手机号',
             'area.required' => '请选择所在小区',
             'area.exists' => '请选择有效的小区',
+            'custom_area.required_if' => '请输入您所在的小区',
             'sports.required' => '请选择想要参与的项目',
             'sports.max' => '最多仅可以选择五个项目',
             'sports.*.required' => '请选择想要参与的项目',
             'sports.*.exists' => '请选择想要参与的项目',
+            'team_name.required' => '请输入团队名称',
         ];
 
         $this->validate($request, [
+            'match' => 'required|exists:matches,id',
             'name' => 'required|max:15',
             'tel' => 'required|digits:11',
             'area' => 'required|exists:residential_areas,id',
+            'custom_area' => 'required_if:area,0',
             'sports' => 'required|array|max:5',
             'sports.*' => 'required|exists:sports,id',
+            'team_name' => 'required',
         ], $messages);
 
         $user = auth()->user();
 
         if ($user->ticket) {
             // 已报名
-            return redirect('activities/hsblockgame');
+            return redirect('ticket');
         }
 
         $user->name = $request->input('name');
         $user->tel = $request->input('tel');
-        $user->residential_area_id = $request->input('area');
+        if ($request->input('area') != 0) {
+            $user->residential_area_id = $request->input('area');
+        } else {
+            $user->custom_area = $request->input('custom_area');
+        }
         $user->save();
 
-        $ticket = Ticket::create(['user_id' => $user->id]);
-        $ticket->sports()->attach($request->input('sports'));
+        $ticket = Ticket::create([
+            'user_id' => $user->id,
+            'match_id' => $request->input('match'),
+        ]);
+        // append team name
+        $attachment = collect($request->input('sports'))->mapWithKeys(function ($sportId) use ($request) {
+            return [$sportId => ['team_name' => $request->input('team_name')]];
+        });
+        // $ticket->sports()->attach($request->input('sports'));
+        $ticket->sports()->attach($attachment);
 
-        return redirect('activities/hsblockgame');
+        return redirect('ticket');
     }
 
     /**

@@ -12,14 +12,20 @@
  */
 
 Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
-    Route::get('activities/hsblockgame', 'TicketController@index'); //index
-    Route::get('activities/hsblockgame/register', 'TicketController@create'); //create
-    Route::post('activities/hsblockgame', 'TicketController@store'); // store
+    // Route::get('activities/hsblockgame', 'TicketController@index'); //index
+    // Route::get('activities/hsblockgame/register', 'TicketController@create'); //create
+    // Route::post('activities/hsblockgame', 'TicketController@store'); // store
     Route::get('activities/hsblockgame/result', 'TicketController@result');
     Route::get('match/result/{id}', 'MatchResultController@show');
-    Route::get('residentialArea/{id}/blockName', 'BlockController@blockNameOfArea');
+    // Route::get('residentialArea/{id}/blockName', 'BlockController@blockNameOfArea');
 
-    Route::resource('match/{match}/ticket', 'TicketController');
+    Route::resource('ticket', 'TicketController');
+    Route::get('street/{street}/area', 'AreaController@indexByStreet');
+
+    Route::group(['namespace' => 'Admin'], function () {
+        Route::get('admin/request/create', 'AdminRequestController@create');
+        Route::post('admin/request', 'AdminRequestController@store');
+    });
 });
 
 $adminMiddleware = isWeChatBrowser(app('request')) ? ['wechat.oauth', 'login.wechat', 'admin'] : (config('app.env') == 'production' ? ['auth.basic'] : []);
@@ -28,6 +34,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => $admi
     Route::get('/', function () {
         return redirect('admin/ticket');
     });
+    Route::resource('request', 'AdminRequestController', ['only' => ['index']]);
     Route::resource('role', 'RoleController');
     Route::resource('street', 'StreetController');
     Route::get('street/{street}/block', 'BlockController@indexByStreet');

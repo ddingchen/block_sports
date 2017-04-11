@@ -3,7 +3,7 @@
 @section('page-title', '报名列表')
 
 @section('content')
-<div class="form-inline" style="margin: 20px 0">
+<div class="form-inline">
   <label for="exampleInputEmail1">运动项目筛选：</label>
   <label id="summary" style="display: none">当前项目共<span id="currentCount">{{ $tickets->count() }}</span>人／总计<span id="allCount">{{ $tickets->count() }}</span>人</label>
   <select id="sport" class="form-control">
@@ -23,6 +23,11 @@
     <table class="table table-hover">
       <thead>
         <tr>
+          <th colspan="12">
+            <a class="btn btn-success pull-right" href="/admin/ticket/create?match={{ $match->id }}">线下报名录入</a>
+          </th>
+        </tr>
+        <tr>
           <th>#</th>
           <th>报名时间</th>
           <th>运动项目</th>
@@ -31,6 +36,7 @@
           <th>姓名</th>
           <th>性别</th>
           <th>联系电话</th>
+          <th>团队</th>
           <th>备注</th>
           <th></th>
           <th></th>
@@ -58,6 +64,7 @@
           <td class="sex"></td>
           @endif
           <td>{{ $ticket->owner->tel }}</td>
+          <td class="team">{{ $ticket->ticketSports->implode('team_name', ' ') }}</td>
           <td class="note">{{ $ticket->note }}</td>
           <td class="control">
           	<a class="btn btn-primary btn-xs" href="/admin/user/{{ $ticket->owner->id }}/edit" role="button">联系方式</a>

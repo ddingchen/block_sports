@@ -12,4 +12,9 @@ class Match extends Model
     {
         return $this->belongsTo('App\Street');
     }
+
+    public function tickets()
+    {
+        return $this->hasMany('App\Ticket');
+    }
 }

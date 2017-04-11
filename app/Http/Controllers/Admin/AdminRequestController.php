@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\AdminUser;
+use App\AdminRequest;
 use App\Http\Controllers\Controller;
-use App\User;
-use DB;
 use Illuminate\Http\Request;
 
-class RoleController extends Controller
+class AdminRequestController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,11 +15,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $adminList = DB::table('users')
-            ->join('admin_users', 'admin_users.id', '=', 'users.id')
-            ->select('users.nickname')
-            ->get();
-        return view('admin.role.index', compact('adminList'));
+        return AdminRequest::with('user')->get();
     }
 
     /**
@@ -31,7 +25,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('admin.role.create');
+        return view('admin.request.create');
     }
 
     /**
@@ -42,27 +36,22 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::findOrFail($request->input('user_id'));
-        $adminRequest = $user->adminRequest;
+        $messages = [
+            'email.*' => '请输入有效的邮箱',
+            'note.required' => '请输入必要的备注',
+            'note.max' => '备注长度不超过30',
+        ];
 
-        // create account
-        AdminUser::updateOrCreate([
-            'id' => $user->id,
-        ], [
-            'id' => $user->id,
-            'name' => $request->input('name'),
-        ]);
+        $this->validate($request, [
+            'email' => 'required|email',
+            'note' => 'required|max:30',
+        ], $messages);
 
-        $user->update([
-            'email' => $adminRequest->email,
-            'password' => bcrypt($request->input('password')),
-        ]);
-        $user->save();
+        AdminRequest::create(array_merge($request->all(), [
+            'user_id' => auth()->user()->id,
+        ]));
 
-        // delete request
-        $adminRequest->delete();
-
-        return redirect('/admin/role');
+        return redirect('admin/request/create');
     }
 
     /**

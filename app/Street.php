@@ -12,4 +12,9 @@ class Street extends Model
     {
         return $this->hasMany('App\Block');
     }
+
+    public function areas()
+    {
+        return $this->hasManyThrough('App\ResidentialArea', 'App\Block');
+    }
 }

@@ -83,7 +83,7 @@ class WechatController extends Controller
                     [
                         "type" => "view",
                         "name" => "报名",
-                        "url" => "http://wap.zhongkaiyun.com/activities/hsblockgame",
+                        "url" => "http://wap.zhongkaiyun.com/ticket",
                     ],
                 ],
             ],

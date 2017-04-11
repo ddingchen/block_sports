@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
 {
-    protected $fillable = ['user_id', 'note'];
+    protected $fillable = ['user_id', 'match_id', 'note'];
 
     public function owner()
     {
@@ -15,7 +15,12 @@ class Ticket extends Model
 
     public function sports()
     {
-        return $this->belongsToMany('App\Sport', 'ticket_sports')->withPivot('video', 'honour')->withTimestamps();
+        return $this->belongsToMany('App\Sport', 'ticket_sports')->withPivot('video', 'honour', 'team_name')->withTimestamps();
+    }
+
+    public function ticketSports()
+    {
+        return $this->hasMany('App\TicketSport');
     }
 
     public function matchResults()

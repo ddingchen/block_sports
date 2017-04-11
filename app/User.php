@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'tel', 'open_id', 'nickname', 'sex', 'avatar', 'residential_area_id',
+        'name', 'email', 'password', 'tel', 'open_id', 'nickname', 'sex', 'avatar', 'residential_area_id', 'custom_area',
     ];
 
     /**
@@ -36,5 +36,10 @@ class User extends Authenticatable
     public function ticket()
     {
         return $this->hasOne('App\Ticket');
+    }
+
+    public function adminRequest()
+    {
+        return $this->hasOne('App\AdminRequest');
     }
 }

@@ -16,11 +16,20 @@
   @click="userSelect(user)"
   >@{{ user.nickname + (user.name ? ' - ' + user.name : '') }}</a>
 </div>
+<div class="list-group">
+  <a href="#" class="list-group-item"
+  v-for="request in requests"
+  @click="requestSelect(request)"
+  >@{{ request.user.nickname + (request.user.name ? ' - ' + request.user.name : '') + ' - ' + request.note }}
+  </a>
+</div>
 <form class="form-inline" method="post" action="/admin/role">
   {{ csrf_field() }}
   <div class="form-group">
-    <input type="text" class="form-control" :value="selectedUser.nickname">
+    <input type="text" class="form-control" :value="selectedUser.nickname" placeholder="帐号">
     <input type="hidden" name="user_id" :value="selectedUser.id">
+    <input type="text" class="form-control" name="password" placeholder="密码">
+    <input type="text" class="form-control" name="name" placeholder="管理帐号名称" :value="selectedRequest.note">
   </div>
   <button type="submit" class="btn btn-primary">设置为管理员</button>
 </form>
@@ -34,9 +43,16 @@
     data: {
       keyword: '',
       result: [],
+      requests: [],
       selectedUser: {
       	id: 0
-      }
+      },
+      selectedRequest: {}
+    },
+    mounted: function() {
+      $.getJSON('/admin/request', function(requests) {
+        this.requests = requests
+      }.bind(this))
     },
     methods: {
       keywordInput: function() {
@@ -48,6 +64,10 @@
       },
       userSelect: function(user) {
       	this.selectedUser = user
+      },
+      requestSelect: function(request) {
+        this.selectedRequest = request
+        this.selectedUser = request.user
       }
     }
   })

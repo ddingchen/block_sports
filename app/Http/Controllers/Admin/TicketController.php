@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Block;
 use App\Http\Controllers\Controller;
+use App\Match;
 use App\ResidentialArea;
 use App\Sport;
 use App\Ticket;
@@ -17,12 +17,13 @@ class TicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tickets = Ticket::all()->sortByDesc('created_at');
+        $match = $request->has('match') ? Match::find($request->input('match')) : Match::first();
+        $tickets = $match->tickets->sortByDesc('created_at');
         $sports = Sport::all();
-        $blocks = Block::all();
-        return view('admin.ticket.index', compact('tickets', 'sports', 'blocks'));
+        $blocks = $match->street->blocks;
+        return view('admin.ticket.index', compact('tickets', 'sports', 'match', 'blocks'));
     }
 
     /**
@@ -30,11 +31,12 @@ class TicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $match = Match::find($request->input('match'));
         $areas = ResidentialArea::all()->sortBy('py');
         $sports = Sport::all();
-        return view('admin.ticket.create', compact('areas', 'sports'));
+        return view('admin.ticket.create', compact('match', 'areas', 'sports'));
     }
 
     /**
@@ -48,6 +50,7 @@ class TicketController extends Controller
         $this->validate($request, [
             'name' => 'required|max:15',
             'tel' => 'required|unique:users',
+            'match' => 'required|exists:matches,id',
             'area' => 'required|exists:residential_areas,id',
             'sports' => 'required|array|max:5',
             'sports.*' => 'required|exists:sports,id',
@@ -61,6 +64,7 @@ class TicketController extends Controller
         ]);
 
         $ticket = Ticket::create([
+            'match_id' => $request->input('match'),
             'user_id' => $user->id,
             'note' => $request->input('note'),
         ]);

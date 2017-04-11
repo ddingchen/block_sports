@@ -5,6 +5,8 @@
 @section('content')
 <form method="post" action="/admin/ticket">
   {{ csrf_field() }}
+  <h3>{{ $match->street->name }}－线下报名录入</h3>
+  <input type="hidden" name="match" value="{{ $match->id }}">
   <div class="form-group">
     <label for="name">姓名</label>
     <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
