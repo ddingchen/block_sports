@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Match;
-use App\Sport;
 use App\Ticket;
 use Illuminate\Http\Request;
 
@@ -16,11 +15,12 @@ class TicketController extends Controller
      */
     public function index()
     {
-        return view('ticket.index', compact('faker'));
+
     }
 
     public function indexOfUser()
     {
+        return 'my ticket';
         $user = auth()->user();
         if (!$user->ticket) {
             return redirect('ticket/create');
@@ -47,16 +47,13 @@ class TicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Match $match)
     {
         $user = auth()->user();
-        if ($user->ticket) {
-            return redirect('ticket');
-        }
         $matches = Match::all();
-        // $areas = $matches->first()->street->areas->sortBy('py');
-        $sports = Sport::where('name', '广场舞')->get();
-        return view('ticket.create', compact('matches', 'sports', 'defaultMatch', 'defaultBlock'));
+        $areas = $match->street->areas->sortBy('py')->values();
+        $sports = $match->sports;
+        return view('ticket.create', compact('matches', 'sports', 'match', 'areas'));
     }
 
     /**
@@ -65,9 +62,8 @@ class TicketController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Match $match)
     {
-        \Log::debug($request->all());
         $messages = [
             'match.required' => '请选择街道',
             'match.exists' => '请选择有效的街道',
@@ -98,11 +94,6 @@ class TicketController extends Controller
 
         $user = auth()->user();
 
-        if ($user->ticket) {
-            // 已报名
-            return redirect('ticket');
-        }
-
         $user->name = $request->input('name');
         $user->tel = $request->input('tel');
         if ($request->input('area') != 0) {
@@ -120,10 +111,9 @@ class TicketController extends Controller
         $attachment = collect($request->input('sports'))->mapWithKeys(function ($sportId) use ($request) {
             return [$sportId => ['team_name' => $request->input('team_name')]];
         });
-        // $ticket->sports()->attach($request->input('sports'));
         $ticket->sports()->attach($attachment);
 
-        return redirect('ticket');
+        return redirect('i/ticket');
     }
 
     /**

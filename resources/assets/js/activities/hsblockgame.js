@@ -17,18 +17,8 @@ $(function() {
     })
     // 街道选择变更时，社区数据重新加载
     $('select[name="match"]').change(function() {
-        if($(this).val() == '-1') {
-            $('select[name="area"] option').not('.placeholder').remove()
-        } else {
-            var streetId = $(this).find('option:selected').data('street');
-            $.get('/street/' + streetId + '/area', function(areas) {
-                $('select[name="area"] option').not('.placeholder').remove()
-                for(var i in areas) {
-                    var area = areas[i]
-                    $('select[name="area"]').append($('<option/>').val(area.id).text(area.name))
-                }
-                $('select[name="area"]').append($('<option/>').val(0).text('其他'))
-            })
+        if($(this).val() != '-1') {
+            window.location.href = '/match/' + $(this).val() + '/ticket/create';
         }
     })
     // 自定义小区名称的切换
@@ -42,7 +32,7 @@ $(function() {
     $('form').submit(function(event) {
         event.preventDefault()
         $.ajax({
-            url: '/ticket',
+            url: '/match/' + $('select[name="match"]').val() + '/ticket',
             data: $('form').serializeArray(),
             error: function(xhr, status, error) {
                 if(xhr.status == 422) {
@@ -53,15 +43,15 @@ $(function() {
                 }
             },
             success: function(data, status, xhr) {
-                window.location.href = "/ticket"
+                window.location.href = "/i/ticket"
             },
             type: 'POST'
         })
     })
 
     // 页面首次加载时，检测是否需要选中默认项
-    var defaultMatch = queryParam('match')
-    if(defaultMatch) {
-        $('select[name="match"]').val(defaultMatch).change()
-    }
+    // var defaultMatch = queryParam('match')
+    // if(defaultMatch) {
+    //     $('select[name="match"]').val(defaultMatch).change()
+    // }
 })
