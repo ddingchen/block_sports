@@ -13,6 +13,17 @@
     	@endforeach
     </select>
   </div>
+  <div class="form-group">
+    <label for="sports">运动项目</label>
+    @foreach($sports as $sport)
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="sports[]" value="{{ $sport->id }}">
+        {{ $sport->name }}
+      </label>
+    </div>
+    @endforeach
+  </div>
   <button type="submit" class="btn btn-primary btn-block btn-lg">确认创建</button>
 </form>
 @endsection

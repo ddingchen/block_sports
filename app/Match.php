@@ -17,4 +17,9 @@ class Match extends Model
     {
         return $this->hasMany('App\Ticket');
     }
+
+    public function sports()
+    {
+        return $this->belongsToMany('App\Sport', 'match_sports')->withTimestamps();
+    }
 }

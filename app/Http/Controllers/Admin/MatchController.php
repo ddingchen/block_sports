@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Block;
 use App\Http\Controllers\Controller;
 use App\Match;
+use App\Sport;
 use App\Street;
 use Illuminate\Http\Request;
 
@@ -19,14 +20,16 @@ class MatchController extends Controller
     public function create()
     {
         $streets = Street::all();
-        return view('admin.match.create', compact('streets'));
+        $sports = Sport::all();
+        return view('admin.match.create', compact('streets', 'sports'));
     }
 
     public function store(Request $request)
     {
-        Match::create([
+        $match = Match::create([
             'street_id' => $request->input('street'),
         ]);
+        $match->sports()->attach($request->input('sports'));
 
         return redirect('admin/match');
     }

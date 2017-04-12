@@ -25,15 +25,6 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            {{-- <li @if(preg_match('/\/admin\/ticket$/' ,url()->current())) class="active" @endif><a href="/admin/ticket">惠山街道报名列表</a></li> --}}
-            <li class="dropdown @if(preg_match('/\/admin\/ticket/' ,url()->current())) active @endif">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">报名列表 <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                @foreach($menuMatches as $match)
-                <li @if(preg_match("/\/admin\/ticket/" ,url()->current()) && url()->getRequest()->input('match') == $match->id ) class="active" @endif><a href="/admin/ticket?match={{ $match->id }}">{{ $match->street->name }}</a></li>
-                @endforeach
-              </ul>
-            </li>
             <li class="dropdown @if(preg_match('/\/admin\/(street|block|area)/' ,url()->current())) active @endif">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">区域管理 <span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -42,7 +33,22 @@
                 <li @if(preg_match('/\/admin\/area/' ,url()->current())) class="active" @endif><a href="/admin/area">小区管理</a></li>
               </ul>
             </li>
-            <li @if(preg_match('/\/admin\/match\/register\/qrcode/' ,url()->current())) class="active" @endif><a href="/admin/match/register/qrcode">报名二维码生成</a></li>
+            <li class="dropdown @if(preg_match('/\/admin\/ticket/' ,url()->current())) active @endif">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">报名列表 <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                @foreach($menuMatches as $match)
+                <li @if(preg_match("/\/admin\/ticket/" ,url()->current()) && url()->getRequest()->input('match') == $match->id ) class="active" @endif><a href="/admin/ticket?match={{ $match->id }}">{{ $match->street->name }}</a></li>
+                @endforeach
+              </ul>
+            </li>
+            <li class="dropdown @if(preg_match('/\/admin\/match/' ,url()->current())) active @endif">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">赛事管理 <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li @if(preg_match('/\/admin\/match$/' ,url()->current())) class="active" @endif><a href="/admin/match">赛事列表</a></li>
+                <li @if(preg_match('/\/admin\/match\/create/' ,url()->current())) class="active" @endif><a href="/admin/match/create">创建赛事</a></li>
+                <li @if(preg_match('/\/admin\/match\/register\/qrcode/' ,url()->current())) class="active" @endif><a href="/admin/match/register/qrcode">报名二维码生成</a></li>
+              </ul>
+            </li>
             <li @if(preg_match('/\/admin\/match\/result/' ,url()->current())) class="active" @endif><a href="/admin/match/result">比赛成绩管理</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
