@@ -27,7 +27,13 @@ class WechatController extends Controller
                                 $mode = $datas[0];
                                 $matchId = $datas[1];
                                 $blockId = $datas[2];
-                                // TO DO
+                                return new News([
+                                    'title' => '街区运动会',
+                                    'description' => '点击进入报名入口',
+                                    // 'url' => "http://wap.zhongkaiyun.com/ticket/create?match={$matchId}&block={$blockId}",
+                                    'url' => url("/ticket/create?match={$matchId}&block={$blockId}"),
+                                    'image' => 'http://mmbiz.qpic.cn/mmbiz_jpg/oMibuKYSu2KtcLUtQjnrYuDaYVjiazDv2SQQ1zBQLGeqQWcFoSnuBcF0VHibg07vVf38w9XkI3yayxUT6NhUgFGLg/0?wx_fmt=jpeg',
+                                ]);
                             }
                             break;
                         default:

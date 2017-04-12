@@ -73,14 +73,18 @@
   <body>
   	<ul>
   		<li>
-  			<div class="month">5月开赛</div>
-  			<div class="title">梁溪区广场舞比赛</div>
-  			<span class="tag hot">火热报名</span>
+            <a href="/ticket/create?match=1">
+                <div class="month">5月开赛</div>
+                <div class="title">梁溪区广场舞比赛</div>
+                <span class="tag hot">火热报名</span>
+            </a>
   		</li>
   		<li>
-  			<div class="month">6月开赛</div>
-  			<div class="title">梁溪区羽毛球比赛</div>
-  			<span class="tag">预热报名</span>
+            <a href="/ticket/create?match=2">
+      			<div class="month">6月开赛</div>
+      			<div class="title">梁溪区羽毛球比赛</div>
+      			<span class="tag">预热报名</span>
+            </a>
   		</li>
   	</ul>
   </body>

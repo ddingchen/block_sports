@@ -38,6 +38,7 @@
             <li @if(preg_match('/\/admin\/street/' ,url()->current())) class="active" @endif><a href="/admin/street">街道管理</a></li>
             <li @if(preg_match('/\/admin\/block/' ,url()->current())) class="active" @endif><a href="/admin/block">社区管理</a></li>
             <li @if(preg_match('/\/admin\/area/' ,url()->current())) class="active" @endif><a href="/admin/area">小区管理</a></li>
+            <li @if(preg_match('/\/admin\/match\/register\/qrcode/' ,url()->current())) class="active" @endif><a href="/admin/match/register/qrcode">报名二维码生成</a></li>
             <li @if(preg_match('/\/admin\/match\/result/' ,url()->current())) class="active" @endif><a href="/admin/match/result">比赛成绩管理</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">

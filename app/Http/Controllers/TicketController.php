@@ -16,7 +16,6 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $faker = \Faker\Factory::create();
         return view('ticket.index', compact('faker'));
     }
 
@@ -57,7 +56,7 @@ class TicketController extends Controller
         $matches = Match::all();
         // $areas = $matches->first()->street->areas->sortBy('py');
         $sports = Sport::where('name', '广场舞')->get();
-        return view('ticket.create', compact('matches', 'sports'));
+        return view('ticket.create', compact('matches', 'sports', 'defaultMatch', 'defaultBlock'));
     }
 
     /**
