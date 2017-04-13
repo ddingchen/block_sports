@@ -22,4 +22,9 @@ class Match extends Model
     {
         return $this->belongsToMany('App\Sport', 'match_sports')->withTimestamps();
     }
+
+    public function group()
+    {
+        return $this->belongsTo('App\MatchGroup');
+    }
 }

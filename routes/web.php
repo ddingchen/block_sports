@@ -48,6 +48,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => $admi
     Route::resource('user', 'UserController');
     Route::resource('ticket', 'TicketController');
     Route::resource('match', 'MatchController', ['only' => ['index', 'create', 'store']]);
+    Route::resource('group', 'MatchGroupController');
     Route::get('match/register/qrcode', 'MatchController@registerQrcodeForm');
     Route::get('match/register/qrcode/generate', 'MatchController@generateRegisterQrcode');
     Route::resource('match/result', 'MatchResultController');
