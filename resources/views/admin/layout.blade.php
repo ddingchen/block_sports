@@ -46,6 +46,7 @@
               <ul class="dropdown-menu">
                 <li @if(preg_match('/\/admin\/match$/' ,url()->current())) class="active" @endif><a href="/admin/match">赛事列表</a></li>
                 <li @if(preg_match('/\/admin\/match\/create/' ,url()->current())) class="active" @endif><a href="/admin/match/create">创建赛事</a></li>
+                <li @if(preg_match('/\/admin\/group/' ,url()->current())) class="active" @endif><a href="/admin/group">赛事组管理</a></li>
                 <li @if(preg_match('/\/admin\/match\/register\/qrcode/' ,url()->current())) class="active" @endif><a href="/admin/match/register/qrcode">报名二维码生成</a></li>
               </ul>
             </li>
