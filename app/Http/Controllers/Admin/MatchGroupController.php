@@ -86,6 +86,7 @@ class MatchGroupController extends Controller
     public function update(Request $request, $matchGroupId)
     {
         $group = MatchGroup::findOrFail($matchGroupId);
+        $group->update($request->all());
         // 解除之前的关系
         $group->matches->each(function ($match) {
             $match->group()->dissociate();

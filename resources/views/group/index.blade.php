@@ -72,20 +72,21 @@
   </head>
   <body>
   	<ul>
-  		<li>
-            <a href="/ticket/create?match=1">
-                <div class="month">5月开赛</div>
-                <div class="title">梁溪区广场舞比赛</div>
-                <span class="tag hot">火热报名</span>
-            </a>
-  		</li>
-  		<li>
-            <a href="/ticket/create?match=2">
-      			<div class="month">6月开赛</div>
-      			<div class="title">梁溪区羽毛球比赛</div>
-      			<span class="tag">预热报名</span>
-            </a>
-  		</li>
+        @foreach($groups as $group)
+        <a href="/match/group/{{ $group->id }}">
+            <li>
+                <div class="month">{{ $group->sub_title }}</div>
+                <div class="title">{{ $group->title }}</div>
+                <span class="tag @if($group->top) hot @endif">
+                    @if($group->top)
+                    火热报名
+                    @else
+                    预热报名
+                    @endif
+                </span>
+            </li>
+        </a>
+        @endforeach
   	</ul>
   </body>
 </html>

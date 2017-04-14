@@ -22,7 +22,7 @@ Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
     Route::get('i/ticket', 'TicketController@indexOfUser');
 
     Route::resource('match/{match}/ticket', 'TicketController');
-    Route::get('match', 'MatchController@index');
+    Route::resource('match/group', 'MatchGroupController', ['only' => ['index', 'show']]);
     Route::get('street/{street}/area', 'AreaController@indexByStreet');
 
     Route::group(['namespace' => 'Admin'], function () {

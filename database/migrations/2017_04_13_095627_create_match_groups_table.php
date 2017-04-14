@@ -16,6 +16,9 @@ class CreateMatchGroupsTable extends Migration
         Schema::create('match_groups', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('title');
+            $table->string('sub_title');
+            $table->boolean('top')->default(false);
             $table->timestamps();
         });
     }

@@ -50,7 +50,7 @@ class TicketController extends Controller
     public function create(Match $match)
     {
         $user = auth()->user();
-        $matches = Match::all();
+        $matches = $match->group->matches;
         $areas = $match->street->areas->sortBy('py')->values();
         $sports = $match->sports;
         return view('ticket.create', compact('matches', 'sports', 'match', 'areas'));

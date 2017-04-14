@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MatchGroup extends Model
 {
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'title', 'sub_title', 'top'];
 
     public function matches()
     {
