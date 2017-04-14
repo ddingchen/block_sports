@@ -35,6 +35,7 @@
           <th>社区</th>
           <th>姓名</th>
           <th>性别</th>
+          <th>年龄</th>
           <th>联系电话</th>
           <th>团队</th>
           <th>备注</th>
@@ -63,7 +64,8 @@
           @else
           <td class="sex"></td>
           @endif
-          <td>{{ $ticket->owner->tel }}</td>
+          <td class="age">{{ $ticket->owner->age }}</td>
+          <td class="tel">{{ $ticket->owner->tel }}</td>
           <td class="team">{{ $ticket->ticketSports->implode('team_name', ' ') }}</td>
           <td class="note">{{ $ticket->note }}</td>
           <td class="control">
@@ -94,12 +96,19 @@
   table tr td.sex{
      min-width: 50px
   }
+  table tr td.age{
+     min-width: 50px
+  }
+  table tr td.tel{
+     min-width: 160px
+  }
   table tr td.control{
      min-width: 60px
   }
   table tr td.note{
      max-width: 150px
   }
+
 </style>
 @endsection
 

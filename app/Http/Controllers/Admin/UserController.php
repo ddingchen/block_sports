@@ -84,11 +84,15 @@ class UserController extends Controller
             'name' => 'required|max:15',
             'tel' => 'required',
             'area' => 'required|exists:residential_areas,id',
+            'sex' => 'nullable|in:female,male',
+            'age' => 'digits:2',
         ]);
 
         $user->name = $request->input('name');
         $user->tel = $request->input('tel');
         $user->residential_area_id = $request->input('area');
+        $user->age = $request->input('age');
+        $user->sex = $request->input('sex') ?: null;
         $user->save();
 
         return redirect('admin/ticket');

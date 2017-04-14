@@ -23,6 +23,31 @@
       @endforeach
     </select>
   </div>
+  <div class="form-group">
+    <label>性别</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="sex" value="" @if(!$user->sex) checked @endif>
+        未知
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="sex" value="male" @if($user->sex=='male') checked @endif>
+        男
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="sex" value="female" @if($user->sex=='female') checked @endif>
+        女
+      </label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="age">年龄</label>
+    <input type="number" class="form-control" name="age" value="{{ $user->age }}">
+  </div>
   <button type="submit" class="btn btn-primary btn-lg btn-block">保存修改</button>
 </form>
 @endsection

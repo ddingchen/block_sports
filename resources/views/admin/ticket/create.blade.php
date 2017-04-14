@@ -12,6 +12,10 @@
     <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
   </div>
   <div class="form-group">
+    <label for="age">年龄</label>
+    <input type="number" class="form-control" name="age" value="{{ old('age') }}">
+  </div>
+  <div class="form-group">
     <label>性别</label>
     <div class="radio">
 	  <label>
