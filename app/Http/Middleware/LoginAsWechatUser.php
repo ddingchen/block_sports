@@ -30,7 +30,7 @@ class LoginAsWechatUser
         if (!$user) {
             // create new profile for user
             $user = User::create([
-                'name' => $wechatUser->nickname,
+                'name' => '',
                 'open_id' => $wechatUser->id,
                 'nickname' => $wechatUser->nickname,
                 'sex' => $this->sexTranslator($wechatUser->getOriginal()['sex']),
