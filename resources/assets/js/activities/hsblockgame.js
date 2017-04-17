@@ -9,6 +9,20 @@ $(function() {
     })
     // 运动项目选择过多时，显示提示
     $('input[name="sports[]"]').change(function() {
+        // 是否需要团队信息
+        var groupInfoRequired = false
+        $('input[name="sports[]"]:checked').each(function(i, n) {
+            if($(n).data('group')) {
+                groupInfoRequired = true
+                return
+            }
+        })
+        if(groupInfoRequired) {
+            $('.group-info').show()
+        } else {
+            $('.group-info').hide()
+        }
+        // 报名项数推荐
         var tip, checkedCount = $('input[name="sports[]"]:checked').length
         tip = checkedCount > 1 ? '建议报名两项' : ''
         tip += checkedCount > 5 ? '，最多报名五项' : ''

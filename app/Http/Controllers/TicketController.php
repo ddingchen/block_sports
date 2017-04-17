@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Match;
+use App\Sport;
 use App\Ticket;
 use Illuminate\Http\Request;
+use Validator;
 
 class TicketController extends Controller
 {
@@ -79,9 +81,10 @@ class TicketController extends Controller
             'sports.*.required' => '请选择想要参与的项目',
             'sports.*.exists' => '请选择想要参与的项目',
             'team_name.required' => '请输入团队名称',
+            'team_name.max' => '请输入20字以内的队名',
         ];
 
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'match' => 'required|exists:matches,id',
             'name' => 'required|max:15',
             'tel' => 'required|digits:11',
@@ -89,11 +92,19 @@ class TicketController extends Controller
             'custom_area' => 'required_if:area,0',
             'sports' => 'required|array|max:5',
             'sports.*' => 'required|exists:sports,id',
-            'team_name' => 'required',
         ], $messages);
 
-        $user = auth()->user();
+        $validator->sometimes('team_name', 'required|max:20', function ($input) {
+            return Sport::findMany($input['sports'])->contains(function ($sport) {
+                return $sport->is_group;
+            });
+        });
 
+        if ($validator->fails()) {
+            $this->throwValidationException($request, $validator);
+        }
+
+        $user = auth()->user();
         $user->name = $request->input('name');
         $user->tel = $request->input('tel');
         if ($request->input('area') != 0) {
@@ -107,6 +118,7 @@ class TicketController extends Controller
             'user_id' => $user->id,
             'match_id' => $request->input('match'),
         ]);
+
         // append team name
         $attachment = collect($request->input('sports'))->mapWithKeys(function ($sportId) use ($request) {
             return [$sportId => ['team_name' => $request->input('team_name')]];

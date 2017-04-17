@@ -27,4 +27,11 @@ class Match extends Model
     {
         return $this->belongsTo('App\MatchGroup');
     }
+
+    public function hasGroupSport()
+    {
+        return $this->sports->contains(function ($sport) {
+            return $sport->is_group;
+        });
+    }
 }

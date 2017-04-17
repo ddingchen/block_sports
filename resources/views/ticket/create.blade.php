@@ -65,17 +65,18 @@
 	    	@foreach($sports as $sport)
 	        <label class="weui-cell weui-check__label" for="s{{ $sport->id }}">
 	            <div class="weui-cell__hd">
-	                <input type="checkbox" class="weui-check" name="sports[]" id="s{{ $sport->id }}" value="{{ $sport->id }}" checked readonly />
+	                <input type="checkbox" class="weui-check" name="sports[]" id="s{{ $sport->id }}" value="{{ $sport->id }}" checked readonly data-group="{{ $sport->is_group }}" />
 	                <i class="weui-icon-checked"></i>
 	            </div>
 	            <div class="weui-cell__bd">
-	                <p>{{ $sport->name }}</p>
+	                <p>{{ $sport->name }}@if($sport->name == '广场舞')（表演人数须12人及以上）@endif</p>
 	            </div>
 	        </label>
 	        @endforeach
 	    </div>
-	    <div class="weui-cells__title">参赛信息<span class="team-tip">（上场表演人数必须12人及以上）</span></div>
-		<div class="weui-cells weui-cells_form">
+	    @if($match->hasGroupSport())
+	    <div class="weui-cells__title group-info">参赛信息</div>
+		<div class="weui-cells weui-cells_form group-info">
 	        <div class="weui-cell">
 	            <div class="weui-cell__hd"><label class="weui-label">团队名称</label></div>
 	            <div class="weui-cell__bd">
@@ -83,6 +84,7 @@
 	            </div>
 	        </div>
 	    </div>
+	    @endif
 	    <div class="weui-cells__title">联系方式</div>
 	  	<div class="weui-cells weui-cells_form">
 	        <div class="weui-cell">
