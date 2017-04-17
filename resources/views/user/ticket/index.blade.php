@@ -10,31 +10,36 @@
   </head>
   <body>
   	<div id="app">
-  		<div class="weui-cells__title">联系方式</div>
+      <div class="weui-cells__title">报名项目</div>
   		<div class="weui-cells">
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>{{ $user->name }}</p>
-                </div>
-                <div class="weui-cell__ft">{{ $user->tel }}</div>
+  			@foreach($tickets as $ticket)
+          {{-- <a class="weui-cell weui-cell_access" href="javascript:;">
+            <div class="weui-cell__bd">
+                <p></p>
             </div>
-        </div>
-        <div class="weui-cells__title">报名项目</div>
-  		<div class="weui-cells">
-  			@foreach($sports as $sport)
+            <div class="weui-cell__ft"></div>
+          </a> --}}
           <div class="weui-cell">
-              <div class="weui-cell__bd">
-                  <p>{{ $sport->name }}</p>
-              </div>
-              <div class="weui-cell__ft">
-                  @if($sport->pivot->team_name)
-                  {{ $sport->pivot->team_name }}
-                  @endif
-              </div>
+            <div class="weui-cell__bd">
+                <p>{{ $ticket->sports->implode('name', '，') }}</p>
+            </div>
+            <div class="weui-cell__ft">{{ $ticket->match->street->name }}</div>
           </div>
         @endforeach
       </div>
-      <div class="weui-cells__tips">您已报名成功</div>
+      <div class="weui-cells__title">比赛咨询热线</div>
+      <div class="weui-cells">
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+              <p><a href="tel:88751569">88751569</a></p>
+          </div>
+        </div>
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+              <p><a href="tel:15716192599">15716192599</a></p>
+          </div>
+        </div>
+      </div>
   	</div>
   </body>
 </html>

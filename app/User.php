@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Ticket;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -33,9 +32,9 @@ class User extends Authenticatable
         return $this->belongsTo('App\ResidentialArea');
     }
 
-    public function ticket()
+    public function tickets()
     {
-        return $this->hasOne('App\Ticket');
+        return $this->hasMany('App\Ticket');
     }
 
     public function adminRequest()

@@ -22,13 +22,9 @@ class TicketController extends Controller
 
     public function indexOfUser()
     {
-        return 'my ticket';
         $user = auth()->user();
-        if (!$user->ticket) {
-            return redirect('ticket/create');
-        }
-        $sports = $user->ticket->sports;
-        return view('user.ticket.index', compact('user', 'sports'));
+        $tickets = $user->tickets;
+        return view('user.ticket.index', compact('user', 'tickets'));
     }
 
     // public function result()

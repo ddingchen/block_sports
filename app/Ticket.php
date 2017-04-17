@@ -13,6 +13,11 @@ class Ticket extends Model
         return $this->belongsTo('App\User', 'user_id');
     }
 
+    public function match()
+    {
+        return $this->belongsTo('App\Match');
+    }
+
     public function sports()
     {
         return $this->belongsToMany('App\Sport', 'ticket_sports')->withPivot('video', 'honour', 'team_name')->withTimestamps();
