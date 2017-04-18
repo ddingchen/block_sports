@@ -109,10 +109,12 @@ class TicketController extends Controller
             // 联系方式变更
             if ($request->has('contact_confirm')
                 && $request->input('contact_confirm') == 0) {
-                if ($user->name != $request->input('name')
-                    || $user->tel != $request->input('tel')) {
-                    $validator->errors()->add('contact_changed', '友情提醒：联系方式与此前您填写过的信息发生了变更！您是否正在给他人进行报名，如果是，请使用他本人微信或其他报名渠道，如：官方交流群、官方报名热线等。否则新的联系方式将覆盖此前的联系人信息。');
-                    return;
+                if ($user->name && $user->tel) {
+                    if ($user->name != $request->input('name')
+                        || $user->tel != $request->input('tel')) {
+                        $validator->errors()->add('contact_changed', '友情提醒：联系方式与此前您填写过的信息发生了变更！您是否正在给他人进行报名，如果是，请使用他本人微信或其他报名渠道，如：官方交流群、官方报名热线等。否则新的联系方式将覆盖此前的联系人信息。');
+                        return;
+                    }
                 }
             }
         });
