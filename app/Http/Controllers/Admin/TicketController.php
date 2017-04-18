@@ -35,7 +35,7 @@ class TicketController extends Controller
     {
         $match = Match::find($request->input('match'));
         $areas = ResidentialArea::all()->sortBy('py');
-        $sports = Sport::all();
+        $sports = $match->sports;
         return view('admin.ticket.create', compact('match', 'areas', 'sports'));
     }
 
