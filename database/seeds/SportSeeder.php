@@ -15,7 +15,6 @@ class SportSeeder extends Seeder
         '五子棋',
         '羽毛球',
         '乒乓球',
-        '足球5v5',
         '篮球3v3',
         '太极',
     ];

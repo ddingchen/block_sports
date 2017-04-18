@@ -85,7 +85,7 @@ class UserController extends Controller
             'tel' => 'required',
             'area' => 'required|exists:residential_areas,id',
             'sex' => 'nullable|in:female,male',
-            'age' => 'digits:2',
+            'age' => 'nullable|digits:2',
         ]);
 
         $user->name = $request->input('name');

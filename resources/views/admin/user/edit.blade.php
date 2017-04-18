@@ -51,3 +51,11 @@
   <button type="submit" class="btn btn-primary btn-lg btn-block">保存修改</button>
 </form>
 @endsection
+
+@section('page-js')
+<script type="text/javascript">
+@if (count($errors) > 0)
+    alert('{{$errors->all()[0]}}')
+@endif
+</script>
+@endsection
