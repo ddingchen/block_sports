@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Match;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -40,5 +41,13 @@ class User extends Authenticatable
     public function adminRequest()
     {
         return $this->hasOne('App\AdminRequest');
+    }
+
+    public function ticketForMatch(Match $match)
+    {
+        return Ticket::where([
+            ['user_id', $this->id],
+            ['match_id', $match->id],
+        ])->first();
     }
 }

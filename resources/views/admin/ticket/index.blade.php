@@ -54,7 +54,7 @@
           <td>{{ $ticket->created_at->format('m-d H:i') }}</td>
           @endif
           <td>{{ $ticket->sports->implode('name', '，') }}</td>
-          <td>{{ $ticket->owner->residentialArea->name }}</td>
+          <td>{{ $ticket->owner->residentialArea->name or '其他' }}</td>
           <td>{{ $ticket->owner->residentialArea->block->name or '' }}</td>
           <td>{{ $ticket->owner->name }}</td>
           @if($ticket->owner->sex == 'male')

@@ -59,7 +59,7 @@ $(function() {
                 for(var i in xhr.responseJSON) {
                     alert(xhr.responseJSON[i][0])
                     if(i == 'contact_changed') {
-                        if(confirm('是否确认使用新的联系方式进行报名？是：使用新的联系方式进行报名；否：复原此前使用的联系方式')) {
+                        if(confirm('是否确认使用新的联系方式进行报名？是：使用当前信息完成报名；否：复原此前使用的联系方式')) {
                             $('input[name="contact_confirm"]').val(1)
                             $('form').submit()
                         } else {

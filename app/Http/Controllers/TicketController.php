@@ -99,13 +99,20 @@ class TicketController extends Controller
             });
         });
 
-        $validator->after(function ($validator) use ($request) {
+        $validator->after(function ($validator) use ($request, $match) {
             $user = auth()->user();
+            // 已报名过该项比赛
+            if ($user->ticketForMatch($match)) {
+                $validator->errors()->add('duplicate_register', '您已报名过该项比赛，如需更改参赛项目或其他报名信息，可联系官方客服进行咨询。');
+                return;
+            }
+            // 联系方式变更
             if ($request->has('contact_confirm')
                 && $request->input('contact_confirm') == 0) {
                 if ($user->name != $request->input('name')
                     || $user->tel != $request->input('tel')) {
                     $validator->errors()->add('contact_changed', '友情提醒：联系方式与此前您填写过的信息发生了变更！您是否正在给他人进行报名，如果是，请使用他本人微信或其他报名渠道，如：官方交流群、官方报名热线等。否则新的联系方式将覆盖此前的联系人信息。');
+                    return;
                 }
             }
         });
