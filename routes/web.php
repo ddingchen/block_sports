@@ -12,8 +12,13 @@
  */
 
 Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
-    // Route::get('activities/hsblockgame', 'TicketController@index'); //index
-    // Route::get('activities/hsblockgame/register', 'TicketController@create'); //create
+    // 原链接重定向至新路由
+    Route::get('activities/hsblockgame', function () {
+        return redirect('match/1/ticket/create');
+    });
+    Route::get('activities/hsblockgame/register', function () {
+        return redirect('match/1/ticket/create');
+    });
     // Route::post('activities/hsblockgame', 'TicketController@store'); // store
     Route::get('activities/hsblockgame/result', 'TicketController@result');
     Route::get('match/result/{id}', 'MatchResultController@show');

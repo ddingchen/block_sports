@@ -31,7 +31,7 @@ class WechatController extends Controller
                                     'title' => '街区运动会',
                                     'description' => '点击进入报名入口',
                                     // 'url' => "http://wap.zhongkaiyun.com/ticket/create?match={$matchId}&block={$blockId}",
-                                    'url' => url("/ticket/create?match={$matchId}&block={$blockId}"),
+                                    'url' => url("match/{$matchId}/ticket/create?block={$blockId}"),
                                     'image' => 'http://mmbiz.qpic.cn/mmbiz_jpg/oMibuKYSu2KtcLUtQjnrYuDaYVjiazDv2SQQ1zBQLGeqQWcFoSnuBcF0VHibg07vVf38w9XkI3yayxUT6NhUgFGLg/0?wx_fmt=jpeg',
                                 ]);
                             }
@@ -90,6 +90,11 @@ class WechatController extends Controller
                         "type" => "view",
                         "name" => "报名",
                         "url" => "http://wap.zhongkaiyun.com/ticket",
+                    ],
+                    [
+                        "type" => "view",
+                        "name" => "我的报名",
+                        "url" => "http://wap.zhongkaiyun.com/i/ticket",
                     ],
                 ],
             ],
