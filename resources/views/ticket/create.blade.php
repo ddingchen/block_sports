@@ -44,6 +44,7 @@
 	                	@foreach($areas as $area)
 	                	<option value="{{ $area->id }}">{{ $area->name }}</option>
 	                	@endforeach
+	                	<option class="placeholder" value="0">以上都不是</option>
 	                </select>
 	            </div>
 	        </div>
@@ -90,15 +91,16 @@
 	        <div class="weui-cell">
 	            <div class="weui-cell__hd"><label class="weui-label">联系人</label></div>
 	            <div class="weui-cell__bd">
-	                <input name="name" class="weui-input" type="text" placeholder="请输入参赛人姓名" value="">
+	                <input name="name" class="weui-input" type="text" placeholder="请输入参赛人姓名" value="{{ $user->name }}" data-old-name="{{ $user->name }}">
 	            </div>
 	        </div>
 	        <div class="weui-cell">
 	            <div class="weui-cell__hd"><label class="weui-label">联系电话</label></div>
 	            <div class="weui-cell__bd">
-	                <input name="tel" class="weui-input" type="text" placeholder="请输入参赛人联系方式" value="">
+	                <input name="tel" class="weui-input" type="text" placeholder="请输入参赛人联系方式" value="{{ $user->tel }}" data-old-tel="{{ $user->tel }}">
 	            </div>
 	        </div>
+	        <input type="hidden" name="contact_confirm" value="0">
 	    </div>
 	    <div style="padding: 20px 15px;">
 	    	<input type="submit" class="weui-btn weui-btn_primary" value="确认提交">

@@ -51,7 +51,7 @@ class TicketController extends Controller
         $matches = $match->group->matches;
         $areas = $match->street->areas->sortBy('py')->values();
         $sports = $match->sports;
-        return view('ticket.create', compact('matches', 'sports', 'match', 'areas'));
+        return view('ticket.create', compact('matches', 'sports', 'match', 'areas', 'user'));
     }
 
     /**
@@ -94,6 +94,17 @@ class TicketController extends Controller
             return Sport::findMany($input['sports'])->contains(function ($sport) {
                 return $sport->is_group;
             });
+        });
+
+        $validator->after(function ($validator) use ($request) {
+            $user = auth()->user();
+            if ($request->has('contact_confirm')
+                && $request->input('contact_confirm') == 0) {
+                if ($user->name != $request->input('name')
+                    || $user->tel != $request->input('tel')) {
+                    $validator->errors()->add('contact_changed', '友情提醒：联系方式与此前您填写过的信息发生了变更！您是否正在给他人进行报名，如果是，请使用他本人微信或其他报名渠道，如：官方交流群、官方报名热线等。否则新的联系方式将覆盖此前的联系人信息。');
+                }
+            }
         });
 
         if ($validator->fails()) {

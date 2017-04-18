@@ -44,16 +44,30 @@ $(function() {
     })
     // 提交报名
     $('form').submit(function(event) {
+        $('input[type="submit"]').attr('disabled', 'disabled')
         event.preventDefault()
         $.ajax({
             url: '/match/' + $('select[name="match"]').val() + '/ticket',
             data: $('form').serializeArray(),
+            complete: function(xhr, status) {
+                $('input[type="submit"]').removeAttr('disabled')
+            },
             error: function(xhr, status, error) {
-                if(xhr.status == 422) {
-                    for(var i in xhr.responseJSON) {
-                        alert(xhr.responseJSON[i][0])
-                        break
+                if(xhr.status != 422) {
+                    return
+                }
+                for(var i in xhr.responseJSON) {
+                    alert(xhr.responseJSON[i][0])
+                    if(i == 'contact_changed') {
+                        if(confirm('是否确认使用新的联系方式进行报名？是：使用新的联系方式进行报名；否：复原此前使用的联系方式')) {
+                            $('input[name="contact_confirm"]').val(1)
+                            $('form').submit()
+                        } else {
+                            $('input[name="name"]').val($('input[name="name"]').data('old-name'))
+                            $('input[name="tel"]').val($('input[name="tel"]').data('old-tel'))
+                        }
                     }
+                    break
                 }
             },
             success: function(data, status, xhr) {
