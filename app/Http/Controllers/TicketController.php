@@ -84,11 +84,14 @@ class TicketController extends Controller
             'match' => 'required|exists:matches,id',
             'name' => 'required|max:15',
             'tel' => 'required|digits:11',
-            'area' => 'required|exists:residential_areas,id',
             'custom_area' => 'required_if:area,0',
             'sports' => 'required|array|max:5',
             'sports.*' => 'required|exists:sports,id',
         ], $messages);
+
+        $validator->sometimes('area', 'required|exists:residential_areas,id', function ($input) {
+            return $input['area'] != 0;
+        });
 
         $validator->sometimes('team_name', 'required|max:20', function ($input) {
             return Sport::findMany($input['sports'])->contains(function ($sport) {
