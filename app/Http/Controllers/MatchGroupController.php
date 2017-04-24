@@ -9,10 +9,6 @@ class MatchGroupController extends Controller
     public function index()
     {
         $groups = MatchGroup::all();
-        if ($groups->count() == 1) {
-            return redirect("match/group/{$groups->first()->id}");
-        }
-
         return view('group.index', compact('groups'));
     }
 

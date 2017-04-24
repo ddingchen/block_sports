@@ -28,6 +28,11 @@ class Match extends Model
         return $this->belongsTo('App\MatchGroup');
     }
 
+    public function results()
+    {
+        return $this->hasManyThrough('App\MatchResult', 'App\Ticket');
+    }
+
     public function hasGroupSport()
     {
         return $this->sports->contains(function ($sport) {

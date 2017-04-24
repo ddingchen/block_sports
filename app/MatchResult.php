@@ -8,7 +8,7 @@ class MatchResult extends Model
 {
     protected $table = 'ticket_sports';
 
-    protected $fillable = ['video', 'honour'];
+    protected $fillable = ['video', 'honour', 'score'];
 
     public function sport()
     {

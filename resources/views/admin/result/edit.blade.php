@@ -3,10 +3,10 @@
 @section('page-title', '赛事成绩确认')
 
 @section('content')
-<form method="post" action="/admin/match/result/{{ $result->id }}">
+<form method="post" action="/admin/match/{{ $match->id }}/result/{{ $result->id }}">
 	{{ csrf_field() }}
 	{{ method_field('PUT') }}
-	<div class="form-group">
+	{{-- <div class="form-group">
 		<label>视频路径</label>
 		<input type="text" class="form-control" name="video" value="{{ $result->video }}">
 	</div>
@@ -15,7 +15,11 @@
 		<input type="text" class="form-control" name="honour" value="{{ $result->honour }}">
 	</div>
 	<label>视频预览</label>
-	<video src="{{ $result->video }}" controls></video>
+	<video src="{{ $result->video }}" controls></video> --}}
+	<div class="form-group">
+		<label>成绩分数</label>
+		<input type="text" class="form-control" name="score" value="{{ $result->score }}">
+	</div>
 	<button class="btn btn-primary btn-block btn-lg" type="submit">提交保存</button>
 </form>
 @endsection

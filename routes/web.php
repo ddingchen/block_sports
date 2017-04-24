@@ -30,6 +30,9 @@ Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
     Route::resource('match/group', 'MatchGroupController', ['only' => ['index', 'show']]);
     Route::get('street/{street}/area', 'AreaController@indexByStreet');
 
+    Route::get('sport/top-list', 'TopListController@indexOfAll');
+    // Route::get('sport/{sport}/top-list', 'TopListController@index');
+
     Route::group(['namespace' => 'Admin'], function () {
         Route::get('admin/request/create', 'AdminRequestController@create');
         Route::post('admin/request', 'AdminRequestController@store');
@@ -56,7 +59,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => $admi
     Route::resource('group', 'MatchGroupController');
     Route::get('match/register/qrcode', 'MatchController@registerQrcodeForm');
     Route::get('match/register/qrcode/generate', 'MatchController@generateRegisterQrcode');
-    Route::resource('match/result', 'MatchResultController');
+    Route::get('match/result', 'MatchResultController@fetchFirstMatch');
+    Route::resource('match/{match}/result', 'MatchResultController');
     Route::get('wechat/material', 'WechatController@material');
     Route::get('wechat/updateMenu', 'WechatController@updateMenu');
 });

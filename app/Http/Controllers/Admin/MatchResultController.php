@@ -3,23 +3,33 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Match;
 use App\MatchResult;
-use App\Sport;
 use Illuminate\Http\Request;
 
 class MatchResultController extends Controller
 {
+    public function fetchFirstMatch()
+    {
+        $match = Match::first();
+        return redirect("admin/match/{$match->id}/result");
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Match $match)
     {
-        $sports = Sport::all();
-        $selectedSport = $request->has('sport') ? Sport::find($request->input('sport')) : $sports->first();
-        $results = $selectedSport->matchResults;
-        return view('admin.match.result.index', compact('sports', 'selectedSport', 'results'));
+        // $sports = Sport::all();
+        // $selectedSport = $request->has('sport') ? Sport::find($request->input('sport')) : $sports->first();
+        // $results = $selectedSport->matchResults;
+        // return view('admin.match.result.index', compact('sports', 'selectedSport', 'results'));
+        $matches = Match::all();
+        $sports = $match->sports;
+        $results = $match->results;
+        return view('admin.result.index', compact('sports', 'matches', 'results'));
     }
 
     /**
@@ -49,7 +59,7 @@ class MatchResultController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Match $match, $id)
     {
 
     }
@@ -60,9 +70,10 @@ class MatchResultController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(MatchResult $result)
+    public function edit(Match $match, $id)
     {
-        return view('admin.match.result.edit', compact('result'));
+        $result = MatchResult::findOrFail($id);
+        return view('admin.result.edit', compact('result', 'match'));
     }
 
     /**
@@ -72,15 +83,15 @@ class MatchResultController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MatchResult $result)
+    public function update(Request $request, Match $match, $id)
     {
+        $result = MatchResult::findOrFail($id);
         $this->validate($request, [
-            'video' => 'required',
-            'honour' => 'required',
+            'score' => 'nullable|numeric',
         ]);
 
         $result->update($request->all());
-        return redirect('admin/match/result');
+        return redirect("admin/match/{$match->id}/result");
     }
 
     /**
