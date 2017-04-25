@@ -40,7 +40,7 @@
         </div>
     @endif
     </div>
-    <script src="/js/common.js"></script>
+    <script src="{{ mix('/js/common.js') }}"></script>
     @yield('js')
   </body>
 </html>

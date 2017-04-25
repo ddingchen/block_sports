@@ -14,6 +14,7 @@ var fs = require('fs');
 
 mix.js('resources/assets/js/common.js', 'public/js/common.js')
 	.js('resources/assets/js/ticket/create.js', 'public/js/ticket/create.js')
+	.version()
 
 if (mix.config.inProduction) {
 	mix.copy('resources/assets/img', 'public/image', false)
