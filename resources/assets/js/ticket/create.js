@@ -1,4 +1,8 @@
-require('./../bootstrap');
+// require('./../bootstrap');
+
+// require('./../../css/test.css');
+// require('./../../sass/activities/hsblockgame.scss');
+// require('weui');
 
 $(function() {
     // 仅有一个选项时，默认选中一个

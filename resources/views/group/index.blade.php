@@ -23,12 +23,10 @@
 @endsection
 
 @section('css')
-<link rel="stylesheet" type="text/css" href="{{ mix('css/activities/hsblockgame.css') }}">
 <style type="text/css">
 body, html {
     margin: 0;
     padding: 0;
-    background-color: #eee;
 }
 img {
     display: block;

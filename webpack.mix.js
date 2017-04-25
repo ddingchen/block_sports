@@ -12,14 +12,20 @@ var fs = require('fs');
  |
  */
 
-mix.sass('resources/assets/sass/activities/hsblockgame.scss', 'public/css/activities')
-	.js('resources/assets/js/activities/hsblockgame.js', 'public/js/activities')
-	.version()
+mix.js('resources/assets/js/common.js', 'public/js/common.js')
+	.js('resources/assets/js/ticket/create.js', 'public/js/ticket/create.js')
 
-try {
-	console.log('\nCheck if weui images published...')
-	fs.statSync('public/image/activities/images')
-} catch(e) {
-	console.log('Copy weui images to public from node_modules')
-	mix.copy('node_modules/weui/dist/example/images', 'public/image/activities/images', false)
+if (mix.config.inProduction) {
+	mix.copy('resources/assets/img', 'public/image', false)
 }
+
+// mix.sass('resources/assets/sass/activities/hsblockgame.scss', 'public/css/activities')
+// mix.js('resources/assets/js/activities/hsblockgame.js', 'public/js/activities')
+//    .version()
+// try {
+// 	console.log('\nCheck if weui images published...')
+// 	fs.statSync('public/image/activities/images')
+// } catch(e) {
+// 	console.log('Copy weui images to public from node_modules')
+// 	mix.copy('node_modules/weui/dist/example/images', 'public/image/activities/images', false)
+// }

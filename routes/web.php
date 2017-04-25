@@ -30,8 +30,8 @@ Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
     Route::resource('match/group', 'MatchGroupController', ['only' => ['index', 'show']]);
     Route::get('street/{street}/area', 'AreaController@indexByStreet');
 
-    Route::get('sport/top-list', 'TopListController@indexOfAll');
-    // Route::get('sport/{sport}/top-list', 'TopListController@index');
+    Route::get('sport/top-list', 'TopListController@fetchFirstTopList');
+    Route::get('sport/{sport}/top-list', 'TopListController@index');
 
     Route::group(['namespace' => 'Admin'], function () {
         Route::get('admin/request/create', 'AdminRequestController@create');

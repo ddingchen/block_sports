@@ -19,4 +19,24 @@ class MatchResult extends Model
     {
         return $this->belongsTo('App\Ticket');
     }
+
+    public function getReadableScoreAttribute()
+    {
+        $suffix = '';
+        switch ($this->sport->name) {
+            case '跳绳':
+                $suffix = '次';
+                break;
+            case '踢毽子':
+                $suffix = '个';
+                break;
+            case '广场舞':
+                $suffix = '分';
+                break;
+            default:
+                break;
+        }
+
+        return $this->score . $suffix;
+    }
 }
