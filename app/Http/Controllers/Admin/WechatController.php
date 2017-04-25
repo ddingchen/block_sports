@@ -88,13 +88,18 @@ class WechatController extends Controller
                     ],
                     [
                         "type" => "view",
-                        "name" => "报名",
-                        "url" => "http://wap.zhongkaiyun.com/ticket",
+                        "name" => "报名入口",
+                        "url" => "http://wap.zhongkaiyun.com/match/group",
                     ],
                     [
                         "type" => "view",
                         "name" => "我的报名",
                         "url" => "http://wap.zhongkaiyun.com/i/ticket",
+                    ],
+                    [
+                        "type" => "view",
+                        "name" => "排行榜",
+                        "url" => "http://wap.zhongkaiyun.com/sport/top-list",
                     ],
                 ],
             ],

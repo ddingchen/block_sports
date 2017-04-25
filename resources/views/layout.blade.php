@@ -9,6 +9,9 @@
     <link href="http://cdn.bootcss.com/weui/1.1.2/style/weui.min.css" rel="stylesheet">
     @yield('css')
     <style type="text/css">
+        body {
+            background-color: #f8f8f8;
+        }
         .container {
             position: absolute;
             left: 0;
