@@ -55,7 +55,7 @@ li .title {
     position: absolute;
     right: 10px;
     bottom: 10px;
-    font-size: 26px;
+    font-size: 22px;
     color: #eef;
     text-shadow: 0px 0px 5px #eef;
 }
@@ -63,7 +63,7 @@ li .month {
     position: absolute;
     right: 10px;
     bottom: 50px;
-    font-size: 24px;
+    font-size: 20px;
     font-style: initial;
     color: #eef;
     text-shadow: 0px 0px 5px #eef;
