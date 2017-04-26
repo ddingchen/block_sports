@@ -91,7 +91,7 @@ class MatchResultController extends Controller
         ]);
 
         $result->update($request->all());
-        return redirect("admin/match/{$match->id}/result");
+        return redirect("admin/match/{$match->id}/result?sport={$result->sport->id}");
     }
 
     /**

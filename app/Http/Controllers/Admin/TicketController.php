@@ -51,7 +51,7 @@ class TicketController extends Controller
             'name' => 'required|max:15',
             'sex' => 'nullable|in:female,male',
             'age' => 'digits:2',
-            'tel' => 'required|unique:users',
+            'tel' => 'required',
             'match' => 'required|exists:matches,id',
             'area' => 'required|exists:residential_areas,id',
             'sports' => 'required|array|max:5',

@@ -60,6 +60,9 @@
 		$('tbody tr').hide()
 		$('tbody tr:contains("' + selectedSport + '")').show()
 	})
+	var sport = queryParam('sport')
+	$('#sport').val(sport)
+	$('#sport').change()
 </script>
 @endsection
 
