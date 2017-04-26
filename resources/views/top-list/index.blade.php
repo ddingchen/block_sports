@@ -39,13 +39,13 @@ wx.ready(function(){
   wx.onMenuShareTimeline({
       title: '街区体育排行榜',
       link: window.location.href,
-      imgUrl: '/image/medal.png'
+      imgUrl: 'http://mmbiz.qpic.cn/mmbiz_jpg/oMibuKYSu2KtcLUtQjnrYuDaYVjiazDv2SQQ1zBQLGeqQWcFoSnuBcF0VHibg07vVf38w9XkI3yayxUT6NhUgFGLg/0?wx_fmt=jpeg'
   })
   wx.onMenuShareAppMessage({
       title: '街区体育排行榜',
       desc: '{{ $sport->name }}排行榜',
       link: window.location.href,
-      imgUrl: '/image/medal.png',
+      imgUrl: 'http://mmbiz.qpic.cn/mmbiz_jpg/oMibuKYSu2KtcLUtQjnrYuDaYVjiazDv2SQQ1zBQLGeqQWcFoSnuBcF0VHibg07vVf38w9XkI3yayxUT6NhUgFGLg/0?wx_fmt=jpeg',
       type: 'link'
   })
 });
