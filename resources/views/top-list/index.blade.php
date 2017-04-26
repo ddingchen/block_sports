@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', '街区运动会－排行榜')
+@section('title', '中铠街区体育－排行榜')
 
 @section('content')
   <div class="weui-navbar">
@@ -40,12 +40,12 @@ $('.weui-navbar__item').click(function() {
 })
 wx.ready(function(){
   wx.onMenuShareTimeline({
-      title: '街区体育排行榜',
+      title: '中铠街区体育-排行榜',
       link: window.location.href,
       imgUrl: 'http://mmbiz.qpic.cn/mmbiz_jpg/oMibuKYSu2KtcLUtQjnrYuDaYVjiazDv2SQQ1zBQLGeqQWcFoSnuBcF0VHibg07vVf38w9XkI3yayxUT6NhUgFGLg/0?wx_fmt=jpeg'
   })
   wx.onMenuShareAppMessage({
-      title: '街区体育排行榜',
+      title: '中铠街区体育',
       desc: '{{ $sport->name }}排行榜',
       link: window.location.href,
       imgUrl: 'http://mmbiz.qpic.cn/mmbiz_jpg/oMibuKYSu2KtcLUtQjnrYuDaYVjiazDv2SQQ1zBQLGeqQWcFoSnuBcF0VHibg07vVf38w9XkI3yayxUT6NhUgFGLg/0?wx_fmt=jpeg',

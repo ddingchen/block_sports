@@ -1,6 +1,6 @@
 @extends('layout', ['hideTab' => true])
 
-@section('title', '街区运动会－我的报名')
+@section('title', '中铠街区体育－我的报名')
 
 @section('content')
 <div class="weui-cells__title">报名项目</div>

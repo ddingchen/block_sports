@@ -1,6 +1,6 @@
 @extends('layout', ['hideTab' => true])
 
-@section('title', '街区运动会－报名通道')
+@section('title', '中铠街区体育－报名')
 
 @section('content')
 <form id="app" method="post">

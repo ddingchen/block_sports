@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', '街区运动会－报名')
+@section('title', '中铠街区体育－报名通道')
 
 @section('content')
 <ul>
