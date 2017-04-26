@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sport extends Model
 {
-    protected $fillable = ['id', 'name'];
+    protected $fillable = ['id', 'name', 'standard'];
 
     public $incrementing = false;
 

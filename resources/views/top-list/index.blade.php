@@ -11,6 +11,7 @@
     @endforeach
   </div>
   <div class="weui-tab__panel">
+    <div class="weui-cells__title standard">{{ $sport->standard }}</div>
     <div class="weui-cells">
       @foreach($list as $item)
         <div class="weui-cell @if($item['rank']==1) gold @elseif($item['rank']==2) sliver @elseif($item['rank']==3) bronze @endif">
@@ -79,6 +80,9 @@ wx.ready(function(){
   }
   .bronze .weui-cell__bd:before {
     background-position: -60px 0;
+  }
+  .standard {
+    text-align: right;
   }
 </style>
 @endsection
