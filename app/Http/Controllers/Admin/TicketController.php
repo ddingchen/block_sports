@@ -50,7 +50,7 @@ class TicketController extends Controller
         $this->validate($request, [
             'name' => 'required|max:15',
             'sex' => 'nullable|in:female,male',
-            'age' => 'digits:2',
+            'age' => 'nullable|integer',
             'tel' => 'required',
             'match' => 'required|exists:matches,id',
             'area' => 'required|exists:residential_areas,id',
@@ -62,7 +62,7 @@ class TicketController extends Controller
             'name' => $request->input('name'),
             'tel' => $request->input('tel'),
             'sex' => $request->input('sex') ?: null,
-            'age' => $request->input('age'),
+            'age' => $request->input('age') ?: null,
             'residential_area_id' => $request->input('area'),
         ]);
 
