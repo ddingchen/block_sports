@@ -12,14 +12,17 @@
   </div>
   <div class="weui-tab__panel">
     <div class="weui-cells__title standard">{{ $sport->standard }}</div>
-    <div class="weui-cells">
+    <div class="weui-cells list">
       @foreach($list as $item)
-        <div class="weui-cell @if($item['rank']==1) gold @elseif($item['rank']==2) sliver @elseif($item['rank']==3) bronze @endif">
-            <div class="weui-cell__bd">
-                <p>{{ $item['rank'] }} {{ $item['name'] }}</p>
-            </div>
-            <div class="weui-cell__ft">{{ $item['readable_score'] }}</div>
-        </div>
+      <div class="weui-cell @if($item['rank']==1) gold @elseif($item['rank']==2) sliver @elseif($item['rank']==3) bronze @endif">
+          <div class="weui-cell__hd">
+            <i class="@if($item['rank']<=3) fa fa-trophy @endif">{{ $item['rank']>3?$item['rank']:'' }}</i>
+          </div>
+          <div class="weui-cell__bd">
+              <p>{{ $item['name'] }}</p>
+          </div>
+          <div class="weui-cell__ft">{{ $item['readable_score'] }}</div>
+      </div>
       @endforeach
     </div>
   </div>
@@ -54,33 +57,22 @@ wx.ready(function(){
 
 @section('css')
 <style type="text/css">
-  .weui-cell__bd p {
-    padding-left: 25px;
+  .weui-cell__hd {
+    margin-right: 5px;
   }
-  .gold .weui-cell__bd:before,
-  .sliver .weui-cell__bd:before,
-  .bronze .weui-cell__bd:before {
-    content: '';
-    position: absolute;
-    display: block;
-    left: 8px;
-    top: 0;
-    width: 30px;
-    height: 44px;
-    background-image: url('/image/medal.png');
-    background-size: 300%;
-    background-position: 0px 0;
-    background-repeat: no-repeat;
+
+  .list .gold i {
+    color: #f2c056;
   }
-  .gold .weui-cell__bd:before {
-    background-position: 0 0;
+
+  .list .sliver i {
+    color: #e9e9d8;
   }
-  .sliver .weui-cell__bd:before {
-    background-position: -30px 0;
+
+ .list .bronze i {
+    color: #bfad6f;
   }
-  .bronze .weui-cell__bd:before {
-    background-position: -60px 0;
-  }
+
   .standard {
     text-align: right;
   }
