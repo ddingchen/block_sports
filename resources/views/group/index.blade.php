@@ -3,86 +3,81 @@
 @section('title', '中铠街区体育－报名通道')
 
 @section('content')
-<ul>
-    @foreach($groups as $group)
-    <a href="/match/group/{{ $group->id }}">
-        <li>
-            <div class="month">{{ $group->sub_title }}</div>
-            <div class="title">{{ $group->title }}</div>
-            <span class="tag @if($group->top) hot @endif">
-                @if($group->top)
-                火热报名
-                @else
-                预热报名
-                @endif
-            </span>
-        </li>
-    </a>
-    @endforeach
-</ul>
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <img class="swiper-slide" src="/storage/slider/slide1.jpg">
+        <img class="swiper-slide" src="/storage/slider/slide2.jpg">
+        <img class="swiper-slide" src="/storage/slider/slide3.jpg">
+        <img class="swiper-slide" src="/storage/slider/slide4.jpg">
+        <img class="swiper-slide" src="/storage/slider/slide5.jpg">
+        <img class="swiper-slide" src="/storage/slider/slide6.jpg">
+    </div>
+    <div class="swiper-pagination"></div>
+</div>
+
+<div class="weui-panel weui-panel_access">
+    <div class="weui-panel__bd">
+        @foreach($groups as $group)
+        <a class="weui-media-box weui-media-box_text" href="/match/group/{{ $group->id }}" style="display: block">
+            <h4 class="weui-media-box__title">{{ $group->title }}
+                <span class="weui-badge" style="float: right;">火热招募</span>
+            </h4>
+            <p class="weui-media-box__desc">{{ $group->sub_title }}</p>
+            <ul class="weui-media-box__info">
+                <li class="weui-media-box__info__meta">发布时间</li>
+                <li class="weui-media-box__info__meta">{{ $group->matches->first()->created_at->diffForHumans() }}</li>
+                <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">官方发布</li>
+            </ul>
+        </a>
+        @endforeach
+    </div>
+</div>
+@endsection
+
+@section('js')
+<script src="http://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    //initialize swiper when document ready
+    var mySwiper = new Swiper ('.swiper-container', {
+        pagination: '.swiper-pagination',
+        slidesPerView: 'auto',
+        centeredSlides: true,
+        paginationClickable: false,
+        spaceBetween: 30,
+        loop: true,
+        autoplay: 2000
+    })
+});
+</script>
 @endsection
 
 @section('css')
+<link href="http://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css" rel="stylesheet">
 <style type="text/css">
-body, html {
-    margin: 0;
-    padding: 0;
+.swiper-container {
+    width: 100%;
+    height: 300px;
+    margin: 10px auto;
 }
-img {
-    display: block;
-    margin: 0;
-    padding: 0;
-    border: 0;
-}
-ul, li {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-ul {
-    margin: 10px;
-}
-li {
-    position: relative;
-    height: 140px;
-    margin-bottom: 10px;
-    border-radius: 10px;
-    background: linear-gradient(45deg, #3fd2ff, #1f4cff, #806aff);
-    overflow: hidden;
-    box-shadow: #666 0 3px 5px;
-}
-li .title {
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
-    font-size: 22px;
-    color: #eef;
-    text-shadow: 0px 0px 5px #eef;
-}
-li .month {
-    position: absolute;
-    right: 10px;
-    bottom: 50px;
-    font-size: 20px;
-    font-style: initial;
-    color: #eef;
-    text-shadow: 0px 0px 5px #eef;
-}
-li .tag {
-    position: absolute;
-    left: -30px;
-    top: 30px;
-    padding: 0 30px;
-    background-color: #3fd2ff;
-    box-shadow: #666 0 3px 5px;
-    color: #666;
-    letter-spacing: 5px;
-    transform: rotate(-45deg);
-    font-weight: bold;
-}
-li .tag.hot {
-    background-color: #E64340;
-    color: #eef;
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    width: auto;
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
 }
 </style>
 @endsection

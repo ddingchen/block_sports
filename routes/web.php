@@ -33,6 +33,10 @@ Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
     Route::get('sport/top-list', 'TopListController@fetchFirstTopList');
     Route::get('sport/{sport}/top-list', 'TopListController@index');
 
+    // Route::get('task', function () {
+    //     return view('task.index');
+    // });
+
     Route::group(['namespace' => 'Admin'], function () {
         Route::get('admin/request/create', 'AdminRequestController@create');
         Route::post('admin/request', 'AdminRequestController@store');
