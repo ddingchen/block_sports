@@ -5,12 +5,12 @@
 @section('content')
 <div class="swiper-container">
     <div class="swiper-wrapper">
-        <img class="swiper-slide" src="/storage/slider/slide1.jpg">
-        <img class="swiper-slide" src="/storage/slider/slide2.jpg">
-        <img class="swiper-slide" src="/storage/slider/slide3.jpg">
-        <img class="swiper-slide" src="/storage/slider/slide4.jpg">
-        <img class="swiper-slide" src="/storage/slider/slide5.jpg">
-        <img class="swiper-slide" src="/storage/slider/slide6.jpg">
+        <img class="swiper-slide" src="/image/slider/slide1.jpg">
+        <img class="swiper-slide" src="/image/slider/slide2.jpg">
+        <img class="swiper-slide" src="/image/slider/slide3.jpg">
+        <img class="swiper-slide" src="/image/slider/slide4.jpg">
+        <img class="swiper-slide" src="/image/slider/slide5.jpg">
+        <img class="swiper-slide" src="/image/slider/slide6.jpg">
     </div>
     <div class="swiper-pagination"></div>
 </div>
