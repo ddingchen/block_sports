@@ -35,7 +35,8 @@ class User extends Authenticatable
 
     public function tickets()
     {
-        return $this->hasMany('App\Ticket');
+        // return $this->hasMany('App\Ticket');
+        return $this->morphMany('App\Ticket', 'owner');
     }
 
     public function adminRequest()

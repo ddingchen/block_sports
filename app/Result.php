@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Ticket extends Model
+class Result extends Model
 {
-    protected $fillable = ['note'];
+    protected $fillable = ['score'];
 
     public function owner()
     {
