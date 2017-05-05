@@ -17,13 +17,13 @@ class TicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Match $match)
     {
-        $match = $request->has('match') ? Match::find($request->input('match')) : Match::first();
+        // $match = $request->has('match') ? Match::find($request->input('match')) : Match::first();
         $tickets = $match->tickets->sortByDesc('created_at');
-        $sports = Sport::all();
-        $blocks = $match->street->blocks;
-        return view('admin.ticket.index', compact('tickets', 'sports', 'match', 'blocks'));
+        // $sports = Sport::all();
+        // $blocks = $match->street->blocks;
+        return view('admin.ticket.index', compact('tickets', 'match'));
     }
 
     /**

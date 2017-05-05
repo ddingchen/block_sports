@@ -6,14 +6,18 @@
 <div class="table-responsive">
 	<table class="table">
 		<thead>
+			<th>赛事标题</th>
+			<th>比赛项目</th>
+			<th>报名人数</th>
 			<th>创建时间</th>
-			<th>所属街道</th>
 		</thead>
 		<tbody>
 			@foreach($matches as $match)
 			<tr>
+				<td>{{ $match->title }} {{ $match->sub_title }}</td>
+				<td>{{ $match->sport->name }}</td>
+				<td><a href="/admin/match/{{ $match->id }}/ticket">{{ $match->tickets->count() }}</a></td>
 				<td>{{ $match->created_at->format('Y-m-d') }}</td>
-				<td>{{ $match->street->name }}</td>
 			</tr>
 			@endforeach
 		</tbody>

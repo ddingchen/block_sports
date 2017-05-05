@@ -32,7 +32,7 @@
               @yield('content')
             </div>
             <div class="weui-tabbar">
-                <a href="/match/group" class="weui-tabbar__item @if(preg_match('/\/match\/group/' ,url()->current())) weui-bar__item_on @endif">
+                <a href="/match/group" class="weui-tabbar__item @if(preg_match('/\/match/' ,url()->current())) weui-bar__item_on @endif">
                     {{-- <img src="/image/match.png" alt="" class="weui-tabbar__icon"> --}}
                     <i class="weui-tabbar__icon fa fa-file-text"></i>
                     <p class="weui-tabbar__label">比赛报名</p>

@@ -27,7 +27,8 @@ Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
     Route::get('i/ticket', 'TicketController@indexOfUser');
 
     Route::resource('match/{match}/ticket', 'TicketController');
-    Route::resource('match/group', 'MatchGroupController', ['only' => ['index', 'show']]);
+    Route::resource('match', 'MatchController');
+    // Route::resource('match/group', 'MatchGroupController', ['only' => ['index', 'show']]);
     Route::get('street/{street}/area', 'AreaController@indexByStreet');
 
     Route::get('sport/top-list', 'TopListController@fetchFirstTopList');
@@ -47,7 +48,7 @@ $adminMiddleware = isWeChatBrowser(app('request')) ? ['wechat.oauth', 'login.wec
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => $adminMiddleware], function () {
     Route::get('/', function () {
-        return redirect('admin/ticket');
+        return redirect('admin/match');
     });
     Route::resource('request', 'AdminRequestController', ['only' => ['index']]);
     Route::resource('role', 'RoleController');
@@ -58,7 +59,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => $admi
     Route::resource('block', 'BlockController');
     Route::resource('area', 'AreaController');
     Route::resource('user', 'UserController');
-    Route::resource('ticket', 'TicketController');
+    Route::resource('match/{match}/ticket', 'TicketController');
     Route::resource('match', 'MatchController', ['only' => ['index', 'create', 'store']]);
     Route::resource('group', 'MatchGroupController');
     Route::get('match/register/qrcode', 'MatchController@registerQrcodeForm');
