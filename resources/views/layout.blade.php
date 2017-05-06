@@ -32,15 +32,19 @@
               @yield('content')
             </div>
             <div class="weui-tabbar">
-                <a href="/match/group" class="weui-tabbar__item @if(preg_match('/\/match/' ,url()->current())) weui-bar__item_on @endif">
-                    {{-- <img src="/image/match.png" alt="" class="weui-tabbar__icon"> --}}
+                <a href="/match/group" class="weui-tabbar__item @if(preg_match('/\/match\/group/' ,url()->current())) weui-bar__item_on @endif">
                     <i class="weui-tabbar__icon fa fa-file-text"></i>
                     <p class="weui-tabbar__label">比赛报名</p>
                 </a>
                 <a href="/sport/top-list" class="weui-tabbar__item @if(preg_match('/\/sport\/(\d+\/)?top-list/' ,url()->current())) weui-bar__item_on @endif">
-                    {{-- <img src="/image/rank.png" alt="" class="weui-tabbar__icon"> --}}
                     <i class="weui-tabbar__icon fa fa-trophy"></i>
                     <p class="weui-tabbar__label">排行榜</p>
+                </a>
+                <a href="/i" class="weui-tabbar__item @if(preg_match('/\/i/' ,url()->current())) weui-bar__item_on @endif">
+                    <i class="weui-tabbar__icon fa fa-user" style="position: relative;">
+                        <span class="weui-badge weui-badge_dot" style="position: absolute;top: 0;right: -6px;"></span>
+                    </i>
+                    <p class="weui-tabbar__label">我</p>
                 </a>
             </div>
         </div>
