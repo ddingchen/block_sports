@@ -54,6 +54,8 @@ class WechatController extends Controller
                             'description' => '动一动手指的事儿',
                             'url' => 'http://mp.weixin.qq.com/s?__biz=MzAwNTAyNzEwOQ==&mid=503151671&idx=1&sn=9aaace34410d5eacedfe74d7e9432e51&chksm=032b387d345cb16b1aecff4a2d820a0fa1f98feae1acb3d661ce396d9a1d54cf4975f9aca1ec#rd',
                         ]);
+                    } else if ($message->Content == '游泳') {
+                        return '报名热线：82308233 或 400-025-5582';
                     }
                     break;
                 case 'image':
