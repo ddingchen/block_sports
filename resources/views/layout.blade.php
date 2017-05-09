@@ -13,12 +13,62 @@
         body {
             background-color: #f8f8f8;
         }
+        a {
+            color: inherit;
+        }
         .container {
             position: absolute;
             left: 0;
             right: 0;
             bottom: 0;
             top: 0;
+        }
+        .fa {
+            position: relative;
+        }
+        .header {
+            box-sizing: border-box;
+            height: 60px;
+            background: #fff;
+            align-items: center;
+            padding: 15px;
+            font-size: 18px;
+        }
+        .top-bar {
+            color: #666;
+        }
+        .top-bar a+a i{
+            margin-left: 10px;
+        }
+        .empty-tip {
+            margin-top: 1em;
+            margin-bottom: .3em;
+            padding-left: 15px;
+            padding-right: 15px;
+            color: #999;
+            font-size: 16px;
+            text-align: center;
+        }
+        .block-btn{
+            margin: 15px auto;
+            padding: 0 15px;
+        }
+        .narrow-btn {
+            margin: 0 auto;
+            padding: 15px 0;
+            width: 60%;
+        }
+        .small-btn {
+            margin: 0 auto;
+            /*padding: 15px 0;*/
+            width: 100px;
+        }
+        .small-btn .weui-btn{
+            line-height: 2.3;
+            font-size: 14px;
+        }
+        .weui-cell__hd i.fa{
+            margin-right: 5px;
         }
     </style>
   </head>

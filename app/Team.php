@@ -15,6 +15,6 @@ class Team extends Model
 
     public function members()
     {
-        return $this->belongsToMany('App\User', 'team_members')->withTimestamps();
+        return $this->belongsToMany('App\User', 'team_members')->withPivot(['id', 'alias'])->withTimestamps();
     }
 }

@@ -44,6 +44,11 @@ class User extends Authenticatable
         return $this->hasOne('App\AdminRequest');
     }
 
+    public function teams()
+    {
+        return $this->belongsToMany('App\Team', 'team_members');
+    }
+
     public function ticketForMatch(Match $match)
     {
         return Ticket::where([

@@ -9,10 +9,10 @@
 		<span class="nickname">{{ $user->nickname }}</span>
 	</div>
 	<div class="top-bar">
-		<i class="fa fa-bell-o fa-lg" style="position: relative;">
+		<i class="fa fa-bell-o fa-lg">
 			<span class="msg-dot weui-badge weui-badge_dot"></span>
 		</i>
-		<i class="fa fa-gear fa-lg" style="position: relative;"></i>
+		<i class="fa fa-gear fa-lg"></i>
 	</div>
 </div>
 <div class="weui-cells__title">好友</div>
@@ -24,12 +24,12 @@
 	    <div class="weui-cell__ft">
 	    </div>
 	</a>
-	<a class="weui-cell weui-cell_access" href="javascript:;">
+	<a class="weui-cell weui-cell_access" href="/i/team">
 	    <div class="weui-cell__bd">
-	        <p>我的团队</p>
+	        <p>我的战队</p>
 	    </div>
 	    <div class="weui-cell__ft">
-            <span style="vertical-align:middle; font-size: 17px;">1</span>
+            <span>{{ $user->teams->count() }}</span>
 	    </div>
 	</a>
 </div>
@@ -57,14 +57,14 @@
 
 @section('css')
 <style type="text/css">
-.header {
+/*.header {
 	box-sizing: border-box;
 	height: 60px;
 	background: #fff;
 	align-items: center;
 	padding: 15px;
 	font-size: 18px;
-}
+}*/
 .head-img, .nickname {
 	float: left;
 }
@@ -74,9 +74,9 @@
 	height: 30px;
 	border-radius: 50%;
 }
-.top-bar {
+/*.top-bar {
 	color: #666;
-}
+}*/
 .top-bar i {
 	margin-left: 15px;
 }

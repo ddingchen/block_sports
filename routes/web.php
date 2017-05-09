@@ -26,6 +26,11 @@ Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
 
     Route::get('i', 'IController@index');
     Route::get('i/ticket', 'TicketController@indexOfUser');
+    Route::resource('i/team', 'TeamController');
+    Route::get('i/team/{team}/invite', 'TeamController@invite');
+    Route::get('i/team/{team}/join', 'TeamController@join');
+    Route::get('i/team/{team}/qrCode', 'TeamController@qrCode');
+    Route::resource('i/team/{team}/member', 'MemberController', ['only' => ['edit', 'update', 'destroy']]);
 
     Route::resource('match/{match}/ticket', 'TicketController');
     Route::resource('match', 'MatchController');

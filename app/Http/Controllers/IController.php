@@ -7,6 +7,6 @@ class IController extends Controller
     public function index()
     {
         $user = auth()->user();
-        return view('i.home', compact('user'));
+        return view('user.home', compact('user'));
     }
 }
