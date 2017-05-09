@@ -17,4 +17,11 @@ class Ticket extends Model
     {
         return $this->belongsTo('App\Match');
     }
+
+    public function getResultAttribute()
+    {
+        return $this->match->results->first(function ($result) {
+            return $result->owner == $this->owner;
+        });
+    }
 }

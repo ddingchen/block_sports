@@ -67,11 +67,13 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => $admi
     Route::resource('user', 'UserController');
     Route::resource('match/{match}/ticket', 'TicketController');
     Route::resource('match', 'MatchController', ['only' => ['index', 'create', 'store']]);
-    Route::resource('group', 'MatchGroupController');
-    Route::get('match/register/qrcode', 'MatchController@registerQrcodeForm');
-    Route::get('match/register/qrcode/generate', 'MatchController@generateRegisterQrcode');
-    Route::get('match/result', 'MatchResultController@fetchFirstMatch');
-    Route::resource('match/{match}/result', 'MatchResultController');
+    // Route::resource('group', 'MatchGroupController');
+    // Route::get('match/register/qrcode', 'MatchController@registerQrcodeForm');
+    // Route::get('match/register/qrcode/generate', 'MatchController@generateRegisterQrcode');
+    // Route::get('match/result', 'MatchResultController@fetchFirstMatch');
+    Route::resource('match/{match}/result', 'ResultController', ['except' => ['create', 'store']]);
+    Route::get('match/{match}/ticket/{ticket}/result/create', 'ResultController@create');
+    Route::post('match/{match}/ticket/{ticket}/result', 'ResultController@store');
     Route::get('wechat/material', 'WechatController@material');
     Route::get('wechat/updateMenu', 'WechatController@updateMenu');
 });
