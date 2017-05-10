@@ -75,6 +75,5 @@ class SimplifyMatchStruct extends Command
                 $result->save();
             }
         });
-
     }
 }

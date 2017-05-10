@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\ResetRealNameOfUsers::class,
         Commands\GenerateHSStreetInfo::class,
         Commands\SimplifyMatchStruct::class,
+        Commands\BuildTeamForSquareDancer::class,
     ];
 
     /**

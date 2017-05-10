@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Match;
-use App\MatchResult;
 use App\Result;
 use App\Ticket;
 use Illuminate\Http\Request;
@@ -64,9 +63,8 @@ class ResultController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Match $match, $id)
+    public function edit(Match $match, Result $result)
     {
-        $result = MatchResult::findOrFail($id);
         return view('admin.result.edit', compact('result', 'match'));
     }
 
@@ -77,15 +75,19 @@ class ResultController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Match $match, $id)
+    public function update(Request $request, Match $match, Result $result)
     {
-        $result = MatchResult::findOrFail($id);
         $this->validate($request, [
             'score' => 'nullable|numeric',
         ]);
 
-        $result->update($request->all());
-        return redirect("admin/match/{$match->id}/result?sport={$result->sport->id}");
+        if ($request->input('score')) {
+            $result->update($request->all());
+        } else {
+            $result->delete();
+        }
+
+        return redirect("admin/match/{$match->id}/result");
     }
 
     /**

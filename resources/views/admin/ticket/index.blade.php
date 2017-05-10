@@ -13,11 +13,14 @@
           <th>报名时间</th>
           @if($match->sport->is_group)
           <th>团队</th>
-          @endif
+          <th>领队姓名</th>
+          <th>领队电话</th>
+          @else
           <th>姓名</th>
           <th>性别</th>
           <th>年龄</th>
           <th>联系电话</th>
+          @endif
           <th>备注</th>
           <th></th>
         </tr>
@@ -28,8 +31,10 @@
           <th scope="row">{{ $loop->index + 1 }}</th>
           <td>{{ $ticket->created_at->diffForHumans() }}</td>
           @if($match->sport->is_group)
-          <td class="team"></td>
-          @endif
+          <td class="team">{{ $ticket->owner->name }}</td>
+          <td>{{ $ticket->owner->leader->name }}</td>
+          <td>{{ $ticket->owner->leader->tel }}</td>
+          @else
           <td>{{ $ticket->owner->name }}</td>
           @if($ticket->owner->sex == 'male')
           <td class="sex">男</td>
@@ -40,6 +45,7 @@
           @endif
           <td class="age">{{ $ticket->owner->age }}</td>
           <td class="tel">{{ $ticket->owner->tel }}</td>
+          @endif
           <td class="note">{{ $ticket->note }}</td>
           <td class="control">
             <div class="btn-group">
