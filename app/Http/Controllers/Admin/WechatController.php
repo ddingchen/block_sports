@@ -34,6 +34,8 @@ class WechatController extends Controller
                                     'url' => url("match/{$matchId}/ticket/create?block={$blockId}"),
                                     'image' => 'http://mmbiz.qpic.cn/mmbiz_jpg/oMibuKYSu2KtcLUtQjnrYuDaYVjiazDv2SQQ1zBQLGeqQWcFoSnuBcF0VHibg07vVf38w9XkI3yayxUT6NhUgFGLg/0?wx_fmt=jpeg',
                                 ]);
+                            } else {
+                                return '欢迎关注我们的新浪微博：中铠街区体育';
                             }
                             break;
                         default:
@@ -84,9 +86,9 @@ class WechatController extends Controller
                 "name" => "街区运动会",
                 "sub_button" => [
                     [
-                        "type" => "view",
-                        "name" => "说明",
-                        "url" => "https://mp.weixin.qq.com/s?__biz=MzAwNTAyNzEwOQ==&mid=503151575&idx=1&sn=49cb1cce3c4b03d5dc87218664507990&chksm=032b3f9d345cb68b2bdab17fb08c7e6330221593a616354450743063f7286dfdb0a61f92659e#rd",
+                        "type" => "media_id",
+                        "name" => "加入",
+                        "media_id" => "LUY0P8mlFZSb6H24mzka7CcnnC_iIReGDavGqKoEflU",
                     ],
                     [
                         "type" => "view",
@@ -106,9 +108,9 @@ class WechatController extends Controller
                 ],
             ],
             [
-                "type" => "media_id",
-                "name" => "交流群",
-                "media_id" => "LUY0P8mlFZSb6H24mzka7CcnnC_iIReGDavGqKoEflU",
+                "type" => "view",
+                "name" => "关于我们",
+                "url" => "http://mp.weixin.qq.com/s?__biz=MzAwNTAyNzEwOQ==&mid=503151773&idx=1&sn=db623be830755363a617414e1d2a9164&chksm=032b38d7345cb1c1e692f126d4ff729ee988571ad608b49ff225b3a3c1bec8447b9862dc7041#rd",
             ],
             [
                 "type" => "view",
