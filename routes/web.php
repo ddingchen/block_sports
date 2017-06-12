@@ -11,7 +11,21 @@
 |
  */
 
+Route::post('payment/notify', 'PaymentController@notify');
+
 Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
+    Route::group(['prefix' => 'wm'], function () {
+        Route::get('/', 'WMSwimmingController@index');
+        Route::get('group', 'WMSwimmingController@groups');
+        Route::get('group/{group}/register', 'WMSwimmingController@registerForm');
+        Route::post('group/{group}/register', 'WMSwimmingController@register');
+        Route::get('ticket/{ticket}/pay', 'WMSwimmingController@payForm');
+        Route::get('success', 'WMSwimmingController@success');
+        Route::get('i/ticket', 'WMSwimmingController@myTickets');
+        Route::get('ticket/{ticket}', 'WMSwimmingController@ticket');
+        Route::get('ticket', 'WMSwimmingController@allTickets');
+    });
+
     // 原链接重定向至新路由
     Route::get('activities/hsblockgame', function () {
         return redirect('match/1/ticket/create');
@@ -24,6 +38,7 @@ Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
     Route::get('match/result/{id}', 'MatchResultController@show');
     // Route::get('residentialArea/{id}/blockName', 'BlockController@blockNameOfArea');
 
+    Route::get('/', function () {return redirect('sport/top-list');});
     Route::get('i', 'IController@index');
     Route::get('i/ticket', 'TicketController@indexOfUser');
     Route::resource('i/team', 'TeamController');
@@ -74,6 +89,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => $admi
     Route::resource('match/{match}/result', 'ResultController', ['except' => ['create', 'store']]);
     Route::get('match/{match}/ticket/{ticket}/result/create', 'ResultController@create');
     Route::post('match/{match}/ticket/{ticket}/result', 'ResultController@store');
+
+    Route::get('wm/group/{group}/ticket', 'WMSwimmingController@tickets');
+    Route::get('wm/registion/{registion}', 'WMSwimmingController@registionForm');
+    Route::put('wm/registion/{registion}', 'WMSwimmingController@editRegistion');
+    Route::delete('wm/ticket/{ticket}', 'WMSwimmingController@destoryTicket');
+
     Route::get('wechat/material', 'WechatController@material');
     Route::get('wechat/updateMenu', 'WechatController@updateMenu');
 });

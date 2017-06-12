@@ -56,4 +56,9 @@ class User extends Authenticatable
             ['match_id', $match->id],
         ])->first();
     }
+
+    public function wmTickets()
+    {
+        return $this->hasMany('App\Wm\Ticket');
+    }
 }

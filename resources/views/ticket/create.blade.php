@@ -5,8 +5,8 @@
 @section('content')
 <form id="app" method="post">
 	{{ csrf_field() }}
-	<div class="weui-cells__title">所在区域</div>
-		<div class="weui-cells weui-cells_form">
+	{{-- <div class="weui-cells__title">所在区域</div>
+	<div class="weui-cells weui-cells_form">
 	    <div class="weui-cell weui-cell_select weui-cell_select-after">
 	        <div class="weui-cell__hd">
 	            <label class="weui-label">街道</label>
@@ -40,28 +40,26 @@
 	            <input name="custom_area" class="weui-input" type="text" value="" placeholder="请输入所在小区名称（无需门牌号）">
 	        </div>
 	    </div>
-	   {{--  <div class="weui-cell block-field" @if(!old('block'))style="display: none;"@endif>
+	    <div class="weui-cell block-field" @if(!old('block'))style="display: none;"@endif>
 	        <div class="weui-cell__hd"><label class="weui-label">社区</label></div>
 	        <div class="weui-cell__bd">
 	            <input name="block" class="weui-input" type="text" readonly="true" value="{{ old('block') }}">
 	        </div>
-	    </div> --}}
-	</div>
-	<div class="weui-cells__title">参与项目<span class="sport-tip"><span></div>
+	    </div>
+	</div> --}}
+	<div class="weui-cells__title">运动项目<span class="sport-tip"><span></div>
 	<div class="weui-cells weui-cells_checkbox">
-		@foreach($sports as $sport)
-	    <label class="weui-cell weui-check__label" for="s{{ $sport->id }}">
+	    <label class="weui-cell weui-check__label" for="sport">
 	        <div class="weui-cell__hd">
-	            <input type="checkbox" class="weui-check" name="sports[]" id="s{{ $sport->id }}" value="{{ $sport->id }}" checked readonly data-group="{{ $sport->is_group }}" />
+	            <input type="checkbox" class="weui-check" id="sport" checked onclick="return false" />
 	            <i class="weui-icon-checked"></i>
 	        </div>
 	        <div class="weui-cell__bd">
-	            <p>{{ $sport->name }}@if($sport->name == '广场舞')（表演人数须12人及以上）@endif</p>
+	            <p>{{ $match->sport->name }}</p>
 	        </div>
 	    </label>
-	    @endforeach
 	</div>
-	@if($match->hasGroupSport())
+	@if($match->sport->is_group)
 	<div class="weui-cells__title group-info">参赛信息</div>
 	<div class="weui-cells weui-cells_form group-info">
 	    <div class="weui-cell">
@@ -92,11 +90,11 @@
 		<input type="submit" class="weui-btn weui-btn_primary" value="确认提交">
 	</div>
 
-	<div class="weui-cells__tips">赛制规则说明：
+{{-- 	<div class="weui-cells__tips">赛制规则说明：
 	    @foreach($sports as $sport)
 	    <a class="sport-rule" href="{{ $sport->fileOfGameRule }}">{{ $sport->name }}</a>@if(!$loop->last)，@endif
 	    @endforeach
-	</div>
+	</div> --}}
 </form>
 @endsection
 

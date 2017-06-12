@@ -49,6 +49,15 @@
                 <li @if(preg_match('/\/admin\/match\/register\/qrcode/' ,url()->current())) class="active" @endif><a href="/admin/match/register/qrcode">报名二维码生成</a></li>
               </ul>
             </li>
+            <li class="dropdown @if(preg_match('/\/wm/' ,url()->current())) active @endif">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">网民公益 <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/admin/match">报名查询</a></li>
+                @foreach($menuGroups as $group)
+                <li><a href="/admin/wm/group/{{ $group->id }}/ticket">{{ $group->name }}</a></li>
+                @endforeach
+              </ul>
+            </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li @if(preg_match('/\/admin\/role/' ,url()->current())) class="active" @endif><a href="/admin/role">管理员管理</a></li>

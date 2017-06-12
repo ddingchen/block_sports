@@ -3,6 +3,7 @@
 namespace App\Http\ViewComposers;
 
 use App\Match;
+use App\Wm\Group;
 use Illuminate\View\View;
 
 class AdminMenuComposer
@@ -11,6 +12,10 @@ class AdminMenuComposer
     public function compose(View $view)
     {
         $matches = Match::all();
-        $view->with('menuMatches', $matches);
+        $groups = Group::all();
+        $view->with([
+            'menuMatches' => $matches,
+            'menuGroups' => $groups,
+        ]);
     }
 }

@@ -12,9 +12,9 @@ class Sport extends Model
 
     public $timestamps = false;
 
-    public function matchResults()
+    public function results()
     {
-        return $this->hasMany('App\MatchResult');
+        return $this->hasManyThrough('App\Result', 'App\Match');
     }
 
     public function getFileOfGameRuleAttribute()

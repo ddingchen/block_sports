@@ -124,10 +124,9 @@ class TicketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ticket $ticket)
+    public function destroy(Match $match, Ticket $ticket)
     {
-        $ticket->sports()->detach();
         $ticket->delete();
-        return redirect('admin/ticket');
+        return redirect("admin/match/{$match->id}/ticket");
     }
 }

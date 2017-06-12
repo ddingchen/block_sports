@@ -59,7 +59,7 @@
             </div>
           </td>
           <td class="control">
-            <form class="delete" method="post" action="/admin/ticket/{{ $ticket->id }}">
+            <form class="delete" method="post" action="/admin/match/{{ $match->id }}/ticket/{{ $ticket->id }}">
               {{ method_field('DELETE') }}
               {{ csrf_field() }}
               <button class="btn btn-danger btn-xs" type="submit">删除</button>
