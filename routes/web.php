@@ -19,7 +19,7 @@ Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
         Route::get('group', 'WMSwimmingController@groups');
         Route::get('group/{group}/register', 'WMSwimmingController@registerForm');
         Route::post('group/{group}/register', 'WMSwimmingController@register');
-        Route::get('ticket/{ticket}/pay', 'WMSwimmingController@payForm');
+        Route::get('pay', 'WMSwimmingController@payForm');
         Route::get('success', 'WMSwimmingController@success');
         Route::get('i/ticket', 'WMSwimmingController@myTickets');
         Route::get('ticket/{ticket}', 'WMSwimmingController@ticket');

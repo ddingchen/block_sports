@@ -111,11 +111,13 @@ class WMSwimmingController extends Controller
         $ticket->registion()->associate($registion);
         $ticket->save();
 
-        return json_encode(['target_url' => "/wm/ticket/{$ticket->id}/pay"]);
+        return json_encode(['target_url' => "/wm/pay?ticket={$ticket->id}"]);
     }
 
-    public function payForm(Ticket $ticket)
+    public function payForm()
     {
+        $ticket = Ticket::findOrFail(request('ticket'));
+
         if ($ticket->owner->id != auth()->id()) {
             return abort('403', '没有访问权限');
         }

@@ -43,7 +43,7 @@
 			        @else
 			        <div class="weui-form-preview__ft">
 		                <a class="weui-form-preview__btn weui-form-preview__btn_default" href="/wm/ticket/{{ $ticket->id }}">报名详情</a>
-		                <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="/wm/ticket/{{ $ticket->id }}/pay">继续支付</a>
+		                <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="/wm/pay?ticket={{$ticket->id}}">继续支付</a>
 		            </div>
 			        @endif
 			    </div>
