@@ -14,7 +14,7 @@
 
 			<div class="page__bd">
 				<div class="weui-cells">
-					<a class="weui-cell weui-cell_access" href="/wm/group">
+					<a class="weui-cell weui-cell_access" href="javascript:changeGroup()">
 		                <div class="weui-cell__bd">
 		                    <p>参赛项目</p>
 		                </div>
@@ -43,6 +43,12 @@
 
 @section('js')
 <script type="text/javascript">
+	function changeGroup() {
+		if(confirm('更改参赛项目后，当前填写的信息将会清空，是否确认继续')) {
+			window.location.href = '/wm/group';
+		}
+	}
+
 	var ajaxing = false
 	$('form').submit(function(event) {
 		if(ajaxing == true) {
