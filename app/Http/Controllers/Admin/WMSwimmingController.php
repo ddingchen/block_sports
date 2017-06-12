@@ -33,7 +33,7 @@ class WMSwimmingController extends Controller
         if ($ticket->paid) {
             // refund
             $out_refund_no = date('ymd') . substr(time(), -5) . substr(microtime(), 2, 5);
-            $result = app('wechat')->payment->refund($ticket->out_trade_no, $out_refund_no, 100);
+            $result = app('wechat')->payment->refund($ticket->out_trade_no, $out_refund_no, $ticket->group->price * 100);
             DB::table('refunds')->insert(['detail' => json_encode($result)]);
         }
         // delete
