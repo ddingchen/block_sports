@@ -32,6 +32,7 @@ class PaymentController extends Controller
                 // 不是已经支付状态则修改为已经支付状态
                 $ticket->paid = true;
                 $ticket->paid_at = Carbon::now();
+                $ticket->save();
             }
 
             return true; // 返回处理完成
