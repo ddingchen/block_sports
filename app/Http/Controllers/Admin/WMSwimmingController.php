@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Wm\Group;
 use App\Wm\Registion;
 use App\Wm\Ticket;
+use DB;
 use Illuminate\Http\Request;
 
 class WMSwimmingController extends Controller
