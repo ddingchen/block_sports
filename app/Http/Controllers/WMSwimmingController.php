@@ -156,6 +156,7 @@ class WMSwimmingController extends Controller
             'out_trade_no' => $ticket->out_trade_no,
             'total_fee' => $ticket->group->price * 100,
         ]));
+        \Log::debug($order);
         $result = app('wechat')->payment->prepare($order);
         \Log::debug($result);
         return $result->prepay_id;
