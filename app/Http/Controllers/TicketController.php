@@ -27,19 +27,6 @@ class TicketController extends Controller
         return view('user.ticket.index', compact('user', 'tickets'));
     }
 
-    // public function result()
-    // {
-    //     $ticket = auth()->user()->ticket;
-    //     if ($ticket) {
-    //         $result = $ticket->matchResults->first(function ($res) {
-    //             return $res->video && $res->honour;
-    //         });
-    //         $result = $result ?: $ticket->matchResults->first();
-    //         return redirect("match/result/{$result->id}");
-    //     }
-    //     return redirect('activities/hsblockgame/register');
-    // }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -48,10 +35,7 @@ class TicketController extends Controller
     public function create(Match $match)
     {
         $user = auth()->user();
-        $matches = $match->group->matches;
-        $areas = $match->street->areas->sortBy('py')->values();
-        $sports = $match->sports;
-        return view('ticket.create', compact('matches', 'sports', 'match', 'areas', 'user'));
+        return view('ticket.create', compact('match', 'user'));
     }
 
     /**
@@ -187,8 +171,8 @@ class TicketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-        //
+
     }
 }

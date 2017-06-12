@@ -35,12 +35,18 @@ class User extends Authenticatable
 
     public function tickets()
     {
-        return $this->hasMany('App\Ticket');
+        // return $this->hasMany('App\Ticket');
+        return $this->morphMany('App\Ticket', 'owner');
     }
 
     public function adminRequest()
     {
         return $this->hasOne('App\AdminRequest');
+    }
+
+    public function teams()
+    {
+        return $this->belongsToMany('App\Team', 'team_members');
     }
 
     public function ticketForMatch(Match $match)
@@ -49,5 +55,10 @@ class User extends Authenticatable
             ['user_id', $this->id],
             ['match_id', $match->id],
         ])->first();
+    }
+
+    public function wmTickets()
+    {
+        return $this->hasMany('App\Wm\Ticket');
     }
 }

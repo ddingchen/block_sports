@@ -11,12 +11,12 @@ class TopListController extends Controller
         $js = app('wechat')->js;
 
         $sports = Sport::all()->filter(function ($sport) {
-            return $sport->matchResults->contains(function ($result) {
+            return $sport->results->contains(function ($result) {
                 return $result->score !== null;
             });
         });
 
-        $results = $sport->matchResults->filter(function ($result) {
+        $results = $sport->results->filter(function ($result) {
             return $result->score !== null;
         });
 
@@ -28,7 +28,7 @@ class TopListController extends Controller
     public function fetchFirstTopList()
     {
         $sports = Sport::all()->filter(function ($sport) {
-            return $sport->matchResults->contains(function ($result) {
+            return $sport->results->contains(function ($result) {
                 return $result->score !== null;
             });
         });
@@ -58,7 +58,7 @@ class TopListController extends Controller
             ];
             return [
                 'rank' => $rank,
-                'name' => $result->ticket->owner->name,
+                'name' => $result->owner->name,
                 'score' => $result->score,
                 'readable_score' => $result->readable_score,
             ];

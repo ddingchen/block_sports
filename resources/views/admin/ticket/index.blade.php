@@ -3,64 +3,24 @@
 @section('page-title', '报名列表')
 
 @section('content')
-<div class="form-inline">
-  {{-- <label id="summary" style="display: none">当前项目共<span id="currentCount">{{ $tickets->count() }}</span>人／总计<span id="allCount">{{ $tickets->count() }}</span>人</label> --}}
-</div>
-<div class="filter">
-  <div class="form-group">
-    <label>运动项目筛选</label>
-    <div>
-      <div class="btn-group sports-filter" role="group" aria-label="...">
-        @foreach($sports as $sport)
-        <button type="button" class="btn btn-default">{{ $sport->name }}</button>
-        @endforeach
-      </div>
-    </div>
-  </div>
-    {{-- <ul class="list-group">
-      @foreach($sports as $sport)
-      <li class="list-group-item">{{ $sport->name }}</li>
-      @endforeach
-    </ul> --}}
-  <div class="form-group">
-    <label>社区筛选</label>
-    <select id="block" class="form-control">
-      <option value="" selected>所有社区</option>
-      @foreach($blocks as $block)
-      <option value="{{ $block->name }}">{{ $block->name }}</option>
-      @endforeach
-    </select>
-  </div>
-
-</div>
-{{-- <div class="form-group">
-  <select id="sport" class="form-control">
-    <option value="" selected>所有项目</option>
-    @foreach($sports as $sport)
-    <option value="{{ $sport->name }}">{{ $sport->name }}</option>
-    @endforeach
-  </select>
-</div> --}}
-
-<a class="btn btn-success" href="/admin/ticket/create?match={{ $match->id }}">线下报名录入</a>
-
+<h2>{{ $match->title }} {{ $match->sub_title }}</h2>
+<a class="btn btn-success" href="/admin/match/{{ $match->id }}/ticket/create">线下报名录入</a>
 <div class="table-responsive">
     <table class="table table-hover">
-      <caption>
-        当前项目共<span id="currentCount">{{ $tickets->count() }}</span>人／总计<span id="allCount">{{ $tickets->count() }}</span>人
-      </caption>
       <thead>
         <tr>
           <th>#</th>
           <th>报名时间</th>
-          <th>运动项目</th>
-          <th>小区</th>
-          <th>社区</th>
+          @if($match->sport->is_group)
+          <th>团队</th>
+          <th>领队姓名</th>
+          <th>领队电话</th>
+          @else
           <th>姓名</th>
           <th>性别</th>
           <th>年龄</th>
           <th>联系电话</th>
-          <th>团队</th>
+          @endif
           <th>备注</th>
           <th></th>
         </tr>
@@ -69,14 +29,12 @@
       	@foreach($tickets as $ticket)
         <tr @if(!$ticket->owner->open_id) style="background-color: #eee" @endif>
           <th scope="row">{{ $loop->index + 1 }}</th>
-          @if($ticket->created_at->isToday())
-          <td>{{ '今天 ' . $ticket->created_at->format('H:i') }}</td>
+          <td>{{ $ticket->created_at->diffForHumans() }}</td>
+          @if($match->sport->is_group)
+          <td class="team">{{ $ticket->owner->name }}</td>
+          <td>{{ $ticket->owner->leader->name }}</td>
+          <td>{{ $ticket->owner->leader->tel }}</td>
           @else
-          <td>{{ $ticket->created_at->format('m-d H:i') }}</td>
-          @endif
-          <td>{{ $ticket->sports->implode('name', '，') }}</td>
-          <td>{{ $ticket->owner->residentialArea->name or '其他' }}</td>
-          <td>{{ $ticket->owner->residentialArea->block->name or '' }}</td>
           <td>{{ $ticket->owner->name }}</td>
           @if($ticket->owner->sex == 'male')
           <td class="sex">男</td>
@@ -87,29 +45,21 @@
           @endif
           <td class="age">{{ $ticket->owner->age }}</td>
           <td class="tel">{{ $ticket->owner->tel }}</td>
-          <td class="team">{{ $ticket->ticketSports->implode('team_name', ' ') }}</td>
+          @endif
           <td class="note">{{ $ticket->note }}</td>
           <td class="control">
             <div class="btn-group">
               <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                操作 <span class="caret"></span>
+                变更 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu dropdown-menu-right">
                 <li><a href="/admin/user/{{ $ticket->owner->id }}/edit">个人信息编辑</a></li>
                 <li><a href="/admin/ticket/{{ $ticket->id }}/edit">报名信息编辑</a></li>
-                {{-- <li role="separator" class="divider"></li>
-                <li><a href="/admin/ticket/{{ $ticket->id }}">删除信息</a></li> --}}
               </ul>
             </div>
           </td>
-         {{--  <td class="control">
-          	<a class="btn btn-primary btn-xs" href="/admin/user/{{ $ticket->owner->id }}/edit" role="button">联系方式</a>
-          </td>
           <td class="control">
-            <a class="btn btn-primary btn-xs" href="/admin/ticket/{{ $ticket->id }}/edit" role="button">报名信息</a>
-          </td> --}}
-          <td class="control">
-            <form class="delete" method="post" action="/admin/ticket/{{ $ticket->id }}">
+            <form class="delete" method="post" action="/admin/match/{{ $match->id }}/ticket/{{ $ticket->id }}">
               {{ method_field('DELETE') }}
               {{ csrf_field() }}
               <button class="btn btn-danger btn-xs" type="submit">删除</button>
@@ -134,13 +84,13 @@
      min-width: 50px
   }
   table tr td.tel{
-     min-width: 160px
+     min-width: 120px
   }
   table tr td.control{
      min-width: 60px
   }
   table tr td.note{
-     max-width: 150px
+     max-width: 250px
   }
 
 </style>

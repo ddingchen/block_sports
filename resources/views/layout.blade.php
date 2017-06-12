@@ -13,12 +13,62 @@
         body {
             background-color: #f8f8f8;
         }
+        a {
+            color: inherit;
+        }
         .container {
             position: absolute;
             left: 0;
             right: 0;
             bottom: 0;
             top: 0;
+        }
+        .fa {
+            position: relative;
+        }
+        .header {
+            box-sizing: border-box;
+            height: 60px;
+            background: #fff;
+            align-items: center;
+            padding: 15px;
+            font-size: 18px;
+        }
+        .top-bar {
+            color: #666;
+        }
+        .top-bar a+a i{
+            margin-left: 10px;
+        }
+        .empty-tip {
+            margin-top: 1em;
+            margin-bottom: .3em;
+            padding-left: 15px;
+            padding-right: 15px;
+            color: #999;
+            font-size: 16px;
+            text-align: center;
+        }
+        .block-btn{
+            margin: 15px auto;
+            padding: 0 15px;
+        }
+        .narrow-btn {
+            margin: 0 auto;
+            padding: 15px 0;
+            width: 60%;
+        }
+        .small-btn {
+            margin: 0 auto;
+            /*padding: 15px 0;*/
+            width: 100px;
+        }
+        .small-btn .weui-btn{
+            line-height: 2.3;
+            font-size: 14px;
+        }
+        .weui-cell__hd i.fa{
+            margin-right: 5px;
         }
     </style>
   </head>
@@ -32,15 +82,19 @@
               @yield('content')
             </div>
             <div class="weui-tabbar">
-                <a href="/match/group" class="weui-tabbar__item @if(preg_match('/\/match\/group/' ,url()->current())) weui-bar__item_on @endif">
-                    {{-- <img src="/image/match.png" alt="" class="weui-tabbar__icon"> --}}
+                <a href="/match" class="weui-tabbar__item @if(preg_match('/\/match/' ,url()->current())) weui-bar__item_on @endif">
                     <i class="weui-tabbar__icon fa fa-file-text"></i>
                     <p class="weui-tabbar__label">比赛报名</p>
                 </a>
                 <a href="/sport/top-list" class="weui-tabbar__item @if(preg_match('/\/sport\/(\d+\/)?top-list/' ,url()->current())) weui-bar__item_on @endif">
-                    {{-- <img src="/image/rank.png" alt="" class="weui-tabbar__icon"> --}}
                     <i class="weui-tabbar__icon fa fa-trophy"></i>
                     <p class="weui-tabbar__label">排行榜</p>
+                </a>
+                <a href="/i" class="weui-tabbar__item @if(preg_match('/\/i/' ,url()->current())) weui-bar__item_on @endif">
+                    <i class="weui-tabbar__icon fa fa-user" style="position: relative;">
+                        <span class="weui-badge weui-badge_dot" style="position: absolute;top: 0;right: -6px;"></span>
+                    </i>
+                    <p class="weui-tabbar__label">我</p>
                 </a>
             </div>
         </div>

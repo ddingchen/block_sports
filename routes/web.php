@@ -11,7 +11,21 @@
 |
  */
 
+Route::post('payment/notify', 'PaymentController@notify');
+
 Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
+    Route::group(['prefix' => 'wm'], function () {
+        Route::get('/', 'WMSwimmingController@index');
+        Route::get('group', 'WMSwimmingController@groups');
+        Route::get('group/{group}/register', 'WMSwimmingController@registerForm');
+        Route::post('group/{group}/register', 'WMSwimmingController@register');
+        Route::get('ticket/{ticket}/pay', 'WMSwimmingController@payForm');
+        Route::get('success', 'WMSwimmingController@success');
+        Route::get('i/ticket', 'WMSwimmingController@myTickets');
+        Route::get('ticket/{ticket}', 'WMSwimmingController@ticket');
+        Route::get('ticket', 'WMSwimmingController@allTickets');
+    });
+
     // 原链接重定向至新路由
     Route::get('activities/hsblockgame', function () {
         return redirect('match/1/ticket/create');
@@ -24,10 +38,18 @@ Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
     Route::get('match/result/{id}', 'MatchResultController@show');
     // Route::get('residentialArea/{id}/blockName', 'BlockController@blockNameOfArea');
 
+    Route::get('/', function () {return redirect('sport/top-list');});
+    Route::get('i', 'IController@index');
     Route::get('i/ticket', 'TicketController@indexOfUser');
+    Route::resource('i/team', 'TeamController');
+    Route::get('i/team/{team}/invite', 'TeamController@invite');
+    Route::get('i/team/{team}/join', 'TeamController@join');
+    Route::get('i/team/{team}/qrCode', 'TeamController@qrCode');
+    Route::resource('i/team/{team}/member', 'MemberController', ['only' => ['edit', 'update', 'destroy']]);
 
     Route::resource('match/{match}/ticket', 'TicketController');
-    Route::resource('match/group', 'MatchGroupController', ['only' => ['index', 'show']]);
+    Route::resource('match', 'MatchController');
+    // Route::resource('match/group', 'MatchGroupController', ['only' => ['index', 'show']]);
     Route::get('street/{street}/area', 'AreaController@indexByStreet');
 
     Route::get('sport/top-list', 'TopListController@fetchFirstTopList');
@@ -47,7 +69,7 @@ $adminMiddleware = isWeChatBrowser(app('request')) ? ['wechat.oauth', 'login.wec
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => $adminMiddleware], function () {
     Route::get('/', function () {
-        return redirect('admin/ticket');
+        return redirect('admin/match');
     });
     Route::resource('request', 'AdminRequestController', ['only' => ['index']]);
     Route::resource('role', 'RoleController');
@@ -58,13 +80,21 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => $admi
     Route::resource('block', 'BlockController');
     Route::resource('area', 'AreaController');
     Route::resource('user', 'UserController');
-    Route::resource('ticket', 'TicketController');
+    Route::resource('match/{match}/ticket', 'TicketController');
     Route::resource('match', 'MatchController', ['only' => ['index', 'create', 'store']]);
-    Route::resource('group', 'MatchGroupController');
-    Route::get('match/register/qrcode', 'MatchController@registerQrcodeForm');
-    Route::get('match/register/qrcode/generate', 'MatchController@generateRegisterQrcode');
-    Route::get('match/result', 'MatchResultController@fetchFirstMatch');
-    Route::resource('match/{match}/result', 'MatchResultController');
+    // Route::resource('group', 'MatchGroupController');
+    // Route::get('match/register/qrcode', 'MatchController@registerQrcodeForm');
+    // Route::get('match/register/qrcode/generate', 'MatchController@generateRegisterQrcode');
+    // Route::get('match/result', 'MatchResultController@fetchFirstMatch');
+    Route::resource('match/{match}/result', 'ResultController', ['except' => ['create', 'store']]);
+    Route::get('match/{match}/ticket/{ticket}/result/create', 'ResultController@create');
+    Route::post('match/{match}/ticket/{ticket}/result', 'ResultController@store');
+
+    Route::get('wm/group/{group}/ticket', 'WMSwimmingController@tickets');
+    Route::get('wm/registion/{registion}', 'WMSwimmingController@registionForm');
+    Route::put('wm/registion/{registion}', 'WMSwimmingController@editRegistion');
+    Route::delete('wm/ticket/{ticket}', 'WMSwimmingController@destoryTicket');
+
     Route::get('wechat/material', 'WechatController@material');
     Route::get('wechat/updateMenu', 'WechatController@updateMenu');
 });

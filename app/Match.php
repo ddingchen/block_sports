@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Match extends Model
 {
-    protected $fillable = ['street_id'];
+    protected $fillable = ['title', 'sub-title'];
 
-    public function street()
+    public function sport()
     {
-        return $this->belongsTo('App\Street');
+        return $this->belongsTo('App\Sport');
     }
 
     public function tickets()
@@ -18,25 +18,8 @@ class Match extends Model
         return $this->hasMany('App\Ticket');
     }
 
-    public function sports()
-    {
-        return $this->belongsToMany('App\Sport', 'match_sports')->withTimestamps();
-    }
-
-    public function group()
-    {
-        return $this->belongsTo('App\MatchGroup');
-    }
-
     public function results()
     {
-        return $this->hasManyThrough('App\MatchResult', 'App\Ticket');
-    }
-
-    public function hasGroupSport()
-    {
-        return $this->sports->contains(function ($sport) {
-            return $sport->is_group;
-        });
+        return $this->hasMany('App\Result');
     }
 }

@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sport extends Model
 {
-    protected $fillable = ['id', 'name', 'standard'];
+    protected $fillable = ['id', 'name', 'standard', 'is_group'];
 
     public $incrementing = false;
 
     public $timestamps = false;
 
-    public function matchResults()
+    public function results()
     {
-        return $this->hasMany('App\MatchResult');
+        return $this->hasManyThrough('App\Result', 'App\Match');
     }
 
     public function getFileOfGameRuleAttribute()

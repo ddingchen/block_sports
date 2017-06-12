@@ -15,6 +15,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\ResetRealNameOfUsers::class,
         Commands\GenerateHSStreetInfo::class,
+        Commands\SimplifyMatchStruct::class,
+        Commands\BuildTeamForSquareDancer::class,
     ];
 
     /**

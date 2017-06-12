@@ -4,17 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Match;
-use App\MatchResult;
+use App\Result;
+use App\Ticket;
 use Illuminate\Http\Request;
 
-class MatchResultController extends Controller
+class ResultController extends Controller
 {
-    public function fetchFirstMatch()
-    {
-        $match = Match::first();
-        return redirect("admin/match/{$match->id}/result");
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -22,14 +17,8 @@ class MatchResultController extends Controller
      */
     public function index(Match $match)
     {
-        // $sports = Sport::all();
-        // $selectedSport = $request->has('sport') ? Sport::find($request->input('sport')) : $sports->first();
-        // $results = $selectedSport->matchResults;
-        // return view('admin.match.result.index', compact('sports', 'selectedSport', 'results'));
-        $matches = Match::all();
-        $sports = $match->sports;
-        $results = $match->results;
-        return view('admin.result.index', compact('sports', 'matches', 'results'));
+        $tickets = $match->tickets;
+        return view('admin.result.index', compact('match', 'tickets'));
     }
 
     /**
@@ -37,9 +26,9 @@ class MatchResultController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request, Match $match, Ticket $ticket)
     {
-        //
+        return view('admin.result.create', compact('match', 'ticket'));
     }
 
     /**
@@ -48,9 +37,13 @@ class MatchResultController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Match $match, Ticket $ticket)
     {
-        //
+        $result = new Result($request->all());
+        $result->match()->associate($match);
+        $result->owner()->associate($ticket->owner);
+        $result->save();
+        return redirect("admin/match/{$match->id}/result");
     }
 
     /**
@@ -70,9 +63,8 @@ class MatchResultController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Match $match, $id)
+    public function edit(Match $match, Result $result)
     {
-        $result = MatchResult::findOrFail($id);
         return view('admin.result.edit', compact('result', 'match'));
     }
 
@@ -83,15 +75,19 @@ class MatchResultController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Match $match, $id)
+    public function update(Request $request, Match $match, Result $result)
     {
-        $result = MatchResult::findOrFail($id);
         $this->validate($request, [
             'score' => 'nullable|numeric',
         ]);
 
-        $result->update($request->all());
-        return redirect("admin/match/{$match->id}/result?sport={$result->sport->id}");
+        if ($request->input('score')) {
+            $result->update($request->all());
+        } else {
+            $result->delete();
+        }
+
+        return redirect("admin/match/{$match->id}/result");
     }
 
     /**
