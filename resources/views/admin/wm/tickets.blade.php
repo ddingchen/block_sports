@@ -37,7 +37,7 @@
 	        			<a href="/admin/wm/registion/{{ $registion->id }}" class="btn btn-primary btn-xs">更改</a>
 	        		</td>
 	        		<td>
-	        			<form method="post" action="/admin/wm/ticket/{{ $ticket->id }}">
+	        			<form class="delete" method="post" action="/admin/wm/ticket/{{ $ticket->id }}">
 	        				{{ csrf_field() }}
 	        				{{ method_field('delete') }}
 	        				<button type="submit" class="btn btn-danger btn-xs">删除并退款</button>
@@ -83,7 +83,7 @@
 	        		</td>
 	        		@if($loop->first)
 	        		<td rowspan="4">
-	        			<form method="post" action="/admin/wm/ticket/{{ $ticket->id }}">
+	        			<form class="delete" method="post" action="/admin/wm/ticket/{{ $ticket->id }}">
 	        				{{ csrf_field() }}
 	        				{{ method_field('delete') }}
 	        				<button type="submit" class="btn btn-danger btn-xs">删除并退款</button>
@@ -97,6 +97,16 @@
 		</table>
 	@endif
 </div>
+@endsection
+
+@section('page-js')
+<script type="text/javascript">
+	$('form.delete').submit(function() {
+		if(!confirm('删除后报名信息将无法找回，资金将退换用户账户，是否继续？')) {
+			return false
+		}
+	})
+</script>
 @endsection
 
 @section('page-css')
