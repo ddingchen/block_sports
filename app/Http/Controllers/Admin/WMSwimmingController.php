@@ -40,4 +40,14 @@ class WMSwimmingController extends Controller
         $ticket->delete();
         return redirect("admin/wm/group/{$ticket->group->id}/ticket");
     }
+
+    public function searchForm()
+    {
+        $registions = [];
+        if ($keyword = request('idcard_no')) {
+            $registions = Registion::where('idcard_no', 'like', "%{$keyword}%")->get();
+        }
+
+        return view('admin.wm.search', compact('registions'));
+    }
 }
