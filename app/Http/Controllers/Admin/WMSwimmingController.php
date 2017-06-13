@@ -50,4 +50,26 @@ class WMSwimmingController extends Controller
 
         return view('admin.wm.search', compact('registions'));
     }
+
+    public function settingForm()
+    {
+        $setting = DB::table('wm_settings')->first();
+        return view('admin.wm.setting', compact('setting'));
+    }
+
+    public function setting(Request $request)
+    {
+        // register switch
+        if (DB::table('wm_settings')->first()) {
+            DB::table('wm_settings')->update($request->only(['title', 'sub_title', 'enable_register']));
+        } else {
+            DB::table('wm_settings')->insert($request->only(['title', 'sub_title', 'enable_register']));
+        }
+        // home banner
+        if ($request->hasFile('banner')) {
+            $request->banner->storeAs('public/image', 'wm_banner.jpg');
+        }
+
+        return back()->with('status', 'success');
+    }
 }

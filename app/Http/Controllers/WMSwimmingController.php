@@ -7,6 +7,7 @@ use App\Wm\RegisterTeam;
 use App\Wm\Registion;
 use App\Wm\Ticket;
 use Carbon\Carbon;
+use DB;
 use EasyWeChat\Payment\Order;
 use Illuminate\Http\Request;
 use Validator;
@@ -16,7 +17,8 @@ class WMSwimmingController extends Controller
 
     public function index()
     {
-        return view('wmswimming.index');
+        $setting = DB::table('wm_settings')->first();
+        return view('wmswimming.index', compact('setting'));
     }
 
     public function groups()
@@ -28,11 +30,17 @@ class WMSwimmingController extends Controller
 
     public function registerForm(Group $group)
     {
-        return view('wmswimming.register', compact('group'));
+        $registerEnabled = $this->registerEnabled();
+        return view('wmswimming.register', compact('group', 'registerEnabled'));
     }
 
     public function register(Request $request, Group $group)
     {
+        // 报名未开启
+        if (!$this->registerEnabled()) {
+            return abort('403');
+        }
+
         $message = [
             '*.required' => '必填',
             'members.*.realname.max' => '请输入15字内身份证姓名',
@@ -216,5 +224,11 @@ class WMSwimmingController extends Controller
             return false;
         }
         return true;
+    }
+
+    private function registerEnabled()
+    {
+        $setting = DB::table('wm_settings')->first();
+        return $setting && $setting->enable_register;
     }
 }

@@ -95,6 +95,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => $admi
     Route::put('wm/registion/{registion}', 'WMSwimmingController@editRegistion');
     Route::delete('wm/ticket/{ticket}', 'WMSwimmingController@destoryTicket');
     Route::get('wm/search/registion', 'WMSwimmingController@searchForm');
+    Route::get('wm/setting', 'WMSwimmingController@settingForm');
+    Route::post('wm/setting', 'WMSwimmingController@setting');
 
     Route::get('wechat/material', 'WechatController@material');
     Route::get('wechat/updateMenu', 'WechatController@updateMenu');

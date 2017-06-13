@@ -33,7 +33,11 @@
 						@include('wmswimming.form', ['member' => 0, 'sex' => ''])
 					@endif
 					<div class="weui-btn-area">
+						@if($registerEnabled)
 			            <button type="submit" class="weui-btn weui-btn_primary">确认报名</button>
+			            @else
+			            <button type="submit" class="weui-btn weui-btn_primary weui-btn_disabled" disabled>未开启报名</button>
+			            @endif
 			        </div>
 				</form>
 			</div>
@@ -64,7 +68,11 @@
 				window.location.href = res.target_url
 			},
 			error: function (xhr, status, error) {
-				console.log(xhr.responseJSON)
+				if(xhr.status == 403) {
+					alert('抱歉，报名未开启')
+					return
+				}
+
 				$('.weui-cell').removeClass('weui-cell_warn').find('small').empty()
 				for(var errorName in xhr.responseJSON) {
 					var errorDesc = xhr.responseJSON[errorName]
