@@ -31,24 +31,33 @@ $factory->define(App\Wm\Group::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Wm\Ticket::class, function (Faker\Generator $faker) {
 
-    $ownerType = $faker->boolean ? 'App\User' : 'App\Wm\RegisterTeam';
-    $owner = factory($ownerType)->create();
-    if ($ownerType == 'App\Wm\RegisterTeam') {
-        $owner->members()->saveMany(factory('App\User', 4)->create());
-    }
+    // $ownerType = $faker->boolean ? 'App\User' : 'App\Wm\RegisterTeam';
+    // $owner = factory($ownerType)->create();
+    // if ($ownerType == 'App\Wm\RegisterTeam') {
+    //     $owner->members()->saveMany(factory('App\User', 4)->create());
+    // }
 
     return [
-        'group_id' => factory('App\Wm\Group')->create()->id,
-        'owner_type' => $ownerType,
-        'owner_id' => $owner->id,
+        'group_id' => function () {
+            return factory('App\Wm\Group')->create()->id;
+        },
+        'user_id' => factory('App\User')->create()->id,
+        'registion_id' => factory('App\Wm\Registion')->create()->id,
+        'registion_type' => 'App\Wm\Registion',
     ];
 });
 
 $factory->define(App\Wm\Registion::class, function (Faker\Generator $faker) {
+    if ($faker->boolean(80)) {
+        $birthday = $faker->dateTimeBetween('-60 years', '-18 years');
+    } else {
+        $birthday = $faker->dateTimeBetween('-15 years', '-13 years');
+    }
+
     return [
         'realname' => $faker->name,
         'sex' => $faker->boolean ? 'male' : 'female',
-        'idcard_no' => $faker->randomNumber(5),
+        'idcard_no' => $faker->randomNumber(6, true) . $birthday->format('Ymd') . $faker->randomNumber(4, true),
         'tel' => '13812084569',
     ];
 });

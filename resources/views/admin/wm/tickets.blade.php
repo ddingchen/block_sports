@@ -5,14 +5,16 @@
 @section('content')
 <div class="table-responsive">
 	@if(!$group->team_required)
+	@foreach($tickets as $ageRange => $ageTickets)
 	<table class="table table-striped">
-		<caption>{{ $group->name }} 报名名单</caption>
+		<caption>{{ $group->name }} {{ $ageRange }} 报名名单</caption>
 		<thead>
         	<tr>
         		<td>#</td>
         		<td>报名时间</td>
         		<td>真实姓名</td>
         		<td>性别</td>
+        		<td>生日</td>
         		<td>联系电话</td>
         		<td>身份证号</td>
         		<td>支付状态</td>
@@ -22,7 +24,7 @@
         	</tr>
         </thead>
         <tbody>
-        	@foreach($group->tickets as $ticket)
+        	@foreach($ageTickets as $ticket)
         		@php
         		$registion = $ticket->registion;
         		@endphp
@@ -31,6 +33,7 @@
 	        		<td>{{ $registion->created_at->diffForHumans() }}</td>
 	        		<td>{{ $registion->realname }}</td>
 	        		<td>{{ $registion->readableSex() }}</td>
+	        		<td>{{ $registion->getBirthday()->format('Y-m-d') }}</td>
 	        		<td>{{ $registion->tel }}</td>
 	        		<td>{{ $registion->idcard_no }}</td>
 	        		<td>{{ $ticket->paid ? '已支付' : '' }}</td>
@@ -49,6 +52,7 @@
         	@endforeach
         </tbody>
 	</table>
+	@endforeach
 	@else
 		<table class="table">
 			<caption>{{ $group->name }} 报名名单</caption>
@@ -58,6 +62,7 @@
 	        		<td>报名时间</td>
 	        		<td>真实姓名</td>
 	        		<td>性别</td>
+        			<td>生日</td>
 	        		<td>联系电话</td>
 	        		<td>身份证号</td>
 	        		<td>支付状态</td>
@@ -75,6 +80,7 @@
 	        		<td>{{ $registion->created_at->diffForHumans() }}</td>
 	        		<td>{{ $registion->realname }}</td>
 	        		<td>{{ $registion->readableSex() }}</td>
+	        		<td>{{ $registion->getBirthday()->format('Y-m-d') }}</td>
 	        		<td>{{ $registion->tel }}</td>
 	        		<td>{{ $registion->idcard_no }}</td>
 	        		@if($loop->first)
