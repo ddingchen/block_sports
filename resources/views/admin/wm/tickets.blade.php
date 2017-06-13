@@ -3,6 +3,7 @@
 @section('page-title', '网民游泳-报名列表')
 
 @section('content')
+<button id="export" class="btn btn-primary">导出EXCEL</button>
 <div class="table-responsive">
 	@if(!$group->team_required)
 	@foreach($tickets as $ageRange => $ageTickets)
@@ -108,11 +109,29 @@
 @endsection
 
 @section('page-js')
+<script src="/js/FileSaver.min.js"></script>
+<script src="http://cdn.bootcss.com/TableExport/4.0.10/css/tableexport.min.css"></script>
+<script src="http://cdn.bootcss.com/TableExport/4.0.10/img/csv.svg"></script>
+<script src="http://cdn.bootcss.com/TableExport/4.0.10/img/icsv.png"></script>
+<script src="http://cdn.bootcss.com/TableExport/4.0.10/img/itxt.png"></script>
+<script src="http://cdn.bootcss.com/TableExport/4.0.10/img/ixls.png"></script>
+<script src="http://cdn.bootcss.com/TableExport/4.0.10/img/ixlsx.png"></script>
+<script src="http://cdn.bootcss.com/TableExport/4.0.10/img/txt.svg"></script>
+<script src="http://cdn.bootcss.com/TableExport/4.0.10/img/xls.svg"></script>
+<script src="http://cdn.bootcss.com/TableExport/4.0.10/img/xlsx.svg"></script>
+<script src="http://cdn.bootcss.com/TableExport/4.0.10/js/tableexport.min.js"></script>
+
 <script type="text/javascript">
 	$('form.delete').submit(function() {
 		if(!confirm('删除后报名信息将无法找回，资金将退换用户账户，是否继续？')) {
 			return false
 		}
+	})
+
+	$('#export').click(function() {
+		$('table').tableExport({
+			ignoreCols: [9, 10]
+		})
 	})
 </script>
 @endsection
