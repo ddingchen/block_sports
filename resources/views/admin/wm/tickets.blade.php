@@ -7,7 +7,7 @@
 <div class="table-responsive">
 	@if(!$group->team_required)
 	@foreach($tickets as $ageRange => $ageTickets)
-	<table class="table table-striped">
+	<table class="table table-striped single">
 		<caption>{{ $group->name }} {{ $ageRange }} 报名名单</caption>
 		<thead>
         	<tr>
@@ -55,7 +55,7 @@
 	</table>
 	@endforeach
 	@else
-		<table class="table">
+		<table class="table team">
 			<caption>{{ $group->name }} 报名名单</caption>
 			<thead>
 	        	<tr>
@@ -110,16 +110,16 @@
 
 @section('page-js')
 <script src="/js/FileSaver.min.js"></script>
-<script src="http://cdn.bootcss.com/TableExport/4.0.10/css/tableexport.min.css"></script>
-<script src="http://cdn.bootcss.com/TableExport/4.0.10/img/csv.svg"></script>
-<script src="http://cdn.bootcss.com/TableExport/4.0.10/img/icsv.png"></script>
-<script src="http://cdn.bootcss.com/TableExport/4.0.10/img/itxt.png"></script>
-<script src="http://cdn.bootcss.com/TableExport/4.0.10/img/ixls.png"></script>
-<script src="http://cdn.bootcss.com/TableExport/4.0.10/img/ixlsx.png"></script>
-<script src="http://cdn.bootcss.com/TableExport/4.0.10/img/txt.svg"></script>
-<script src="http://cdn.bootcss.com/TableExport/4.0.10/img/xls.svg"></script>
-<script src="http://cdn.bootcss.com/TableExport/4.0.10/img/xlsx.svg"></script>
-<script src="http://cdn.bootcss.com/TableExport/4.0.10/js/tableexport.min.js"></script>
+<script src="http://cdn.bootcss.com/TableExport/5.0.0-rc.4/css/tableexport.min.css"></script>
+<script src="http://cdn.bootcss.com/TableExport/5.0.0-rc.4/img/csv.svg"></script>
+<script src="http://cdn.bootcss.com/TableExport/5.0.0-rc.4/img/icsv.png"></script>
+<script src="http://cdn.bootcss.com/TableExport/5.0.0-rc.4/img/itxt.png"></script>
+<script src="http://cdn.bootcss.com/TableExport/5.0.0-rc.4/img/ixls.png"></script>
+<script src="http://cdn.bootcss.com/TableExport/5.0.0-rc.4/img/ixlsx.png"></script>
+<script src="http://cdn.bootcss.com/TableExport/5.0.0-rc.4/img/txt.svg"></script>
+<script src="http://cdn.bootcss.com/TableExport/5.0.0-rc.4/img/xls.svg"></script>
+<script src="http://cdn.bootcss.com/TableExport/5.0.0-rc.4/img/xlsx.svg"></script>
+<script src="http://cdn.bootcss.com/TableExport/5.0.0-rc.4/js/tableexport.min.js"></script>
 
 <script type="text/javascript">
 	$('form.delete').submit(function() {
@@ -128,10 +128,11 @@
 		}
 	})
 
-	$('#export').click(function() {
-		$('table').tableExport({
-			ignoreCols: [9, 10]
-		})
+	$('table.single').tableExport({
+		// ignoreCols: [9, 10]
+	})
+	$('table.team').tableExport({
+		// ignoreCols: [8, 9]
 	})
 </script>
 @endsection
