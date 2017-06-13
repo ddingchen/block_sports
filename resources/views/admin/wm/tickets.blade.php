@@ -16,6 +16,7 @@
         		<td>联系电话</td>
         		<td>身份证号</td>
         		<td>支付状态</td>
+        		<td>微信支付后台订单号</td>
         		<td></td>
         		<td></td>
         	</tr>
@@ -33,6 +34,7 @@
 	        		<td>{{ $registion->tel }}</td>
 	        		<td>{{ $registion->idcard_no }}</td>
 	        		<td>{{ $ticket->paid ? '已支付' : '' }}</td>
+	        		<td>{{ $ticket->out_trade_no }}</td>
 	        		<td>
 	        			<a href="/admin/wm/registion/{{ $registion->id }}" class="btn btn-primary btn-xs">更改</a>
 	        		</td>
