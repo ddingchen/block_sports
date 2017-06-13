@@ -202,7 +202,7 @@ class WMSwimmingController extends Controller
     private function registerForTeam($formInput)
     {
         $registions = collect($formInput)->map(function ($input) {
-            return Registion::make($input);
+            return new Registion($input);
         });
         $teamRegistion = RegisterTeam::create();
         $teamRegistion->registions()->saveMany($registions);

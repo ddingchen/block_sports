@@ -3,7 +3,6 @@
 @section('page-title', '网民游泳-报名列表')
 
 @section('content')
-<button id="export" class="btn btn-primary">导出EXCEL</button>
 <div class="table-responsive">
 	@if(!$group->team_required)
 	@foreach($tickets as $ageRange => $ageTickets)
@@ -128,12 +127,7 @@
 		}
 	})
 
-	$('table.single').tableExport({
-		// ignoreCols: [9, 10]
-	})
-	$('table.team').tableExport({
-		// ignoreCols: [8, 9]
-	})
+	$('table').tableExport()
 </script>
 @endsection
 
