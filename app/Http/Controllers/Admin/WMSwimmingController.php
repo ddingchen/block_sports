@@ -51,6 +51,12 @@ class WMSwimmingController extends Controller
 
     public function editRegistion(Request $request, Registion $registion)
     {
+        $this->validate($request, [
+            'realname' => 'required|string|max:15',
+            'sex' => 'required|in:male,female',
+            'idcard_no' => ['required', 'string', 'regex:/^[0-9]{17}([0-9]|X)$/'],
+            'tel' => 'required',
+        ]);
         $registion->update($request->all());
         return redirect("admin/wm/group/{$registion->registerGroup()->id}/ticket");
     }

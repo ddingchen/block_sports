@@ -5,11 +5,11 @@
 		<div class="page js_show">
 			<div class="page__hd">
 				<h1 class="page__title">填写参赛信息</h1>
+				@if($group->team_required)
 				<p class="page__desc">
-					@if($group->team_required)
-						填表顺序与实际比赛接力顺序无关
-					@endif
+					填表顺序与实际比赛接力顺序无关
 				</p>
+				@endif
 			</div>
 
 			<div class="page__bd">
@@ -21,6 +21,9 @@
 		                <div class="weui-cell__ft">{{ $group->name }}</div>
 		            </a>
 				</div>
+				@if(!$group->team_required)
+				<div class="weui-cells__tips" style="text-align: right;">系统将根据身份证号的生日自动选择年龄分组</div>
+				@endif
 
 				<form method="post" action="/wm/group/{{ $group->id }}/register">
 					{{ csrf_field() }}
