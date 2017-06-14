@@ -199,6 +199,19 @@ class WMSwimmingController extends Controller
         return view('wmswimming.ticket', compact('ticket'));
     }
 
+    public function destoryTicket(Ticket $ticket)
+    {
+        if ($ticket->owner->id != auth()->id()) {
+            return abort('403', '没有访问权限');
+        }
+        if ($ticket->paid) {
+            return abort('403', '订单已经支付不可进行删除操作');
+        }
+        // delete
+        $ticket->delete();
+        return redirect('wm');
+    }
+
     private function registerForTeam($formInput)
     {
         $registions = collect($formInput)->map(function ($input) {

@@ -23,6 +23,7 @@ Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
         Route::get('success', 'WMSwimmingController@success');
         Route::get('i/ticket', 'WMSwimmingController@myTickets');
         Route::get('ticket/{ticket}', 'WMSwimmingController@ticket');
+        Route::delete('ticket/{ticket}', 'WMSwimmingController@destoryTicket');
         Route::get('ticket', 'WMSwimmingController@allTickets');
     });
 
@@ -100,6 +101,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => $admi
 
     Route::get('wechat/material', 'WechatController@material');
     Route::get('wechat/updateMenu', 'WechatController@updateMenu');
+    Route::get('wechat/createWmQrCode', 'WechatController@createWmQrCode');
 });
 
 Route::group(['namespace' => 'Admin'], function () {

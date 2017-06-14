@@ -34,8 +34,23 @@ class WechatController extends Controller
                                     'url' => url("match/{$matchId}/ticket/create?block={$blockId}"),
                                     'image' => 'http://mmbiz.qpic.cn/mmbiz_jpg/oMibuKYSu2KtcLUtQjnrYuDaYVjiazDv2SQQ1zBQLGeqQWcFoSnuBcF0VHibg07vVf38w9XkI3yayxUT6NhUgFGLg/0?wx_fmt=jpeg',
                                 ]);
+                            } elseif (preg_match('/wm_swimming/', $message->EventKey === 1)) {
+                                return new News([
+                                    'title' => '2017年无锡市网民全民健身游泳比赛',
+                                    'description' => '点击进入报名入口',
+                                    'url' => url("/wm"),
+                                ]);
                             } else {
                                 return '欢迎关注我们的新浪微博：中铠街区体育';
+                            }
+                            break;
+                        case 'SCAN':
+                            if ($message->EventKey == 'wm_swimming') {
+                                return new News([
+                                    'title' => '2017年无锡市网民全民健身游泳比赛',
+                                    'description' => '点击进入报名入口',
+                                    'url' => url("/wm"),
+                                ]);
                             }
                             break;
                         default:
@@ -129,6 +144,15 @@ class WechatController extends Controller
         $material = app('wechat')->material;
         $resource = $material->lists($type, $countPerPage * $page, $countPerPage * ($page + 1));
         return $resource;
+    }
+
+    public function createWmQrCode()
+    {
+        $qrcode = app('wechat')->qrcode;
+        $result = $qrcode->forever('wm_swimming'); // 或者 $qrcode->forever("foo");
+        $ticket = $result->ticket; // 或者 $result['ticket']
+        $url = $qrcode->url($ticket);
+        return $url;
     }
 
     private function setSexForUser($openId)

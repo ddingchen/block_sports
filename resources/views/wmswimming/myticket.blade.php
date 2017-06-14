@@ -5,7 +5,11 @@
 		<div class="page js_show">
 			<div class="page__hd">
 				<h1 class="page__title">我的报名</h1>
-				<p class="page__desc">报名需支付完成后才生效</p>
+				<p class="page__desc">
+					如发现提交的报名信息有误，可致电客服修改<br/>
+					客服热线：<a href="tel:0510-88751569">0510-88751569</a><br/>
+					咨询时间：工作日 10:00～17:00
+				</p>
 			</div>
 
 			<div class="page__bd">
