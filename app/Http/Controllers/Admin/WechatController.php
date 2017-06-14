@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\User;
+use DB;
 use EasyWeChat\Message\Material;
 use EasyWeChat\Message\News;
 use Illuminate\Http\Request;
@@ -34,9 +35,9 @@ class WechatController extends Controller
                                     'url' => url("match/{$matchId}/ticket/create?block={$blockId}"),
                                     'image' => 'http://mmbiz.qpic.cn/mmbiz_jpg/oMibuKYSu2KtcLUtQjnrYuDaYVjiazDv2SQQ1zBQLGeqQWcFoSnuBcF0VHibg07vVf38w9XkI3yayxUT6NhUgFGLg/0?wx_fmt=jpeg',
                                 ]);
-                            } elseif (preg_match('/wm_swimming/', $message->EventKey === 1)) {
+                            } elseif (preg_match('/wm_swimming/', $message->EventKey) === 1) {
                                 return new News([
-                                    'title' => '2017年无锡市网民全民健身游泳比赛',
+                                    'title' => $this->getWmMatchName(),
                                     'description' => '点击进入报名入口',
                                     'url' => url("/wm"),
                                 ]);
@@ -47,7 +48,7 @@ class WechatController extends Controller
                         case 'SCAN':
                             if ($message->EventKey == 'wm_swimming') {
                                 return new News([
-                                    'title' => '2017年无锡市网民全民健身游泳比赛',
+                                    'title' => $this->getWmMatchName(),
                                     'description' => '点击进入报名入口',
                                     'url' => url("/wm"),
                                 ]);
@@ -176,5 +177,11 @@ class WechatController extends Controller
             $sex = 'female';
         }
         return $sex;
+    }
+
+    private function getWmMatchName()
+    {
+        $setting = DB::table('wm_settings')->first();
+        return ($setting && $setting->title) ? $setting->title : '2017年无锡市网民全民健身游泳比赛';
     }
 }
