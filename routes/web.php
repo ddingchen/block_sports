@@ -101,7 +101,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => $admi
 
     Route::get('wechat/material', 'WechatController@material');
     Route::get('wechat/updateMenu', 'WechatController@updateMenu');
-    Route::get('wechat/createWmQrCode', 'WechatController@createWmQrCode');
+    // Route::get('wechat/createWmQrCode', 'WechatController@createWmQrCode');
 });
 
 Route::group(['namespace' => 'Admin'], function () {

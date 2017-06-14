@@ -45,7 +45,7 @@
 	        			<form class="delete" method="post" action="/admin/wm/ticket/{{ $ticket->id }}">
 	        				{{ csrf_field() }}
 	        				{{ method_field('delete') }}
-	        				<button type="submit" class="btn btn-danger btn-xs">删除并退款</button>
+	        				<button type="submit" class="btn btn-danger btn-xs">删除</button>
 	        			</form>
 	        		</td>
 	        	</tr>
@@ -122,7 +122,7 @@
 
 <script type="text/javascript">
 	$('form.delete').submit(function() {
-		if(!confirm('删除后报名信息将无法找回，资金将退换用户账户，是否继续？')) {
+		if(!confirm('请确认是否已经支付，如果已经支付需要考虑是否需要退款，可以截屏或复制保存该信息以备使用！报名信息将无法找回，是否继续？')) {
 			return false
 		}
 	})

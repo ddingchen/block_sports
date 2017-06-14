@@ -15,7 +15,7 @@
                 <img src="/storage/image/wm_banner.jpg">
             </section>
             <section>
-            	<a href="http://mp.weixin.qq.com/s?__biz=MzAwNTAyNzEwOQ==&mid=503151796&idx=1&sn=8fb6cbde5a2d543828b9e13c02d72dcf&chksm=032b38fe345cb1e860d1e2260dc713e9fa4b8b239281f2798dbae5157c6a18579c8e12b34db7#rd">
+            	<a href="http://mp.weixin.qq.com/s?__biz=MzAwNTAyNzEwOQ==&mid=503151796&idx=1&sn=8fb6cbde5a2d543828b9e13c02d72dcf&chksm=032b38fe345cb1e860d1e2260dc713e9fa4b8b239281f2798dbae5157c6a18579c8e12b34db7">
             		<h1 style="text-decoration: underline; text-align: center; color: #1AAD19">完整赛事规程</h1>
             	</a>
             </section>

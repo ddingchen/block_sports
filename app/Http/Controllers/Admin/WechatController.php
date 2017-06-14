@@ -98,30 +98,35 @@ class WechatController extends Controller
         $wechat = app('wechat');
         $menu = $wechat->menu;
         $buttons = [
+            // [
+            //     "name" => "街区运动会",
+            //     "sub_button" => [
+            //         [
+            //             "type" => "media_id",
+            //             "name" => "加入",
+            //             "media_id" => "LUY0P8mlFZSb6H24mzka7CcnnC_iIReGDavGqKoEflU",
+            //         ],
+            //         [
+            //             "type" => "view",
+            //             "name" => "报名入口",
+            //             "url" => "http://wap.zhongkaiyun.com/match/group",
+            //         ],
+            //         [
+            //             "type" => "view",
+            //             "name" => "我的报名",
+            //             "url" => "http://wap.zhongkaiyun.com/i/ticket",
+            //         ],
+            //         [
+            //             "type" => "view",
+            //             "name" => "排行榜",
+            //             "url" => "http://wap.zhongkaiyun.com/sport/top-list",
+            //         ],
+            //     ],
+            // ],
             [
-                "name" => "街区运动会",
-                "sub_button" => [
-                    [
-                        "type" => "media_id",
-                        "name" => "加入",
-                        "media_id" => "LUY0P8mlFZSb6H24mzka7CcnnC_iIReGDavGqKoEflU",
-                    ],
-                    [
-                        "type" => "view",
-                        "name" => "报名入口",
-                        "url" => "http://wap.zhongkaiyun.com/match/group",
-                    ],
-                    [
-                        "type" => "view",
-                        "name" => "我的报名",
-                        "url" => "http://wap.zhongkaiyun.com/i/ticket",
-                    ],
-                    [
-                        "type" => "view",
-                        "name" => "排行榜",
-                        "url" => "http://wap.zhongkaiyun.com/sport/top-list",
-                    ],
-                ],
+                "name" => "网民公益",
+                "type" => "view",
+                "url" => "http://wap.zhongkaiyun.com/wm",
             ],
             [
                 "type" => "view",
@@ -147,14 +152,14 @@ class WechatController extends Controller
         return $resource;
     }
 
-    public function createWmQrCode()
-    {
-        $qrcode = app('wechat')->qrcode;
-        $result = $qrcode->forever('wm_swimming'); // 或者 $qrcode->forever("foo");
-        $ticket = $result->ticket; // 或者 $result['ticket']
-        $url = $qrcode->url($ticket);
-        return $url;
-    }
+    // public function createWmQrCode()
+    // {
+    //     $qrcode = app('wechat')->qrcode;
+    //     $result = $qrcode->forever('wm_swimming');
+    //     $ticket = $result->ticket;
+    //     $url = $qrcode->url($ticket);
+    //     return $url;
+    // }
 
     private function setSexForUser($openId)
     {
