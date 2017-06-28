@@ -9,6 +9,7 @@ use App\Wm\Ticket;
 use Carbon\Carbon;
 use DB;
 use EasyWeChat\Payment\Order;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -62,7 +63,7 @@ class WMSwimmingController extends Controller
 
         $validator->after(function ($validator) use ($request, $group) {
             $idcardNos = collect($request->input('members.*.idcard_no'));
-            $idcardNos->each(function ($idcardNo, $index) use ($validator, $group, $idcardNos) {
+            $idcardNos->each(function ($idcardNo, $index) use ($validator, $group, $idcardNos, $request) {
                 // 组队报名是
                 if ($group->team_required && $idcardNos->filter(function ($no) use ($idcardNo) {
                     return $no == $idcardNo;
@@ -71,18 +72,6 @@ class WMSwimmingController extends Controller
                     return;
                 }
 
-                $birthdayStr = substr($idcardNo, 6, 8);
-                // 生日提取
-                if (!$this->isValidDate($birthdayStr)) {
-                    $validator->errors()->add("members.{$index}.idcard_no", '无法识别身份证号日期部分，请确认输入是否正确');
-                    return;
-                }
-                // 年龄范围限定
-                $birthday = Carbon::createFromFormat('Ymd', $birthdayStr);
-                if ($this->isAgeOutOfRange($birthday)) {
-                    $validator->errors()->add("members.{$index}.idcard_no", '抱歉，该年龄不在我们的年龄组别范围内，无法报名');
-                    return;
-                }
                 // 报名人次限制
                 $registions = Registion::where('idcard_no', $idcardNo)->get();
                 if ($registions->count() != 0) {
@@ -95,6 +84,20 @@ class WMSwimmingController extends Controller
                         $validator->errors()->add("members.{$index}.idcard_no", '抱歉，该身份证已报名过该项目，不可重复报名');
                         return;
                     }
+                }
+
+                // 身份证实名认证
+                $validateResult = $this->validateIdcard($idcardNo, $request->input("members.{$index}.realname"));
+                if (!$validateResult['isValid']) {
+                    $validator->errors()->add("members.{$index}.idcard_no", $validateResult['message']);
+                    return;
+                }
+                // 年龄范围限定
+                $birthdayStr = substr($idcardNo, 6, 8);
+                $birthday = Carbon::createFromFormat('Ymd', $birthdayStr);
+                if ($this->isAgeOutOfRange($birthday)) {
+                    $validator->errors()->add("members.{$index}.idcard_no", '抱歉，该年龄不在我们的年龄组别范围内，无法报名');
+                    return;
                 }
             });
 
@@ -120,6 +123,44 @@ class WMSwimmingController extends Controller
         $ticket->save();
 
         return json_encode(['target_url' => "/wm/pay?ticket={$ticket->id}"]);
+    }
+
+    protected function validateIdcard($idcardNo, $realname)
+    {
+        $appKey = 'b7bb221d5ec25d7838a848f1a1fcf7d6';
+        $realname = urlencode($realname);
+        $client = new Client;
+        $response = $client->request('get', "http://op.juhe.cn/idcard/query?key={$appKey}&idcard={$idcardNo}&realname={$realname}");
+        \Log::debug($response->getBody());
+        $data = json_decode($response->getBody());
+        switch ($data->error_code) {
+            case 0:
+                if ($data->result->res == 1) {
+                    // 匹配成功
+                    return [
+                        'isValid' => true,
+                    ];
+                } else {
+                    // 匹配失败
+                    return [
+                        'isValid' => false,
+                        'message' => '您输入的姓名与身份证不匹配，请检查输入是否有误',
+                    ];
+                }
+                break;
+            case 210301:
+                return [
+                    'isValid' => false,
+                    'message' => '您输入的身份证不存在，请检查输入是否有误',
+                ];
+                break;
+            default:
+                \Log::error("身份证实名认证异常，身份证号{$idcardNo}，异常代码{$data->error_code}");
+                return [
+                    'isValid' => true,
+                ];
+                break;
+        }
     }
 
     public function payForm()
