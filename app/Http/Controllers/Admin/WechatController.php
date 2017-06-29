@@ -203,11 +203,11 @@ class WechatController extends Controller
     {
         switch ($type) {
             case 'five':
-                return 'pJRMdsxZDVUhyWJpevoL57Ql5EA4';
+                return 'pJRMdsw4NDzSV5pq9sllM2YkzjLM';
             case 'ten':
-                return 'pJRMdsxZDVUhyWJpevoL57Ql5EA4';
+                return 'pJRMds03Nl4tk2YRSC5HQmKvZ4Sk';
             case 'all':
-                return 'pJRMdsxZDVUhyWJpevoL57Ql5EA4';
+                return 'pJRMdsyqkJjNSW1HI5kU7rGIQrYo';
             default:
                 return '';
         };
