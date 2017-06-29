@@ -11,6 +11,9 @@
     	.page {
     		padding-bottom: 50px;
     	}
+        .notice {
+            color: #e64340;
+        }
     </style>
     @yield('css')
 </head>

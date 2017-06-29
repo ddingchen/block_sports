@@ -5,11 +5,12 @@
 		<div class="page js_show">
 			<div class="page__hd">
 				<h1 class="page__title">填写参赛信息</h1>
-				@if($group->team_required)
 				<p class="page__desc">
-					填表顺序与实际比赛接力顺序无关
+					请确认<span class="notice">填写信息与真实身份信息相符</span>，否则赛场取消比赛资格
+					@if($group->team_required)
+					<br/>填表顺序与实际比赛接力顺序无关
+					@endif
 				</p>
-				@endif
 			</div>
 
 			<div class="page__bd">
@@ -22,6 +23,7 @@
 		                <div class="weui-cell__ft">{{ session('team_name') }}</div>
 		            </a>
 				</div>
+				<div class="weui-cells__tips" style="text-align: right;">点击可更改团体名称，或改为个人报名</div>
 				@endif
 				<div class="weui-cells">
 					<a class="weui-cell weui-cell_access" href="javascript:changeGroup()">
@@ -34,7 +36,7 @@
 				@if(!$group->team_required)
 				<div class="weui-cells__tips" style="text-align: right;">系统将根据身份证号的生日自动选择年龄分组</div>
 				@endif
-
+				<br/>
 				<form method="post" action="/wm/group/{{ $group->id }}/register">
 					{{ csrf_field() }}
 					@if($group->team_required)

@@ -38,9 +38,6 @@
 
 @section('css')
 <style type="text/css">
-.notice {
-    color: #e64340;
-}
 </style>
 @endsection
 
