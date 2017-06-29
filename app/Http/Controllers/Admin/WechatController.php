@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\User;
+use Carbon\Carbon;
 use DB;
 use EasyWeChat\Message\Material;
 use EasyWeChat\Message\News;
+use EasyWeChat\Message\Raw;
 use Illuminate\Http\Request;
 
 class WechatController extends Controller
@@ -41,6 +43,8 @@ class WechatController extends Controller
                                     'description' => '点击进入报名入口',
                                     'url' => url("/wm"),
                                 ]);
+                            } elseif (preg_match('/ticket_coupon/', $message->EventKey) === 1) {
+                                return $this->getTicketCoupon($openId);
                             } else {
                                 return '欢迎关注我们的新浪微博：中铠街区体育';
                             }
@@ -52,6 +56,8 @@ class WechatController extends Controller
                                     'description' => '点击进入报名入口',
                                     'url' => url("/wm"),
                                 ]);
+                            } elseif ($message->EventKey == 'ticket_coupon') {
+                                return $this->getTicketCoupon($openId);
                             }
                             break;
                         default:
@@ -152,14 +158,69 @@ class WechatController extends Controller
         return $resource;
     }
 
-    // public function createWmQrCode()
-    // {
-    //     $qrcode = app('wechat')->qrcode;
-    //     $result = $qrcode->forever('wm_swimming');
-    //     $ticket = $result->ticket;
-    //     $url = $qrcode->url($ticket);
-    //     return $url;
-    // }
+    private function getTicketCoupon($openId)
+    {
+        if (DB::table('swimming_coupons')->where('open_id', $openId)->count() > 0) {
+            return '您已领取过门票优惠券，每个微信号仅限一次机会。';
+        }
+        // random coupon card
+        $type = $this->getCouponType();
+        $cardId = $this->getCouponCardId($type);
+        // send card
+        $staff = app('wechat')->staff;
+        $message = new Raw('{
+            "touser":"' . $openId . '",
+            "msgtype":"wxcard",
+            "wxcard":
+            {
+                 "card_id":"' . $cardId . '"
+            }
+        }');
+        $staff->message($message)->to($openId)->send();
+        // log to db
+        DB::table('swimming_coupons')->insert([
+            'open_id' => $openId,
+            'type' => $type,
+            'created_at' => Carbon::now(),
+        ]);
+    }
+
+    private function getCouponType()
+    {
+        $faker = \Faker\Factory::create();
+        if ($faker->boolean(75)) {
+            return 'five';
+        } else {
+            if ($faker->boolean(80)) {
+                return 'ten';
+            } else {
+                return 'all';
+            }
+        }
+    }
+
+    private function getCouponCardId($type)
+    {
+        switch ($type) {
+            case 'five':
+                return 'pJRMdsxZDVUhyWJpevoL57Ql5EA4';
+            case 'ten':
+                return 'pJRMdsxZDVUhyWJpevoL57Ql5EA4';
+            case 'all':
+                return 'pJRMdsxZDVUhyWJpevoL57Ql5EA4';
+            default:
+                return '';
+        };
+    }
+
+    public function createWmQrCode()
+    {
+        $qrcode = app('wechat')->qrcode;
+        $result = $qrcode->forever('ticket_coupon');
+        $ticket = $result->ticket;
+        $url = $qrcode->url($ticket);
+        return $url;
+    }
 
     private function setSexForUser($openId)
     {
