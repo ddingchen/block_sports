@@ -16,6 +16,8 @@ Route::post('payment/notify', 'PaymentController@notify');
 Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
     Route::group(['prefix' => 'wm'], function () {
         Route::get('/', 'WMSwimmingController@index');
+        Route::get('type', 'WMSwimmingController@types');
+        Route::post('type', 'WMSwimmingController@type');
         Route::get('group', 'WMSwimmingController@groups');
         Route::get('group/{group}/register', 'WMSwimmingController@registerForm');
         Route::post('group/{group}/register', 'WMSwimmingController@register');
@@ -98,6 +100,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => $admi
     Route::get('wm/search/registion', 'WMSwimmingController@searchForm');
     Route::get('wm/setting', 'WMSwimmingController@settingForm');
     Route::post('wm/setting', 'WMSwimmingController@setting');
+    Route::get('wm/team', 'WMSwimmingController@teams');
 
     Route::get('wechat/material', 'WechatController@material');
     Route::get('wechat/updateMenu', 'WechatController@updateMenu');

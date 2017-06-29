@@ -109,4 +109,12 @@ class WMSwimmingController extends Controller
 
         return back()->with('status', 'success');
     }
+
+    public function teams()
+    {
+        $registionsByGroup = Registion::whereNotNull('team_name')->get()->groupBy(function ($registion) {
+            return $registion->team_name;
+        });
+        return view('admin.wm.team', compact('registionsByGroup'));
+    }
 }

@@ -13,6 +13,16 @@
 			</div>
 
 			<div class="page__bd">
+				@if(session('team_name'))
+				<div class="weui-cells">
+					<a class="weui-cell weui-cell_access" href="javascript:changeType()">
+		                <div class="weui-cell__bd">
+		                    <p>报名团体</p>
+		                </div>
+		                <div class="weui-cell__ft">{{ session('team_name') }}</div>
+		            </a>
+				</div>
+				@endif
 				<div class="weui-cells">
 					<a class="weui-cell weui-cell_access" href="javascript:changeGroup()">
 		                <div class="weui-cell__bd">
@@ -53,6 +63,12 @@
 	function changeGroup() {
 		if(confirm('更改参赛项目后，当前填写的信息将会清空，是否确认继续')) {
 			window.location.href = '/wm/group';
+		}
+	}
+
+	function changeType() {
+		if(confirm('更改报名团体后，当前填写的信息将会清空，是否确认继续')) {
+			window.location.href = '/wm/type';
 		}
 	}
 

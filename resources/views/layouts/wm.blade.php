@@ -12,6 +12,7 @@
     		padding-bottom: 50px;
     	}
     </style>
+    @yield('css')
 </head>
 <body>
 	@yield('content')

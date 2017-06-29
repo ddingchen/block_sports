@@ -22,6 +22,29 @@ class WMSwimmingController extends Controller
         return view('wmswimming.index', compact('setting'));
     }
 
+    public function types()
+    {
+        return view('wmswimming.types');
+    }
+
+    public function type(Request $request)
+    {
+        $this->validate($request, [
+            'team_name' => 'nullable|string|max:30',
+        ], [
+            'team_name.string' => '请输入有效的团体名称',
+            'team_name.max' => '团体名称不能超过30个字',
+        ]);
+
+        if ($teamName = $request->input('team_name')) {
+            // add session
+            session()->put('team_name', $teamName);
+        } else {
+            // destory session
+            session()->forget('team_name');
+        }
+    }
+
     public function groups()
     {
         return view('wmswimming.groups', [
@@ -62,6 +85,19 @@ class WMSwimmingController extends Controller
         }
 
         $validator->after(function ($validator) use ($request, $group) {
+            $membersCount = count($request->input('members'));
+            if ($group->team_required) {
+                if ($membersCount != 4) {
+                    $validator->errors()->add("members", '4X50米接力报名必须有4个人组成');
+                    return;
+                }
+            } else {
+                if ($membersCount != 1) {
+                    $validator->errors()->add("members", '该项目为单人比赛');
+                    return;
+                }
+            }
+
             $idcardNos = collect($request->input('members.*.idcard_no'));
             $idcardNos->each(function ($idcardNo, $index) use ($validator, $group, $idcardNos, $request) {
                 // 组队报名是
@@ -110,6 +146,13 @@ class WMSwimmingController extends Controller
         // 待完善：身份证验证
 
         $formInput = $request->input('members');
+        // add team name if exists
+        if (session('team_name')) {
+            foreach ($formInput as &$input) {
+                $input['team_name'] = session('team_name');
+            }
+        }
+        \Log::debug($formInput);
         if ($group->team_required) {
             $registion = $this->registerForTeam($formInput);
         } else {
@@ -127,6 +170,12 @@ class WMSwimmingController extends Controller
 
     protected function validateIdcard($idcardNo, $realname)
     {
+        if (app()->isLocal()) {
+            return [
+                'isValid' => true,
+            ];
+        }
+
         $appKey = 'b7bb221d5ec25d7838a848f1a1fcf7d6';
         $realname = urlencode($realname);
         $client = new Client;

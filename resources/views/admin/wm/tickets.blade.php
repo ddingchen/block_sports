@@ -17,6 +17,7 @@
         		<td>生日</td>
         		<td>联系电话</td>
         		<td>身份证号</td>
+        		<td>团队名称</td>
         		<td>支付状态</td>
         		<td>微信支付后台订单号</td>
         		<td></td>
@@ -36,6 +37,7 @@
 	        		<td>{{ $registion->getBirthday()->format('Y-m-d') }}</td>
 	        		<td>{{ $registion->tel }}</td>
 	        		<td>{{ $registion->idcard_no }}</td>
+	        		<td>{{ $registion->team_name }}</td>
 	        		<td>{{ $ticket->paid ? '已支付' : '' }}</td>
 	        		<td>{{ $ticket->out_trade_no }}</td>
 	        		<td>
@@ -65,6 +67,7 @@
         			<td>生日</td>
 	        		<td>联系电话</td>
 	        		<td>身份证号</td>
+        			<td>团队名称</td>
 	        		<td>支付状态</td>
         			<td></td>
         			<td></td>
@@ -83,6 +86,7 @@
 	        		<td>{{ $registion->getBirthday()->format('Y-m-d') }}</td>
 	        		<td>{{ $registion->tel }}</td>
 	        		<td>{{ $registion->idcard_no }}</td>
+	        		<td>{{ $registion->team_name }}</td>
 	        		@if($loop->first)
 	        		<td rowspan="4">{{ $ticket->paid ? '已支付' : '' }}</td>
 	        		@endif

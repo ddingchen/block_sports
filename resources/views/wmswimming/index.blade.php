@@ -21,7 +21,7 @@
             </section>
             <section>
             	@if($setting->enable_register)
-                <a class="weui-btn weui-btn_primary" href="/wm/group">前往报名</a>
+                <a class="weui-btn weui-btn_primary" href="/wm/type">前往报名</a>
                 @else
                 <a class="weui-btn weui-btn_primary weui-btn_disabled" href="javascript:">报名未开启</a>
                 @endif
