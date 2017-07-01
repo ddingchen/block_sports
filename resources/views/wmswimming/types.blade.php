@@ -4,8 +4,9 @@
 <div class="container">
     <div class="page js_show">
         <div class="page__hd">
-            <h1 class="page__title">所属团体</h1>
+            <h1 class="page__title">所属团体（可选）</h1>
             <p class="page__desc">
+                <span class="notice">个人报名</span>可直接点击底部跳过按钮<br/>
                 本次比赛接受团体报名<br/>
                 使用<span class="notice">相同的团体名称</span>报名视为同一团体<br/>
                 团体报名人数不可<span class="notice">少于10人</span><br/>
@@ -27,7 +28,8 @@
                 </div>
 
                 <div class="weui-btn-area">
-                    <button type="submit" class="weui-btn weui-btn_primary">下一步</button>
+                    <button type="submit" class="weui-btn weui-btn_primary">以该团体成员身份报名</button>
+                    <br/>
                     <a href="javascript:clearTeamName()" class="weui-btn weui-btn_plain-primary">跳过，以个人身份报名</a>
                 </div>
             </form>

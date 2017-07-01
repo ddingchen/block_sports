@@ -76,7 +76,7 @@ class WMSwimmingController extends Controller
             'members' => 'required|array',
             'members.*.realname' => 'required|string|max:15',
             'members.*.sex' => 'required|in:male,female',
-            'members.*.idcard_no' => ['required', 'string', 'regex:/^[0-9]{17}([0-9]|X)$/'],
+            'members.*.idcard_no' => ['required', 'string', 'regex:/^[0-9]{17}([0-9]|X|x)$/'],
             'members.*.tel' => 'required|digits:11',
         ], $message);
 
@@ -98,7 +98,9 @@ class WMSwimmingController extends Controller
                 }
             }
 
-            $idcardNos = collect($request->input('members.*.idcard_no'));
+            $idcardNos = collect($request->input('members.*.idcard_no'))->map(function ($idcardNo) {
+                return strtoupper($idcardNo);
+            });
             $idcardNos->each(function ($idcardNo, $index) use ($validator, $group, $idcardNos, $request) {
                 // 组队报名是
                 if ($group->team_required && $idcardNos->filter(function ($no) use ($idcardNo) {
@@ -146,6 +148,9 @@ class WMSwimmingController extends Controller
         // 待完善：身份证验证
 
         $formInput = $request->input('members');
+        foreach ($formInput as &$inputField) {
+            $inputField['idcard_no'] = strtoupper($inputField['idcard_no']);
+        }
         // add team name if exists
         if (session('team_name')) {
             foreach ($formInput as &$input) {
