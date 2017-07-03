@@ -3,18 +3,28 @@
 @section('content')
 <div class="container">
     <div class="page js_show">
-        <div class="page__hd">
-            <h1 class="page__title">所属团体（可选）</h1>
-            <p class="page__desc">
-                <span class="notice">个人报名</span>可直接点击底部跳过按钮<br/>
-                本次比赛接受团体报名<br/>
-                使用<span class="notice">相同的团体名称</span>报名视为同一团体<br/>
-                团体报名人数不可<span class="notice">少于10人</span><br/>
-                团体比赛将设立专门的团体比赛奖项<br/>
+
+        <div class="section">
+            <h3 class="section-title">个人报名</h3>
+            <p class="section-desc">
+                如果您没有所属的俱乐部或其他团体组织，则直接选择<span class="notice">以个人身份报名</span>
             </p>
+            <div class="weui-btn-area">
+                <a href="javascript:clearTeamName()" class="weui-btn weui-btn_primary">以个人身份报名</a>
+            </div>
         </div>
 
-        <div class="page__bd">
+        <hr>
+
+        <div class="section">
+            <h3 class="section-title">团体报名</h3>
+            <p class="section-desc">
+                本次比赛接受团体报名<br/>
+                使用<span class="notice">相同的团体名称</span>报名将视为同一团体<br/>
+                团体报名人数不可<span class="notice">少于10人</span><br/>
+                团体比赛将设立专门的团体比赛奖项
+            </p>
+
             <form method="post" action="/wm/type">
                 {{ csrf_field() }}
                 <div class="weui-cells">
@@ -29,17 +39,32 @@
 
                 <div class="weui-btn-area">
                     <button type="submit" class="weui-btn weui-btn_primary">以该团体成员身份报名</button>
-                    <br/>
-                    <a href="javascript:clearTeamName()" class="weui-btn weui-btn_plain-primary">跳过，以个人身份报名</a>
                 </div>
             </form>
-        </div>
+        </section>
+
     </div>
 </div>
 @endsection
 
 @section('css')
 <style type="text/css">
+.section {
+    padding-bottom: 40px;
+}
+.section-title {
+    padding: 0 40px;
+    padding-top: 40px;
+    font-weight: 400;
+    text-align: left;
+}
+.section-desc {
+    padding: 0 40px;
+    margin-top: 5px;
+    color: #888;
+    text-align: left;
+    font-size: 14px;
+}
 </style>
 @endsection
 
@@ -47,6 +72,11 @@
 <script type="text/javascript">
     var ajaxing = false
     $('form').submit(function(event) {
+        if(!$('input[name="team_name"]').val()) {
+            alert('请输入您的团体名称');
+            return false;
+        }
+
         if(ajaxing == true) {
             return false
         }
