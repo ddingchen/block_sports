@@ -130,7 +130,7 @@ class WechatController extends Controller
             //     ],
             // ],
             [
-                "name" => "网民公益",
+                "name" => "游泳比赛",
                 "type" => "view",
                 "url" => "http://wap.zhongkaiyun.com/wm",
             ],
