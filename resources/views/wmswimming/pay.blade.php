@@ -41,19 +41,26 @@
 		        </div>
 		    </div>
 
-
-			<div class="weui-btn-area">
-				@if(app()->isLocal())
-				@php
-					$ticket->paid = true;
-					$ticket->paid_at = \Carbon\Carbon::now();
-					$ticket->save();
-				@endphp
-	            <a href="/wm/success" class="weui-btn weui-btn_primary">微信支付</a>
-	            @else
-	            <a href="javascript:" onclick="callPay()" class="weui-btn weui-btn_primary">微信支付</a>
-	            @endif
-	        </div>
+		    @if($isWeChatBrowser)
+				<div class="weui-btn-area">
+					@if(app()->isLocal())
+					@php
+						$ticket->paid = true;
+						$ticket->paid_at = \Carbon\Carbon::now();
+						$ticket->save();
+					@endphp
+		            <a href="/wm/success" class="weui-btn weui-btn_primary">微信支付</a>
+		            @else
+		            <a href="javascript:" onclick="callPay()" class="weui-btn weui-btn_primary">微信支付</a>
+		            @endif
+		        </div>
+	        @else
+	        	<p>扫描下方二维码完成支付</p>
+	        	<img src="/storage/pay_qrcode/{{ $ticket->id }}.png">
+				<div class="weui-btn-area">
+		            <a href="javascript:" class="weui-btn weui-btn_primary">我已成功支付</a>
+		        </div>
+	        @endif
 		</div>
 	</div>
 </div>

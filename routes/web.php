@@ -13,7 +13,9 @@
 
 Route::post('payment/notify', 'PaymentController@notify');
 
-Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
+$middlewares = isWeChatBrowser() ? ['wechat.oauth', 'login.wechat'] : [];
+
+Route::group(['middleware' => $middlewares], function () {
     Route::group(['prefix' => 'wm'], function () {
         Route::get('/', 'WMSwimmingController@index');
         Route::get('type', 'WMSwimmingController@types');
@@ -24,10 +26,14 @@ Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
         Route::get('pay', 'WMSwimmingController@payForm');
         Route::get('success', 'WMSwimmingController@success');
         Route::get('i/ticket', 'WMSwimmingController@myTickets');
+        Route::get('tickets/search', 'WMSwimmingController@search');
         Route::get('ticket/{ticket}', 'WMSwimmingController@ticket');
         Route::delete('ticket/{ticket}', 'WMSwimmingController@destoryTicket');
         Route::get('ticket', 'WMSwimmingController@allTickets');
     });
+});
+
+Route::group(['middleware' => ['wechat.oauth', 'login.wechat']], function () {
 
     // 原链接重定向至新路由
     Route::get('activities/hsblockgame', function () {

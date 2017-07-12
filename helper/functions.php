@@ -1,8 +1,8 @@
 <?php
 
-function isWeChatBrowser($request)
+function isWeChatBrowser()
 {
-    return strpos($request->header('user_agent'), 'MicroMessenger') !== false;
+    return strpos(request()->header('user_agent'), 'MicroMessenger') !== false;
 }
 
 function getPyHeadersOfZhWord($zhWord)

@@ -11,6 +11,7 @@ use DB;
 use EasyWeChat\Payment\Order;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use PHPQRCode\QRcode;
 use Validator;
 
 class WMSwimmingController extends Controller
@@ -166,7 +167,7 @@ class WMSwimmingController extends Controller
         $ticket = new Ticket;
         $ticket->out_trade_no = date('ymd') . substr(time(), -5) . substr(microtime(), 2, 5);
         $ticket->group()->associate($group);
-        $ticket->owner()->associate(auth()->user());
+        // $ticket->owner()->associate(auth()->user());
         $ticket->registion()->associate($registion);
         $ticket->save();
 
@@ -219,38 +220,34 @@ class WMSwimmingController extends Controller
 
     public function payForm()
     {
+        $jsApiParameters = "";
         $ticket = Ticket::findOrFail(request('ticket'));
-
-        if ($ticket->owner->id != auth()->id()) {
-            return abort('403', '没有访问权限');
+        $result = $this->prepareForWechat($ticket);
+        \Log::debug($result);
+        $isWeChatBrowser = isWeChatBrowser();
+        if ($isWeChatBrowser) {
+            $jsApiParameters = app('wechat')->payment->configForPayment($result->prepay_id);
+        } else {
+            QRcode::png($result->code_url, storage_path("app/public/pay_qrcode/{$ticket->id}.png"), 'L', 5);
         }
 
-        // if (!app()->isLocal()) {
-        $prepayId = $this->prepareForWechat($ticket);
-        // $request->session()->put('success_callback', '/history/book/finish');
-        // $request->session()->put('fail_callback', '/history/book/unfinish');
-        // return redirect('payment/wxpub')->with([
-        //     'prepay_id' => $prepayId,
-        // ]);
-        $jsApiParameters = app('wechat')->payment->configForPayment($prepayId);
-        // } else {
-        // $payment->successCallbackForWxpub();
-        // if ($payMethod != 'wxpub') {
-        //     return redirect('sport/success');
-        // } else {
-        //     return redirect('history/book/finish');
-        // }
-        // }
-        return view('wmswimming.pay', compact('ticket', 'prepayId', 'jsApiParameters'));
+        return view('wmswimming.pay', compact('ticket', 'jsApiParameters', 'isWeChatBrowser'));
     }
 
     private function getWechatPaymentAttribute()
     {
-        return [
-            'notify_url' => config('app.url') . '/payment/notify',
-            'trade_type' => 'JSAPI',
-            'openid' => auth()->user()->open_id,
-        ];
+        if (isWeChatBrowser()) {
+            return [
+                'notify_url' => config('app.url') . '/payment/notify',
+                'trade_type' => 'JSAPI',
+                'openid' => auth()->user()->open_id,
+            ];
+        } else {
+            return [
+                'notify_url' => config('app.url') . '/payment/notify',
+                'trade_type' => 'NATIVE',
+            ];
+        }
     }
 
     private function prepareForWechat(Ticket $ticket)
@@ -260,11 +257,9 @@ class WMSwimmingController extends Controller
             'detail' => $ticket->group->name,
             'out_trade_no' => $ticket->out_trade_no,
             'total_fee' => $ticket->group->price * 100,
+            'product_id' => $ticket->out_trade_no,
         ]));
-        \Log::debug($order);
-        $result = app('wechat')->payment->prepare($order);
-        \Log::debug($result);
-        return $result->prepay_id;
+        return app('wechat')->payment->prepare($order);
     }
 
     public function success()
@@ -279,6 +274,25 @@ class WMSwimmingController extends Controller
         ]);
     }
 
+    public function search(Request $request)
+    {
+        $tickets = [];
+        if ($request->has('idcard_no') && $request->has('realname')) {
+            $tickets = $this->searchTickets($request->input('idcard_no'), $request->input('realname'));
+        }
+        return view('wmswimming.search', compact('tickets'));
+    }
+
+    private function searchTickets($idcardNo, $realname)
+    {
+        return Registion::where('idcard_no', $idcardNo)
+            ->where('realname', $realname)
+            ->get()
+            ->map(function ($registion) {
+                return $registion->ticket ?: $registion->getTeam()->ticket;
+            });
+    }
+
     public function allTickets()
     {
         return view('wmswimming.alltickets', [
@@ -286,10 +300,13 @@ class WMSwimmingController extends Controller
         ]);
     }
 
-    public function ticket(Ticket $ticket)
+    public function ticket(Request $request, Ticket $ticket)
     {
-        if ($ticket->owner->id != auth()->id()) {
-            return abort('403', '没有访问权限');
+        if (!($request->has('idcard_no') && $request->has('realname'))) {
+            return abort('403', '缺少必要信息');
+        }
+        if (!$ticket->isTicketOwner($request->input('idcard_no'), $request->input('realname'))) {
+            return abort('403', '身份信息有误');
         }
         return view('wmswimming.ticket', compact('ticket'));
     }
@@ -338,5 +355,30 @@ class WMSwimmingController extends Controller
     {
         $setting = DB::table('wm_settings')->first();
         return $setting && $setting->enable_register;
+    }
+
+    public function scanpay()
+    {
+        \PHPQRCode\QRcode::png('abc', storage_path("app/public/pay_qrcode/1.png"), 'L', 5);
+        return;
+        // $ticket = Ticket::findOrFail(request('ticket'));
+        // $result = $this->prepareForWechat($ticket);
+        $outTradeNo = '8001' . time();
+        $order = new Order(array_merge([
+            'notify_url' => config('app.url') . '/payment/notify',
+            'trade_type' => 'NATIVE',
+            // 'openid' => auth()->user()->open_id,
+            'product_id' => '8001',
+        ], [
+            'body' => '扫码支付测试',
+            'detail' => '测试',
+            'out_trade_no' => '8001' . time(),
+            'total_fee' => 1,
+        ]));
+        $result = app('wechat')->payment->prepare($order);
+        // $prepayId = $result->prepay_id;
+        $codeUrl = $result->code_url;
+        // $jsApiParameters = app('wechat')->payment->configForPayment($prepayId);
+        \PHPQRCode\QRcode::png($codeUrl, storage_path("app/public/pay_qrcode/{$outTradeNo}.png"), 'L', 5);
     }
 }

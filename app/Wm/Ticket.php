@@ -2,6 +2,8 @@
 
 namespace App\Wm;
 
+use App\Wm\RegisterTeam;
+use App\Wm\Registion;
 use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
@@ -32,5 +34,18 @@ class Ticket extends Model
     public function group()
     {
         return $this->belongsTo('App\Wm\Group');
+    }
+
+    public function isTicketOwner($idcardNo, $realname)
+    {
+        $registion = $this->registion;
+        if ($registion instanceof RegisterTeam) {
+            return $registion->registions->contains(function ($item) use ($idcardNo, $realname) {
+                return $item->idcard_no == $idcardNo && $item->realname == $realname;
+            });
+        } else {
+            return $registion->idcard_no == $idcardNo && $registion->realname == $realname;
+        }
+        return false;
     }
 }
