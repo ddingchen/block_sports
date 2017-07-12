@@ -222,13 +222,18 @@ class WMSwimmingController extends Controller
     {
         $jsApiParameters = "";
         $ticket = Ticket::findOrFail(request('ticket'));
+        if ($ticket->paid) {
+            return redirect('wm');
+        }
         $result = $this->prepareForWechat($ticket);
         \Log::debug($result);
         $isWeChatBrowser = isWeChatBrowser();
-        if ($isWeChatBrowser) {
-            $jsApiParameters = app('wechat')->payment->configForPayment($result->prepay_id);
-        } else {
-            QRcode::png($result->code_url, storage_path("app/public/pay_qrcode/{$ticket->id}.png"), 'L', 5);
+        if (!app()->isLocal()) {
+            if ($isWeChatBrowser) {
+                $jsApiParameters = app('wechat')->payment->configForPayment($result->prepay_id);
+            } else {
+                QRcode::png($result->code_url, storage_path("app/public/pay_qrcode/{$ticket->id}.png"), 'L', 5);
+            }
         }
 
         return view('wmswimming.pay', compact('ticket', 'jsApiParameters', 'isWeChatBrowser'));

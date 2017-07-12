@@ -55,10 +55,12 @@
 		            @endif
 		        </div>
 	        @else
-	        	<p>扫描下方二维码完成支付</p>
-	        	<img src="/storage/pay_qrcode/{{ $ticket->id }}.png">
+	        	<div style="display: flex; flex-direction: column; margin: 20px;">
+		        	<p style="text-align: center">扫描下方二维码完成支付</p>
+		        	<img src="/storage/pay_qrcode/{{ $ticket->id }}.png">
+				</div>
 				<div class="weui-btn-area">
-		            <a href="javascript:" class="weui-btn weui-btn_primary">我已成功支付</a>
+		            <a href="javascript:" class="weui-btn weui-btn_primary" onclick="complete()">我已成功支付</a>
 		        </div>
 	        @endif
 		</div>
@@ -68,15 +70,21 @@
 
 @section('js')
 <script type="text/javascript">
+function complete() {
+	alert('可在主页进入“报名查询”，查询报名记录')
+	window.location.href = '/wm'
+}
+
 function onBridgeReady(){
    WeixinJSBridge.invoke(
        	'getBrandWCPayRequest',
-		{!! $jsApiParameters !!},
+		{!! $jsApiParameters !!} @if($jsApiParameters),@endif
 		function(res){
 			if(res.err_msg == "get_brand_wcpay_request:ok") {
 				window.location.href = '/wm/success';
 			} else {
-				window.location.href = '/wm/i/ticket';
+				alert('支付失败，请于主页进入“报名查询”，找回您的报名并重新发起支付。');
+				window.location.href = '/wm';
 			}
 		}
    );

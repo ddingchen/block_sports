@@ -15,7 +15,7 @@
 	        <div class="weui-msg__opr-area">
 	            <p class="weui-btn-area">
 	                <a href="/wm/group" class="weui-btn weui-btn_primary">继续报名</a>
-	                <a href="/wm/i/ticket" class="weui-btn weui-btn_default">查看我的报名</a>
+	                <a href="/wm/tickets/search" class="weui-btn weui-btn_default">查询我的报名</a>
 	            </p>
 	        </div>
 	    </div>
