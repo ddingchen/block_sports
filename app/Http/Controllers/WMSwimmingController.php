@@ -228,15 +228,18 @@ class WMSwimmingController extends Controller
         $result = $this->prepareForWechat($ticket);
         \Log::debug($result);
         $isWeChatBrowser = isWeChatBrowser();
+        $readyForPay = $result->result_code == 'SUCCESS';
         if (!app()->isLocal()) {
             if ($isWeChatBrowser) {
                 $jsApiParameters = app('wechat')->payment->configForPayment($result->prepay_id);
             } else {
-                QRcode::png($result->code_url, storage_path("app/public/pay_qrcode/{$ticket->id}.png"), 'L', 5);
+                if ($result->code_url) {
+                    QRcode::png($result->code_url, storage_path("app/public/pay_qrcode/{$ticket->id}.png"), 'L', 5);
+                }
             }
         }
 
-        return view('wmswimming.pay', compact('ticket', 'jsApiParameters', 'isWeChatBrowser'));
+        return view('wmswimming.pay', compact('ticket', 'jsApiParameters', 'isWeChatBrowser', 'readyForPay'));
     }
 
     private function getWechatPaymentAttribute()

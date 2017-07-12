@@ -70,6 +70,12 @@
 
 @section('js')
 <script type="text/javascript">
+@if(!$readyForPay)
+$(function() {
+	alert('无法为您创建支付。备注：微信内创建的报名仅可以在微信内完成支付，其他浏览器创建的报名仅可以通过其页面扫码支付，两者不可兼容。')
+	window.location.href = '/wm'
+})
+@endif
 function complete() {
 	alert('可于主页进入“报名查询”，查询报名记录')
 	window.location.href = '/wm'
