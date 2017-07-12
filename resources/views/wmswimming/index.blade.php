@@ -45,7 +45,7 @@
                 @else
                 <a class="weui-btn weui-btn_primary weui-btn_disabled" href="javascript:">报名未开启</a>
                 @endif
-				<a class="weui-btn weui-btn_plain-primary" href="/wm/ticket/search">报名查询</a>
+				<a class="weui-btn weui-btn_plain-primary" href="/wm/tickets/search">报名查询</a>
             </section>
         </article>
 	</div>

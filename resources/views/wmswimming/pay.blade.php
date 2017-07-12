@@ -57,7 +57,7 @@
 	        @else
 	        	<div style="display: flex; flex-direction: column; margin: 20px;">
 		        	<p style="text-align: center">扫描下方二维码完成支付</p>
-		        	<img src="/storage/pay_qrcode/{{ $ticket->id }}.png">
+		        	<img style="margin: auto;" src="/storage/pay_qrcode/{{ $ticket->id }}.png">
 				</div>
 				<div class="weui-btn-area">
 		            <a href="javascript:" class="weui-btn weui-btn_primary" onclick="complete()">我已成功支付</a>
@@ -71,7 +71,7 @@
 @section('js')
 <script type="text/javascript">
 function complete() {
-	alert('可在主页进入“报名查询”，查询报名记录')
+	alert('可于主页进入“报名查询”，查询报名记录')
 	window.location.href = '/wm'
 }
 
