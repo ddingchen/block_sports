@@ -69,6 +69,7 @@
 	        		<td>身份证号</td>
         			<td>团队名称</td>
 	        		<td>支付状态</td>
+        			<td>微信支付后台订单号</td>
         			<td></td>
         			<td></td>
 	        	</tr>
@@ -89,6 +90,7 @@
 	        		<td>{{ $registion->team_name }}</td>
 	        		@if($loop->first)
 	        		<td rowspan="4">{{ $ticket->paid ? '已支付' : '' }}</td>
+	        		<td rowspan="4">{{ $ticket->out_trade_no }}</td>
 	        		@endif
 	        		<td>
 	        			<a href="/admin/wm/registion/{{ $registion->id }}" class="btn btn-primary btn-xs">更改</a>

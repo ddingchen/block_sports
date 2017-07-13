@@ -59,13 +59,19 @@
 						            @foreach($ticket->registion->registions as $registion)
 						            <div class="weui-form-preview__item">
 						                <label class="weui-form-preview__label">@if($loop->first)参赛人员@endif</label>
-						                <span class="weui-form-preview__value">{{ $registion->realname }}</span>
+						                <span class="weui-form-preview__value">
+						                	@if($registion->team_name) [ {{ $registion->team_name }} ] @endif
+						                	{{ $registion->realname }}
+						                </span>
 						            </div>
 						            @endforeach
 					            @else
 					            	<div class="weui-form-preview__item">
 						                <label class="weui-form-preview__label">参赛人员</label>
-						                <span class="weui-form-preview__value">{{ $ticket->registion->realname }}</span>
+						                <span class="weui-form-preview__value">
+						                	@if($ticket->registion->team_name) [ {{ $ticket->registion->team_name }} ] @endif
+						                	{{ $ticket->registion->realname }}
+						                </span>
 						            </div>
 					            @endif
 					            <div class="weui-form-preview__item">
