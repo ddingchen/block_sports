@@ -99,6 +99,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => $admi
     Route::get('match/{match}/ticket/{ticket}/result/create', 'ResultController@create');
     Route::post('match/{match}/ticket/{ticket}/result', 'ResultController@store');
 
+    Route::get('wm/tickets', 'WMSwimmingController@allTickets');
     Route::get('wm/group/{group}/ticket', 'WMSwimmingController@tickets');
     Route::get('wm/registion/{registion}', 'WMSwimmingController@registionForm');
     Route::put('wm/registion/{registion}', 'WMSwimmingController@editRegistion');
