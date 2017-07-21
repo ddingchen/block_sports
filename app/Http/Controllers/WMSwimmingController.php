@@ -138,12 +138,8 @@ class WMSwimmingController extends Controller
                     $validator->errors()->add("members.{$index}.idcard_no", '抱歉，该年龄不在我们的年龄组别范围内，无法报名');
                     return;
                 }
-                // 小学组不可报名800米项目
-                if ($this->rejectForGroup($birthday, $group)) {
-                    $validator->errors()->add("members.{$index}.idcard_no", "抱歉，该年龄组过小，不能报名该项目");
-                    return;
-                }
             });
+
         });
         if ($validator->fails()) {
             $this->throwValidationException($request, $validator);
@@ -230,6 +226,7 @@ class WMSwimmingController extends Controller
             return redirect('wm');
         }
         $result = $this->prepareForWechat($ticket);
+        \Log::debug($result);
         $isWeChatBrowser = isWeChatBrowser();
         $readyForPay = $result->result_code == 'SUCCESS';
         if (!app()->isLocal()) {
@@ -356,19 +353,10 @@ class WMSwimmingController extends Controller
         if ($year >= 1957 && $year <= 1999) {
             return false;
         }
-        if ($year >= 2002 && $year <= 2011) {
+        if ($year >= 2002 && $year <= 2004) {
             return false;
         }
         return true;
-    }
-
-    protected function rejectForGroup($date, $group)
-    {
-        $year = $date->year;
-        if ($year >= 2005 && $year <= 2011 && $group->id == 5) {
-            return true;
-        }
-        return false;
     }
 
     private function registerEnabled()
