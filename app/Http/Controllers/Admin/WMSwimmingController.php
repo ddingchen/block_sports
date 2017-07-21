@@ -11,12 +11,6 @@ use Illuminate\Http\Request;
 
 class WMSwimmingController extends Controller
 {
-    public function allTickets()
-    {
-        $tickets = Ticket::orderBy('group_id')->get();
-        return view('admin.wm.all-tickets', compact('tickets'));
-    }
-
     public function tickets(Group $group)
     {
         $tickets = $group->tickets()->with('registion')->get();

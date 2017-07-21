@@ -55,7 +55,6 @@
                 <li><a href="/admin/wm/setting">报名设定</a></li>
                 <li><a href="/admin/wm/search/registion">报名查询</a></li>
                 <li><a href="/admin/wm/team">团队一览</a></li>
-                <li><a href="/admin/wm/tickets">报名一览</a></li>
                 @foreach($menuGroups as $group)
                 <li><a href="/admin/wm/group/{{ $group->id }}/ticket">{{ $group->name }}</a></li>
                 @endforeach
