@@ -25,6 +25,7 @@
 			        <div class="weui-cell__ft">{{ $ticket->group->name }}</div>
 			    </div>
 			</div>
+
 			@if($ticket->group->team_required)
 				@foreach($ticket->registion->registions as $registion)
 					@include('wmswimming.registion', ['registion' => $registion])

@@ -42,6 +42,7 @@
 	        		<td>{{ $ticket->out_trade_no }}</td>
 	        		<td>
 	        			<a href="/admin/wm/registion/{{ $registion->id }}" class="btn btn-primary btn-xs">更改</a>
+	        			<a href="/admin/wm/ticket/{{ $ticket->id }}/edit" class="btn btn-warning btn-xs">变更项目</a>
 	        		</td>
 	        		<td>
 	        			<form class="delete" method="post" action="/admin/wm/ticket/{{ $ticket->id }}">

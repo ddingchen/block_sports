@@ -103,6 +103,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => $admi
     Route::get('wm/group/{group}/ticket', 'WMSwimmingController@tickets');
     Route::get('wm/registion/{registion}', 'WMSwimmingController@registionForm');
     Route::put('wm/registion/{registion}', 'WMSwimmingController@editRegistion');
+    Route::get('wm/ticket/{ticket}/edit', 'WMSwimmingController@ticketForm');
+    Route::put('wm/ticket/{ticket}', 'WMSwimmingController@editTicket');
     Route::delete('wm/ticket/{ticket}', 'WMSwimmingController@destoryTicket');
     Route::get('wm/search/registion', 'WMSwimmingController@searchForm');
     Route::get('wm/setting', 'WMSwimmingController@settingForm');

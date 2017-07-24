@@ -5,6 +5,14 @@
         </div>
         <div class="weui-cell__ft">{{ $registion->realname }}</div>
     </div>
+    @if($registion->team_name)
+    <div class="weui-cell">
+        <div class="weui-cell__bd">
+            <p>所属团队</p>
+        </div>
+        <div class="weui-cell__ft">{{ $registion->team_name }}</div>
+    </div>
+    @endif
     <div class="weui-cell">
         <div class="weui-cell__bd">
             <p>性别</p>

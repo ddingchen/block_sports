@@ -67,6 +67,24 @@ class WMSwimmingController extends Controller
         return redirect("admin/wm/group/{$registion->registerGroup()->id}/ticket");
     }
 
+    public function ticketForm(Ticket $ticket)
+    {
+        $groups = Group::where('name', 'not like', '%接力%')->get();
+        return view("admin.wm.ticket-edit", compact('ticket', 'groups'));
+    }
+
+    public function editTicket(Request $request, Ticket $ticket)
+    {
+        $this->validate($request, [
+            'group_id' => 'required|exists:groups,id',
+        ]);
+
+        $ticket->group_id = $request->input('group_id');
+        $ticket->save();
+
+        return redirect("admin/wm/group/{$request->input('group_id')}/ticket");
+    }
+
     public function destoryTicket(Ticket $ticket)
     {
         if ($ticket->paid) {

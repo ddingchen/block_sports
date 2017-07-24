@@ -158,7 +158,6 @@ class WMSwimmingController extends Controller
                 $input['team_name'] = session('team_name');
             }
         }
-        \Log::debug($formInput);
         if ($group->team_required) {
             $registion = $this->registerForTeam($formInput);
         } else {
