@@ -136,7 +136,10 @@ class WMSwimmingController extends Controller
 
     public function teams()
     {
-        $registionsByGroup = Registion::whereNotNull('team_name')->get()->groupBy(function ($registion) {
+        $registions = Registion::whereNotNull('team_name')->get()->unique(function ($registion) {
+            return $registion['realname'] . $registion['idcard_no'];
+        });
+        $registionsByGroup = $registions->groupBy(function ($registion) {
             return $registion->team_name;
         });
         return view('admin.wm.team', compact('registionsByGroup'));
