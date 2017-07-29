@@ -38,6 +38,8 @@
 				<form method="post" action="/wm/ticket/{{ $ticket->id }}">
 					{{ csrf_field() }}
 					{{ method_field('delete') }}
+					<input type="hidden" name="realname" value="{{ request('realname') }}">
+					<input type="hidden" name="idcard_no" value="{{ request('idcard_no') }}">
 	            	<button type="submit" class="weui-btn weui-btn_warn">取消报名</button>
 				</form>
 	        </div>

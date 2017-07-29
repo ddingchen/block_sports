@@ -318,10 +318,13 @@ class WMSwimmingController extends Controller
         return view('wmswimming.ticket', compact('ticket'));
     }
 
-    public function destoryTicket(Ticket $ticket)
+    public function destoryTicket(Request $request, Ticket $ticket)
     {
-        if ($ticket->owner->id != auth()->id()) {
-            return abort('403', '没有访问权限');
+        if (!($request->has('idcard_no') && $request->has('realname'))) {
+            return abort('403', '缺少必要信息');
+        }
+        if (!$ticket->isTicketOwner($request->input('idcard_no'), $request->input('realname'))) {
+            return abort('403', '身份信息有误');
         }
         if ($ticket->paid) {
             return abort('403', '订单已经支付不可进行删除操作');
