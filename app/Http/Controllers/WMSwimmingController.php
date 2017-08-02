@@ -111,17 +111,19 @@ class WMSwimmingController extends Controller
                     return;
                 }
 
-                // 报名人次限制
-                $registions = Registion::where('idcard_no', $idcardNo)->get();
-                if ($registions->count() != 0) {
-                    if ($registions->count() >= 2) {
-                        $validator->errors()->add("members.{$index}.idcard_no", '抱歉，该身份证已报名过两个项目，不可再报名');
-                        return;
-                    }
-                    $registion = $registions->first();
-                    if ($registion->registerGroup()->id == $group->id) {
-                        $validator->errors()->add("members.{$index}.idcard_no", '抱歉，该身份证已报名过该项目，不可重复报名');
-                        return;
+                // 报名人次限制（4X50米不列入一人两项的限制中）
+                if ($group->id != 6) {
+                    $registions = Registion::has('ticket')->where('idcard_no', $idcardNo)->get();
+                    if ($registions->count() != 0) {
+                        if ($registions->count() >= 2) {
+                            $validator->errors()->add("members.{$index}.idcard_no", '抱歉，该身份证已报名过两个项目，不可再报名');
+                            return;
+                        }
+                        $registion = $registions->first();
+                        if ($registion->registerGroup()->id == $group->id) {
+                            $validator->errors()->add("members.{$index}.idcard_no", '抱歉，该身份证已报名过该项目，不可重复报名');
+                            return;
+                        }
                     }
                 }
 
