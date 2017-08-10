@@ -3,9 +3,15 @@
 @section('page-title', '网民游泳-所有报名')
 
 @section('content')
+
 <div class="table-responsive">
 	<table class="table">
-		<thread>
+		<caption>
+			当前已支付的报名中：<br/>
+			总报名项目人次 - <span id="countOfNum"></span>人次<br/>
+			总报名人数（去除重复） - <span id="countOfPerson"></span>人
+		</caption>
+		<thead>
 			<tr>
 				<th>#</th>
 				<th>报名项目</th>
@@ -17,7 +23,7 @@
 				<th>团队名称</th>
 				<th>支付状态</th>
 			</tr>
-		</thread>
+		</thead>
 		<tbody>
 			@foreach($tickets as $ticket)
 				@if(!$ticket->group->team_required)
@@ -74,5 +80,16 @@
 <script src="http://cdn.bootcss.com/TableExport/5.0.0-rc.4/js/tableexport.min.js"></script>
 <script type="text/javascript">
 	$('table').tableExport()
+
+	var $paidRows = $('table tbody tr:contains("已支付")');
+	var persons = []
+	$paidRows.each(function(i, n) {
+		var person = $(n).find('td:eq(6)').text()
+		if(persons.indexOf(person) == -1) {
+			persons.push(person)
+		}
+	})
+	$('#countOfPerson').text(persons.length)
+	$('#countOfNum').text($paidRows.length)
 </script>
 @endsection
