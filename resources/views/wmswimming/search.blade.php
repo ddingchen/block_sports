@@ -14,7 +14,7 @@
 			<div class="page__hd">
 				<h1 class="page__title">报名查询</h1>
 				<p class="page__desc">
-					请于下方输入完整的身份证号及相应姓名进行查询<br/>
+					请于下方输入完整的证件号及相应姓名进行查询<br/>
 					如发现提交的报名信息有误，可致电客服修改<br/>
 					客服热线：<a href="tel:0510-88751569">0510-88751569</a><br/>
 					咨询时间：工作日 10:00～17:00
@@ -32,10 +32,10 @@
 						    </div>
 						</div>
 						<div class="weui-cell">
-						    <div class="weui-cell__hd"><label class="weui-label">身份证号</label></div>
+						    <div class="weui-cell__hd"><label class="weui-label">证件号码</label></div>
 						    <div class="weui-cell__bd">
 						    	<small></small>
-						        <input class="weui-input" type="text" name="idcard_no" placeholder="请输入二代身份证号码" value="{{ request('idcard_no') }}">
+						        <input class="weui-input" type="text" name="idcard_no" placeholder="请输入身份证号码或护照号码" value="{{ request('idcard_no') }}">
 						    </div>
 						</div>
 					</div>
