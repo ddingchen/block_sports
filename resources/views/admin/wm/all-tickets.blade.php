@@ -4,12 +4,17 @@
 
 @section('content')
 
+<div class="btn-group" role="group" aria-label="...">
+  <a class="btn btn-default @if(!$paid) btn-primary @endif" href="/admin/wm/tickets">所有报名</a>
+  <a class="btn btn-default @if($paid) btn-primary @endif" href="/admin/wm/tickets?paid">仅已支付</a>
+</div>
+
 <div class="table-responsive">
 	<table class="table">
 		<caption>
 			当前已支付的报名中：<br/>
 			总报名项目人次 - <span id="countOfNum"></span>人次<br/>
-			总报名人数（去除重复） - <span id="countOfPerson"></span>人
+			总报名人数（去除重复） - <span id="countOfPerson"></span>人<br/>
 		</caption>
 		<thead>
 			<tr>
@@ -79,7 +84,19 @@
 <script src="http://cdn.bootcss.com/TableExport/5.0.0-rc.4/img/xlsx.svg"></script>
 <script src="http://cdn.bootcss.com/TableExport/5.0.0-rc.4/js/tableexport.min.js"></script>
 <script type="text/javascript">
-	$('table').tableExport()
+
+	var exportFileName =  '报名名单 ' + new Date().Format("yyyy-MM-dd HH:mm:ss")
+	var unpaidRows = []
+	$('table tbody tr').each(function(i, n) {
+		if($(n).has('td:contains("已支付")').length == 0) {
+			unpaidRows.push(i)
+		}
+	})
+
+	$('table').tableExport({
+		filename: exportFileName,
+		ignoreRows: unpaidRows
+	})
 
 	var $paidRows = $('table tbody tr:contains("已支付")');
 	var persons = []

@@ -11,10 +11,14 @@ use Illuminate\Http\Request;
 
 class WMSwimmingController extends Controller
 {
-    public function allTickets()
+    public function allTickets(Request $request)
     {
-        $tickets = Ticket::orderBy('group_id')->get();
-        return view('admin.wm.all-tickets', compact('tickets'));
+        $query = Ticket::orderBy('group_id');
+        if($paid = $request->exists('paid')) {
+            $query->where('paid', true);
+        }
+        $tickets = $query->get();
+        return view('admin.wm.all-tickets', compact('tickets', 'paid'));
     }
 
     public function tickets(Group $group)
