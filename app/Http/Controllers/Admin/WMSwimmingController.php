@@ -14,8 +14,11 @@ class WMSwimmingController extends Controller
     public function allTickets(Request $request)
     {
         $query = Ticket::orderBy('group_id');
-        if($paid = $request->exists('paid')) {
+        if ($paid = $request->exists('paid')) {
             $query->where('paid', true);
+        }
+        if ($from = $request->input('from')) {
+            $query->whereDate('created_at', '>', $from);
         }
         $tickets = $query->get();
         return view('admin.wm.all-tickets', compact('tickets', 'paid'));
